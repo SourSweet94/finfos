@@ -10,8 +10,8 @@ const recordSchema = new Schema({
 
     workout_id: [
         {
-            type: Schema.Types.ObjectId,
-            ref: 'workout',
+            type: String,
+            // ref: 'workout',
             required: true,
         },
     ],

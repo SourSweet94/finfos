@@ -38,11 +38,12 @@ const getSingleWorkout = async (req, res) => {
 const createWorkout = async (req, res) => {
     const { date, title, reps, load } = req.body
     const record_id = req.params.record_id
+    console.log(req.body)
     try {
         const user_id = req.user._id
         const workout = await Workout.create({ date, title, reps, load, user_id })
         const record = await Record.findById(record_id)
-        if(!record){
+        if (!record) {
             return res.status(404).json({ error: 'Record not found' });
         }
         record.workout_id.push(workout._id)
@@ -82,7 +83,6 @@ const updateWorkout = async (req, res) => {
 module.exports = {
     getAllWorkouts,
     getSingleWorkout,
-    // getWorkoutByRecordID,
     createWorkout,
     deleteWorkout,
     updateWorkout

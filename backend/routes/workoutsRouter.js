@@ -4,7 +4,7 @@ const router = express.Router()
 const {
     getAllWorkouts,
     getSingleWorkout,
-    getWorkoutByRecordID,
+getWorkoutByRecordID,
     createWorkout,
     deleteWorkout,
     updateWorkout
