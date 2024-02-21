@@ -48,12 +48,9 @@ const WorkoutForm = ({ workoutDetails, setModalShow }: WorkoutFormProps) => {
       return;
     }
 
-    const workout = { date, title, reps, load, record_id };
-
+    const workout = { date, title, reps, load };
     const response = await fetch(
-      `http://localhost:4000/api/workouts/${
-        action === "N" ? "" : workoutDetails!._id
-      }`,
+      `http://localhost:4000/api/records/${record_id}/${action === "N" ? "" : workoutDetails!._id}`,
       {
         method: action === "N" ? "POST" : "PATCH",
         body: JSON.stringify(workout),
@@ -75,7 +72,9 @@ const WorkoutForm = ({ workoutDetails, setModalShow }: WorkoutFormProps) => {
         dispatch({ type: "CREATE_WORKOUT", payload: json });
       } else {
         const updatedResp = await fetch(
-          `http://localhost:4000/api/workouts/${workoutDetails!._id}`,
+          `http://localhost:4000/api/records/${record_id}/${
+            workoutDetails!._id
+          }`,
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
@@ -95,7 +94,7 @@ const WorkoutForm = ({ workoutDetails, setModalShow }: WorkoutFormProps) => {
 
   return (
     <form onSubmit={handleSubmit}>
-       <Form.Group className="mb-3">
+      <Form.Group className="mb-3">
         <Form.Label>Date</Form.Label>
         <DatePicker
           selected={date}

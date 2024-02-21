@@ -20,7 +20,7 @@ export interface WorkoutDetailsProps {
 }
 
 const WorkoutDetails = ({ workout }: WorkoutDetailsProps) => {
-  const { setAction } = useContext(ScreenContext);
+  const { setAction, record_id } = useContext(ScreenContext);
   const { dispatch } = useContext(WorkoutContext);
   const {
     state: { user },
@@ -32,7 +32,7 @@ const WorkoutDetails = ({ workout }: WorkoutDetailsProps) => {
       return;
     }
     const response = await fetch(
-      "http://localhost:4000/api/workouts/" + workout._id,
+      `http://localhost:4000/api/records/${record_id}/${workout._id}`,
       {
         method: "DELETE",
         headers: {

@@ -19,10 +19,6 @@ const workoutsSchema = new Schema({
         type: Number,
         required: true
     },
-    record_id: {
-        type: String,
-        required: true
-    },
     user_id: {
         type: String,
         required: true

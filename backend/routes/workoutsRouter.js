@@ -17,7 +17,7 @@ router.get('/', getAllWorkouts)
 
 router.get('/:id', getSingleWorkout)
 
-router.get('/:record/:record_id', getWorkoutByRecordID)
+// router.get('/:record/:record_id', getWorkoutByRecordID)
 
 router.post('/', createWorkout)
 

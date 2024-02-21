@@ -18,7 +18,7 @@ app.use(cors())
 
 app.use('/api/records', recordRouters)
 
-app.use('/api/workouts', workoutRouters)
+app.use('/api/records/:record_id', workoutRouters)
 
 app.use('/api/user', userRouters)
 

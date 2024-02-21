@@ -4,7 +4,8 @@ const router = express.Router()
 const {
   getAllRecords,
   createRecord,
-  deleteRecord
+  deleteRecord,
+  updateRecord
 
 } = require('../controllers/recordController')
 
@@ -17,5 +18,7 @@ router.get('/', getAllRecords)
 router.post('/', createRecord)
 
 router.delete('/:id', deleteRecord)
+
+router.patch('/:id', updateRecord)
 
 module.exports = router

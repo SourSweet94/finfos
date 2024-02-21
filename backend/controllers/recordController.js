@@ -31,4 +31,18 @@ const deleteRecord = async (req, res) => {
     res.status(200).json(record)
 }
 
-module.exports = { getAllRecords, createRecord, deleteRecord }
+const updateRecord = async (req, res) => {
+    const { id } = req.params
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ err: 'invalid id' })
+    }
+    const workout = await Workout.findOneAndUpdate({ _id: id }, {
+        ...req.body
+    })
+    if (!workout) {
+        return res.status(400).json({ err: 'not found' })
+    }
+    res.status(200).json(workout)
+}
+
+module.exports = { getAllRecords, createRecord, deleteRecord, updateRecord }

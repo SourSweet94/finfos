@@ -35,7 +35,9 @@ const ScreenContextProvider = ({ children }: ScreenContextProps) => {
   const [action, setAction] = useState<"" | "N" | "E" | "D" | "V">("");
 
   const [record_id, setRecordID] = useState<string | null>(null);
-
+  console.log(screenType);
+  console.log(action);
+  console.log(record_id)
   return (
     <ScreenContext.Provider
       value={{
