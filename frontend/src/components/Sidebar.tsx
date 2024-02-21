@@ -9,6 +9,7 @@ const Sidebar = () => {
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
+  console.log('test git')
   return (
     <>
       {/* Toggle button inside Sidebar component */}

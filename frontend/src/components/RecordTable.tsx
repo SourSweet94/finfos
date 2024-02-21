@@ -31,7 +31,7 @@ const RecordTable = () => {
   }, [dispatch, user]);
 
   const tableHeader = ["name"];
-
+  console.log('test git')
   return (
     <>
       <Table tableHeader={tableHeader}>
