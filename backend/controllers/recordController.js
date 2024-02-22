@@ -36,13 +36,13 @@ const updateRecord = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ err: 'invalid id' })
     }
-    const workout = await Workout.findOneAndUpdate({ _id: id }, {
+    const record = await Record.findOneAndUpdate({ _id: id }, {
         ...req.body
     })
-    if (!workout) {
+    if (!record) {
         return res.status(400).json({ err: 'not found' })
     }
-    res.status(200).json(workout)
+    res.status(200).json(record)
 }
 
 module.exports = { getAllRecords, createRecord, deleteRecord, updateRecord }
