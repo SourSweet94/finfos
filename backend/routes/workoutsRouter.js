@@ -4,7 +4,7 @@ const router = express.Router()
 const {
     getAllWorkouts,
     getSingleWorkout,
-    getWorkoutByRecordID,
+getWorkoutByRecordID,
     createWorkout,
     deleteWorkout,
     updateWorkout
@@ -13,16 +13,14 @@ const requireAuth = require('../middlewares/requireAuth')
 
 router.use(requireAuth)
 
-router.get('/', getAllWorkouts)
+router.get('/:record_id/', getAllWorkouts)
 
-router.get('/:id', getSingleWorkout)
+router.get('/:record_id/:id', getSingleWorkout)
 
-// router.get('/:record/:record_id', getWorkoutByRecordID)
+router.post('/:record_id', createWorkout)
 
-router.post('/', createWorkout)
+router.delete('/:record_id/:id', deleteWorkout)
 
-router.delete('/:id', deleteWorkout)
-
-router.patch('/:id', updateWorkout)
+router.patch('/:record_id/:id', updateWorkout)
 
 module.exports = router

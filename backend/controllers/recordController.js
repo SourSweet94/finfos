@@ -33,6 +33,7 @@ const deleteRecord = async (req, res) => {
 
 const updateRecord = async (req, res) => {
     const { id } = req.params
+    const { workout_id, name } = req.body
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ err: 'invalid id' })
     }

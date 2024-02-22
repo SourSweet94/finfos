@@ -13,6 +13,7 @@ import { WorkoutProps } from "./WorkoutDetails";
 import { ScreenContext } from "../context/ScreenContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { RecordContext } from "../context/RecordContext";
 
 interface WorkoutFormProps {
   workoutDetails?: WorkoutProps;
@@ -21,6 +22,7 @@ interface WorkoutFormProps {
 
 const WorkoutForm = ({ workoutDetails, setModalShow }: WorkoutFormProps) => {
   const { dispatch } = useContext(WorkoutContext);
+  const { dispatch: dispatchRecord } = useContext(RecordContext);
   const {
     state: { user },
   } = useContext(AuthContext);
@@ -43,14 +45,11 @@ const WorkoutForm = ({ workoutDetails, setModalShow }: WorkoutFormProps) => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!user) {
-      setError("You must be logged in");
-      return;
-    }
-
     const workout = { date, title, reps, load };
     const response = await fetch(
-      `http://localhost:4000/api/records/${record_id}/${action === "N" ? "" : workoutDetails!._id}`,
+      `http://localhost:4000/api/records/${record_id}/${
+        action === "N" ? "" : workoutDetails!._id
+      }`,
       {
         method: action === "N" ? "POST" : "PATCH",
         body: JSON.stringify(workout),
@@ -70,6 +69,20 @@ const WorkoutForm = ({ workoutDetails, setModalShow }: WorkoutFormProps) => {
 
       if (action === "N") {
         dispatch({ type: "CREATE_WORKOUT", payload: json });
+        const recordResp = await fetch(
+          `http://localhost:4000/api/records/${record_id}`,
+          {
+            method: "PATCH",
+            body: JSON.stringify(workoutDetails),
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        );
+        const updatedJson = await recordResp.json();
+        dispatchRecord({ type: "UPDATE_RECORD", payload: updatedJson });
+        
       } else {
         const updatedResp = await fetch(
           `http://localhost:4000/api/records/${record_id}/${

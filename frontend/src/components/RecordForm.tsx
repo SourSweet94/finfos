@@ -9,7 +9,6 @@ import {
 import { Form } from "react-bootstrap";
 import { RecordContext } from "../context/RecordContext";
 import { AuthContext } from "../context/AuthContext";
-// import { WorkoutProps } from "./WorkoutDetails";
 import { ScreenContext } from "../context/ScreenContext";
 import { RecordProps } from "./Record";
 
@@ -58,7 +57,7 @@ const RecordForm = ({ record, setModalShow }: RecordFormProps) => {
       console.log(action)
       if (action === "N") {
         dispatch({ type: "CREATE_RECORD", payload: json });
-      } else {
+      } else if (action === "E") {
         const updatedResp = await fetch(
           `http://localhost:4000/api/records/${record!._id}`,
           {
