@@ -38,16 +38,11 @@ const updateRecord = async (req, res) => {
         return res.status(404).json({ err: 'invalid id' })
     }
     const record = await Record.findOneAndUpdate({ _id: id }, {
-        name,
+        ...req.body
     })
     if (!record) {
         return res.status(400).json({ err: 'not found' })
     }
-    if (workout_id) {
-        console.log(workout_id)
-        record.workout_id.push(workout_id)
-    }
-    await record.save();
     res.status(200).json(record)
 }
 

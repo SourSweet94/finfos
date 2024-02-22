@@ -18,7 +18,7 @@ const WorkoutTable = () => {
   useEffect(() => {
     const fetchWorkouts = async () => {
       const response = await fetch(
-        `http://localhost:4000/api/records/${record_id}`, 
+        `http://localhost:4000/api/records/${record_id}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,

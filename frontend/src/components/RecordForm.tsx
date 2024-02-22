@@ -52,8 +52,9 @@ const RecordForm = ({ record, setModalShow }: RecordFormProps) => {
     const json = await response.json();
 
     if (response.ok) {
+      // update UI
       setName(null)
-
+      console.log(action)
       if (action === "N") {
         dispatch({ type: "CREATE_RECORD", payload: json });
       } else if (action === "E") {

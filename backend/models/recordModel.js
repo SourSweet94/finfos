@@ -12,7 +12,7 @@ const recordSchema = new Schema({
         {
             type: String,
             // ref: 'workout',
-            required: true,
+            // required: true,
         },
     ],
 
