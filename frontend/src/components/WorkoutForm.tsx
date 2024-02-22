@@ -73,7 +73,7 @@ const WorkoutForm = ({ workoutDetails, setModalShow }: WorkoutFormProps) => {
           `http://localhost:4000/api/records/${record_id}`,
           {
             method: "PATCH",
-            body: JSON.stringify(workoutDetails?._id),
+            body: JSON.stringify(workoutDetails),
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${user.token}`,
