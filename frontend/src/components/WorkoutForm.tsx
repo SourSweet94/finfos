@@ -14,6 +14,7 @@ import { ScreenContext } from "../context/ScreenContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { RecordContext } from "../context/RecordContext";
+import { ItemContext } from "../context/ItemContext";
 
 interface WorkoutFormProps {
   workoutDetails?: WorkoutProps;
@@ -26,7 +27,8 @@ const WorkoutForm = ({ workoutDetails, setModalShow }: WorkoutFormProps) => {
   const {
     state: { user },
   } = useContext(AuthContext);
-  const { action, record_id } = useContext(ScreenContext);
+  const { action } = useContext(ScreenContext);
+  const { record_id} = useContext(ItemContext)
 
   const [date, setDate] = useState<Date | null>(
     action === "E" && workoutDetails ? new Date(workoutDetails.date) : null
@@ -47,7 +49,7 @@ const WorkoutForm = ({ workoutDetails, setModalShow }: WorkoutFormProps) => {
 
     const workout = { date, title, reps, load };
     const response = await fetch(
-      `http://localhost:4000/api/records/${record_id}/${
+      `http://localhost:4000/api/records/${record_id}/workouts${
         action === "N" ? "" : workoutDetails!._id
       }`,
       {

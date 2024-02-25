@@ -4,6 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import ActionModal from "./ActionModal";
 import Button from "./Button";
 import { ScreenContext } from "../context/ScreenContext";
+import { ItemContext } from "../context/ItemContext";
 
 export interface WorkoutProps {
   date: string;
@@ -20,8 +21,9 @@ export interface WorkoutDetailsProps {
 }
 
 const WorkoutDetails = ({ workout }: WorkoutDetailsProps) => {
-  const { setAction, record_id } = useContext(ScreenContext);
+  const { setAction } = useContext(ScreenContext);
   const { dispatch } = useContext(WorkoutContext);
+  const { record_id } = useContext(ItemContext);
   const {
     state: { user },
   } = useContext(AuthContext);
@@ -32,7 +34,7 @@ const WorkoutDetails = ({ workout }: WorkoutDetailsProps) => {
       return;
     }
     const response = await fetch(
-      `http://localhost:4000/api/records/${record_id}/${workout._id}`,
+      `http://localhost:4000/api/records/${record_id}/workouts/${workout._id}`,
       {
         method: "DELETE",
         headers: {
@@ -50,7 +52,6 @@ const WorkoutDetails = ({ workout }: WorkoutDetailsProps) => {
     setShowActionModal(true);
     setAction("E");
   };
-
 
   return (
     <>

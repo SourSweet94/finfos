@@ -4,6 +4,7 @@ import { RecordContext } from "../context/RecordContext";
 import { AuthContext } from "../context/AuthContext";
 import Button from "./Button";
 import ActionModal from "./ActionModal";
+import { ItemContext } from "../context/ItemContext";
 
 export interface RecordProps {
   name: string;
@@ -14,7 +15,8 @@ export interface RecordDetailsProps {
   styles?: any;
 }
 const Record = ({ record }: RecordDetailsProps) => {
-  const { setScreenType, setAction, setRecordID } = useContext(ScreenContext);
+  const { setScreenType, setAction } = useContext(ScreenContext);
+  const { setRecordID, setWorkoutID } = useContext(ItemContext);
   const { dispatch } = useContext(RecordContext);
   const {
     state: { user },
@@ -25,12 +27,15 @@ const Record = ({ record }: RecordDetailsProps) => {
     if (!user) {
       return;
     }
-    const response = await fetch("http://localhost:4000/api/records/" + record._id, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const response = await fetch(
+      "http://localhost:4000/api/records/" + record._id,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
     const json = await response.json();
     if (response.ok) {
       dispatch({ type: "DELETE_RECORD", payload: json });
@@ -42,9 +47,24 @@ const Record = ({ record }: RecordDetailsProps) => {
     setAction("E");
   };
 
-  const handleView = () => {
+  const handleView = async () => {
     setScreenType("Action");
-    setRecordID(record._id)
+    setRecordID(record._id);
+
+    const response = await fetch(
+      "http://localhost:4000/api/records/" + record._id,
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+
+    const currentRecord = await response.json();
+    if (response.ok) {
+      // the workout_id array from current viewed Record
+      setWorkoutID(currentRecord.workout_id)
+    }
   };
 
   return (

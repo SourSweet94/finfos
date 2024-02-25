@@ -15,8 +15,6 @@ export interface ScreenContextValue {
   setScreenType: Dispatch<SetStateAction<"" | "Browse" | "Action">>;
   action: "" | "N" | "E" | "D" | "V";
   setAction: Dispatch<SetStateAction<"" | "N" | "E" | "D" | "V">>;
-  record_id: string | null;
-  setRecordID: Dispatch<SetStateAction<string | null>>;
 }
 
 export const ScreenContext = createContext<ScreenContextValue>({
@@ -24,8 +22,6 @@ export const ScreenContext = createContext<ScreenContextValue>({
   setScreenType: () => {},
   action: "",
   setAction: () => {},
-  record_id: "",
-  setRecordID: () => {},
 });
 
 const ScreenContextProvider = ({ children }: ScreenContextProps) => {
@@ -34,10 +30,6 @@ const ScreenContextProvider = ({ children }: ScreenContextProps) => {
   );
   const [action, setAction] = useState<"" | "N" | "E" | "D" | "V">("");
 
-  const [record_id, setRecordID] = useState<string | null>(null);
-  console.log(screenType);
-  console.log(action);
-  console.log(record_id)
   return (
     <ScreenContext.Provider
       value={{
@@ -45,8 +37,6 @@ const ScreenContextProvider = ({ children }: ScreenContextProps) => {
         setScreenType,
         action,
         setAction,
-        record_id,
-        setRecordID,
       }}
     >
       {children}

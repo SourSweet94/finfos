@@ -40,10 +40,19 @@ const createWorkout = async (req, res) => {
 }
 
 const deleteWorkout = async (req, res) => {
+    const { record_id } = req.params
     const { id } = req.params
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ err: 'invalid id' })
     }
+
+    const record = await Record.findById(record_id)
+    if (!record) {
+        return res.status(404).json({ error: 'Record not found' });
+    }
+    record.workout_id.splice(record.workout_id.indexOf(id), 1)
+    await record.save()
+
     const workout = await Workout.findOneAndDelete({ _id: id })
     if (!workout) {
         return res.status(400).json({ err: 'not found' })

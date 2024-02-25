@@ -29,7 +29,6 @@ const Table = ({ tableHeader, children }: TableProps) => {
         </thead>
         <tbody>
           {children}
-          <tr></tr>
         </tbody>
       </BSTable>
       <Button onClick={handleAddClick}>Add</Button>

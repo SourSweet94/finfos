@@ -1,9 +1,22 @@
 const Record = require('../models/recordModel')
+const Workout = require('../models/workoutsModel')
 const mongoose = require('mongoose')
 
 const getAllRecords = async (req, res) => {
     const user_id = req.user._id
     const record = await Record.find({ user_id }).sort({ createdAt: -1 })
+    res.status(200).json(record)
+}
+
+const getSingleRecord = async (req, res) => {
+    const { id } = req.params
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ err: "invalid id" })
+    }
+    const record = await Record.findById(id)
+    if (!record) {
+        return res.status(400).json({ err: 'not found' })
+    }
     res.status(200).json(record)
 }
 
@@ -25,6 +38,7 @@ const deleteRecord = async (req, res) => {
         return res.status(404).json({ err: 'invalid id' })
     }
     const record = await Record.findOneAndDelete({ _id: id })
+    await Workout.deleteMany({ _id: { $in: record.workout_id } });
     if (!record) {
         return res.status(400).json({ err: 'not found' })
     }
@@ -33,7 +47,6 @@ const deleteRecord = async (req, res) => {
 
 const updateRecord = async (req, res) => {
     const { id } = req.params
-    const { workout_id, name } = req.body
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ err: 'invalid id' })
     }
@@ -46,4 +59,10 @@ const updateRecord = async (req, res) => {
     res.status(200).json(record)
 }
 
-module.exports = { getAllRecords, createRecord, deleteRecord, updateRecord }
+module.exports = {
+    getAllRecords,
+    getSingleRecord,
+    createRecord,
+    deleteRecord,
+    updateRecord
+}

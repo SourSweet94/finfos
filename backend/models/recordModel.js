@@ -11,8 +11,7 @@ const recordSchema = new Schema({
     workout_id: [
         {
             type: String,
-            // ref: 'workout',
-            // required: true,
+            ref: 'workout',
         },
     ],
 

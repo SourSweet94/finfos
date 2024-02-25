@@ -45,7 +45,6 @@ const recordReducer = (state: any, action: any) => {
 
 const RecordContextProvider = ({ children }: RecordContextProps) => {
   const [state, dispatch] = useReducer(recordReducer, { records: null });
-  console.log(state);
   return (
     <RecordContext.Provider value={{ state, dispatch }}>
       {children}

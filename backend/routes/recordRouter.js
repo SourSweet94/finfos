@@ -3,6 +3,7 @@ const router = express.Router()
 
 const {
   getAllRecords,
+  getSingleRecord,
   createRecord,
   deleteRecord,
   updateRecord
@@ -14,6 +15,8 @@ const requireAuth = require('../middlewares/requireAuth')
 router.use(requireAuth)
 
 router.get('/', getAllRecords)
+
+router.get('/:id', getSingleRecord)
 
 router.post('/', createRecord)
 
