@@ -6,8 +6,8 @@ import Signup from "./pages/Signup";
 import NavBar from "./components/Navbar";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
-import Table from "./components/WorkoutTable";
 import Menu from "./components/Menu";
+import Manage from "./components/Manage";
 
 function App() {
   const {
@@ -19,8 +19,12 @@ function App() {
       <Routes>
         <Route path="/" element={user ? <Home /> : <Navigate to="/login" />}>
           <Route path="/dashboard" element={<div>Dashboard</div>} />
-          <Route path="/menu" element={<Menu />} />
+          <Route path="/manage" element={<Manage />} />
           <Route path="/order" element={<div>Order</div>} />
+
+          <Route path="/menu" element={<Menu />} />
+          <Route path="/cart" element={<div>cart</div>} />
+          <Route path="/review" element={<div>review</div>} />
         </Route>
         <Route
           path="/login"

@@ -6,9 +6,15 @@ interface AuthContextProps {
 
 interface AuthState {
   user: null | any;
+  userType: "admin" | "staff" | null;
 }
 
-type AuthAction = { type: "LOGIN"; payload: any } | { type: "LOGOUT" };
+type AuthAction =
+  | {
+      type: "LOGIN";
+      payload: { user: any; userType: "admin" | "staff" };
+    }
+  | { type: "LOGOUT" };
 
 interface initAuth {
   state: AuthState;
@@ -16,27 +22,30 @@ interface initAuth {
 }
 
 export const AuthContext = createContext<initAuth>({
-  state: { user: null },
+  state: { user: null, userType: null },
   dispatch: () => {},
 });
 
 const authReducer = (state: AuthState, action: AuthAction) => {
   switch (action.type) {
     case "LOGIN":
-      return { user: action.payload };
+      return { user: action.payload.user, userType: action.payload.userType };
     case "LOGOUT":
-      return { user: null };
+      return { user: null, userType: null };
     default:
       return state;
   }
 };
 
 const AuthContextProvider = ({ children }: AuthContextProps) => {
-  const [state, dispatch] = useReducer(authReducer, { user: null });
+  const [state, dispatch] = useReducer(authReducer, {
+    user: null,
+    userType: null,
+  });
   useEffect(() => {
     if (localStorage.getItem("user") !== null) {
       const user = JSON.parse(localStorage.getItem("user") || "{}");
-      dispatch({type: "LOGIN", payload: user})
+      dispatch({ type: "LOGIN", payload: user });
     }
   }, []);
 

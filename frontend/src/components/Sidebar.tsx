@@ -1,37 +1,47 @@
-import { Navbar, Nav, Col, Row } from "react-bootstrap";
-import Button from "./Button";
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Nav } from "react-bootstrap";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 const Sidebar = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
-
+  const {
+    state: { userType },
+  } = useContext(AuthContext);
   return (
     <>
-      {/* Toggle button inside Sidebar component */}
-      <Row>
-        {!sidebarOpen && (
-          <Col>
-            <Navbar bg="dark" variant="dark" className="sidebar">
-              <Navbar.Toggle aria-controls="sidebar-nav" />
-              <Navbar.Collapse id="sidebar-nav">
-                <Nav className="flex-column">
-                  <Link to="/dashboard">Dashboard</Link>
-                  <Link to="/menu">Menu</Link>
-                  <Link to="/order">Order</Link>
-                </Nav>
-              </Navbar.Collapse>
-            </Navbar>
-          </Col>
+      <Nav
+        className="col-md-12 d-none d-md-block bg-light sidebar"
+        activeKey="/home"
+        onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
+      >
+        <div className="sidebar-sticky"></div>
+        {userType === "admin" && (
+          <>
+            <Nav.Item>
+              <Link to="/dashboard">Dashboard</Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Link to="/manage">Manage</Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Link to="/order">Order</Link>
+            </Nav.Item>
+          </>
         )}
-        <Col>
-          <Button onClick={toggleSidebar}>OO</Button>
-        </Col>
-      </Row>
+        {userType === "staff" && (
+          <>
+            <Nav.Item>
+              <Link to="/menu">Menu</Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Link to="/cart">Cart</Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Link to="/review">Review</Link>
+            </Nav.Item>
+          </>
+        )}
+      </Nav>
     </>
   );
 };
