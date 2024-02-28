@@ -1,28 +1,27 @@
 import { useContext, useState } from "react";
-import { WorkoutContext } from "../context/WorkoutContext";
+import { FoodContext } from "../context/FoodContext";
 import { AuthContext } from "../context/AuthContext";
 import ActionModal from "./ActionModal";
 import Button from "./Button";
 import { ScreenContext } from "../context/ScreenContext";
 import { ItemContext } from "../context/ItemContext";
 
-export interface WorkoutProps {
+export interface FoodProps {
   date: string;
   _id: string;
   title: string;
-  reps: number;
-  load: number;
+  price: number;
   createdAt: string;
 }
 
-export interface WorkoutDetailsProps {
-  workout: WorkoutProps;
+export interface FoodDetailsProps {
+  food: FoodProps;
   styles?: any;
 }
 
-const WorkoutDetails = ({ workout }: WorkoutDetailsProps) => {
+const FoodDetails = ({ food }: FoodDetailsProps) => {
   const { setAction } = useContext(ScreenContext);
-  const { dispatch } = useContext(WorkoutContext);
+  const { dispatch } = useContext(FoodContext);
   const { record_id } = useContext(ItemContext);
   const {
     state: { user },
@@ -34,7 +33,7 @@ const WorkoutDetails = ({ workout }: WorkoutDetailsProps) => {
       return;
     }
     const response = await fetch(
-      `http://localhost:4000/api/records/${record_id}/workouts/${workout._id}`,
+      `http://localhost:4000/api/records/${record_id}/food/${food._id}`,
       {
         method: "DELETE",
         headers: {
@@ -44,7 +43,7 @@ const WorkoutDetails = ({ workout }: WorkoutDetailsProps) => {
     );
     const json = await response.json();
     if (response.ok) {
-      dispatch({ type: "DELETE_WORKOUT", payload: json });
+      dispatch({ type: "DELETE_FOOD", payload: json });
     }
   };
 
@@ -56,11 +55,10 @@ const WorkoutDetails = ({ workout }: WorkoutDetailsProps) => {
   return (
     <>
       <tr>
-        <td>{workout._id}</td>
-        <td>{new Date(workout.date).toLocaleDateString()}</td>
-        <td>{workout.title}</td>
-        <td>{workout.reps}</td>
-        <td>{workout.load}</td>
+        <td>{food._id}</td>
+        <td>{new Date(food.date).toLocaleDateString()}</td>
+        <td>{food.title}</td>
+        <td>{food.price}</td>
         <td>
           <Button onClick={handleEdit}>Edit</Button>
           <Button onClick={handleDelete}>Delete</Button>
@@ -71,10 +69,10 @@ const WorkoutDetails = ({ workout }: WorkoutDetailsProps) => {
         buttonLabel="test"
         show={showActionModal}
         setShow={setShowActionModal}
-        workout={workout}
+        food={food}
       />
     </>
   );
 };
 
-export default WorkoutDetails;
+export default FoodDetails;

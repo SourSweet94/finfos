@@ -7,22 +7,22 @@ import {
   useState,
 } from "react";
 import { Form } from "react-bootstrap";
-import { WorkoutContext } from "../context/WorkoutContext";
+import { FoodContext } from "../context/FoodContext";
 import { AuthContext } from "../context/AuthContext";
-import { WorkoutProps } from "./WorkoutDetails";
+import { FoodProps } from "./FoodDetails";
 import { ScreenContext } from "../context/ScreenContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { RecordContext } from "../context/RecordContext";
 import { ItemContext } from "../context/ItemContext";
 
-interface WorkoutFormProps {
-  workoutDetails?: WorkoutProps;
+interface FoodFormProps {
+  foodDetails?: FoodProps;
   setModalShow?: Dispatch<SetStateAction<boolean>>;
 }
 
-const WorkoutForm = ({ workoutDetails, setModalShow }: WorkoutFormProps) => {
-  const { dispatch } = useContext(WorkoutContext);
+const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
+  const { dispatch } = useContext(FoodContext);
   const { dispatch: dispatchRecord } = useContext(RecordContext);
   const {
     state: { user },
@@ -31,30 +31,27 @@ const WorkoutForm = ({ workoutDetails, setModalShow }: WorkoutFormProps) => {
   const { record_id} = useContext(ItemContext)
 
   const [date, setDate] = useState<Date | null>(
-    action === "E" && workoutDetails ? new Date(workoutDetails.date) : null
+    action === "E" && foodDetails ? new Date(foodDetails.date) : null
   );
   const [title, setTitle] = useState<string | null>(
-    action === "E" && workoutDetails ? workoutDetails.title : null
+    action === "E" && foodDetails ? foodDetails.title : null
   );
-  const [reps, setReps] = useState<number | null>(
-    action === "E" && workoutDetails ? workoutDetails!.reps : null
-  );
-  const [load, setLoad] = useState<number | null>(
-    action === "E" && workoutDetails ? workoutDetails!.load : null
+  const [price, setPrice] = useState<number | null>(
+    action === "E" && foodDetails ? foodDetails!.price : null
   );
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const workout = { date, title, reps, load };
+    const food = { date, title, price };
     const response = await fetch(
-      `http://localhost:4000/api/records/${record_id}/workouts${
-        action === "N" ? "" : workoutDetails!._id
+      `http://localhost:4000/api/records/${record_id}/food${
+        action === "N" ? "" : foodDetails!._id
       }`,
       {
         method: action === "N" ? "POST" : "PATCH",
-        body: JSON.stringify(workout),
+        body: JSON.stringify(food),
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
@@ -66,16 +63,15 @@ const WorkoutForm = ({ workoutDetails, setModalShow }: WorkoutFormProps) => {
 
     if (response.ok) {
       setTitle(null);
-      setReps(null);
-      setLoad(null);
+      setPrice(null);
 
       if (action === "N") {
-        dispatch({ type: "CREATE_WORKOUT", payload: json });
+        dispatch({ type: "CREATE_FOOD", payload: json });
         const recordResp = await fetch(
           `http://localhost:4000/api/records/${record_id}`,
           {
             method: "PATCH",
-            body: JSON.stringify(workoutDetails),
+            body: JSON.stringify(foodDetails),
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${user.token}`,
@@ -88,7 +84,7 @@ const WorkoutForm = ({ workoutDetails, setModalShow }: WorkoutFormProps) => {
       } else {
         const updatedResp = await fetch(
           `http://localhost:4000/api/records/${record_id}/${
-            workoutDetails!._id
+            foodDetails!._id
           }`,
           {
             headers: {
@@ -97,7 +93,7 @@ const WorkoutForm = ({ workoutDetails, setModalShow }: WorkoutFormProps) => {
           }
         );
         const updatedJson = await updatedResp.json();
-        dispatch({ type: "UPDATE_WORKOUT", payload: updatedJson });
+        dispatch({ type: "UPDATE_FOOD", payload: updatedJson });
       }
       setModalShow!(false);
 
@@ -131,24 +127,13 @@ const WorkoutForm = ({ workoutDetails, setModalShow }: WorkoutFormProps) => {
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label>Reps</Form.Label>
+        <Form.Label>Price</Form.Label>
         <Form.Control
           type="number"
-          placeholder="Reps"
-          value={reps === null ? "" : reps}
+          placeholder="Price"
+          value={price === null ? "" : price}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setReps(e.target.valueAsNumber)
-          }
-        />
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>Load</Form.Label>
-        <Form.Control
-          type="number"
-          placeholder="Load"
-          value={load === null ? "" : load}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setLoad(e.target.valueAsNumber)
+            setPrice(e.target.valueAsNumber)
           }
         />
       </Form.Group>
@@ -159,4 +144,4 @@ const WorkoutForm = ({ workoutDetails, setModalShow }: WorkoutFormProps) => {
   );
 };
 
-export default WorkoutForm;
+export default FoodForm;

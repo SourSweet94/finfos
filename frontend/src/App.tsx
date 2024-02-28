@@ -6,8 +6,8 @@ import Signup from "./pages/Signup";
 import NavBar from "./components/Navbar";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
-import Menu from "./components/Menu";
-import Manage from "./components/Manage";
+import Menu from "./pages/Menu";
+import Manage from "./pages/Manage";
 
 function App() {
   const {

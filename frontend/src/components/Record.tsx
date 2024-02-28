@@ -16,7 +16,7 @@ export interface RecordDetailsProps {
 }
 const Record = ({ record }: RecordDetailsProps) => {
   const { setScreenType, setAction } = useContext(ScreenContext);
-  const { setRecordID, setWorkoutID } = useContext(ItemContext);
+  const { setRecordID, setFoodID } = useContext(ItemContext);
   const { dispatch } = useContext(RecordContext);
   const {
     state: { user },
@@ -62,8 +62,8 @@ const Record = ({ record }: RecordDetailsProps) => {
 
     const currentRecord = await response.json();
     if (response.ok) {
-      // the workout_id array from current viewed Record
-      setWorkoutID(currentRecord.workout_id)
+      // the food_id array from current viewed Record
+      setFoodID(currentRecord.food_id)
     }
   };
 
