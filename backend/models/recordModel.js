@@ -8,10 +8,10 @@ const recordSchema = new Schema({
         required: true
     },
 
-    workout_id: [
+    food_id: [
         {
             type: String,
-            ref: 'workout',
+            ref: 'food',
         },
     ],
 

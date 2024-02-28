@@ -1,13 +1,13 @@
 import { Dispatch, SetStateAction, useContext } from "react";
 import Modal from "./Modal";
-import WorkoutForm from "./WorkoutForm";
-import { WorkoutProps } from "./WorkoutDetails";
+import FoodForm from "./FoodForm";
+import { FoodProps } from "./FoodDetails";
 import { ScreenContext } from "../context/ScreenContext";
 import { RecordProps } from "./Record";
 import RecordForm from "./RecordForm";
 
 interface ActionModalProps {
-  workout?: WorkoutProps;
+  food?: FoodProps;
   record?: RecordProps;
 
   show: boolean;
@@ -21,7 +21,7 @@ interface ActionModalProps {
   onClick2?: () => void;
 }
 
-const ActionModal = ({ workout, record, show, setShow }: ActionModalProps) => {
+const ActionModal = ({ food, record, show, setShow }: ActionModalProps) => {
   const { screenType, action, setAction } = useContext(ScreenContext);
   const handleCloseModal = () => {
     setShow(false);
@@ -45,8 +45,8 @@ const ActionModal = ({ workout, record, show, setShow }: ActionModalProps) => {
     >
       <>
         {screenType === "Action" && (
-          <WorkoutForm
-            workoutDetails={workout}
+          <FoodForm
+            foodDetails={food}
             setModalShow={handleCloseModal}
           />
         )}

@@ -1,5 +1,5 @@
 const Record = require('../models/recordModel')
-const Workout = require('../models/workoutsModel')
+const Food = require('../models/foodModel')
 const mongoose = require('mongoose')
 
 const getAllRecords = async (req, res) => {
@@ -38,7 +38,7 @@ const deleteRecord = async (req, res) => {
         return res.status(404).json({ err: 'invalid id' })
     }
     const record = await Record.findOneAndDelete({ _id: id })
-    await Workout.deleteMany({ _id: { $in: record.workout_id } });
+    await Food.deleteMany({ _id: { $in: record.food_id } });
     if (!record) {
         return res.status(400).json({ err: 'not found' })
     }

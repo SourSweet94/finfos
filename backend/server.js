@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
 require('dotenv').config()
-const workoutRouters = require('./routes/workoutsRouter')
+const foodRouters = require('./routes/foodRouter')
 const userRouters = require('./routes/userRouter')
 const recordRouters = require("./routes/recordRouter")
 const app = express()
@@ -18,7 +18,7 @@ app.use(cors())
 
 app.use('/api/records', recordRouters)
 
-app.use('/api/records', workoutRouters)
+app.use('/api/records', foodRouters)
 
 app.use('/api/user', userRouters)
 

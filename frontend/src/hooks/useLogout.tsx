@@ -1,15 +1,15 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { WorkoutContext } from "../context/WorkoutContext";
+import { FoodContext } from "../context/FoodContext";
 
 const useLogout = () => {
   const { dispatch } = useContext(AuthContext);
-  const { dispatch: dispatchWorkouts} = useContext(WorkoutContext)
+  const { dispatch: dispatchFood} = useContext(FoodContext)
 
   const logout = () => {
     localStorage.removeItem("user");
     dispatch({ type: "LOGOUT" });
-    dispatchWorkouts({type: "SET_WORKOUT", payload: null})
+    dispatchFood({type: "SET_FOOD", payload: null})
   };
 
   return { logout };
