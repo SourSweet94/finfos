@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import "../styles/sidebar.css"
 
 const Sidebar = () => {
   const {

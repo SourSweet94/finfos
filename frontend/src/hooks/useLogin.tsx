@@ -5,6 +5,7 @@ const useLogin = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState<undefined | boolean>(undefined);
   const { dispatch } = useContext(AuthContext);
+  // const adminEmail : string | undefined = process.env.REACT_APP_ADMIN_EMAIL
 
   const login = async (email: any, password: any) => {
     setIsLoading(true);

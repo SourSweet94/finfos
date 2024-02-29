@@ -1,6 +1,8 @@
 import { useContext, useEffect } from "react";
 import { FoodContext } from "../context/FoodContext";
 import { AuthContext } from "../context/AuthContext";
+import FoodCard from "../components/FoodCard";
+import { Col, Container, Row } from "react-bootstrap";
 
 const Menu = () => {
   const {
@@ -14,7 +16,7 @@ const Menu = () => {
 
   useEffect(() => {
     const fetchFood = async () => {
-      const response = await fetch(`http://localhost:4000/api/food/`, {
+      const response = await fetch(`http://localhost:4000/api/food`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
@@ -32,7 +34,20 @@ const Menu = () => {
 
   console.log(food);
 
-  return <div>Menu</div>;
+  return (
+    <>
+      <Container>
+        <Row style={{display: 'flex'}}>
+          {food?.map((food) => {
+          return (
+            <FoodCard key={food._id} title={food.title} price={food.price} />
+          );
+        })}
+        </Row>
+        
+      </Container>
+    </>
+  );
 };
 
 export default Menu;

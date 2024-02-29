@@ -17,14 +17,11 @@ const FoodTable = () => {
 
   useEffect(() => {
     const fetchFood = async () => {
-      const response = await fetch(
-        `http://localhost:4000/api/food/${record_id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      );
+      const response = await fetch("http://localhost:4000/api/food", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
       const json = await response.json();
       const filteredJson = json.filter((item: any) =>
         food_id.includes(item._id)
@@ -42,10 +39,7 @@ const FoodTable = () => {
 
   return (
     <Table tableHeader={tableHeader}>
-      {food &&
-        food.map((food) => (
-          <FoodDetails key={food._id} food={food} />
-        ))}
+      {food && food.map((food) => <FoodDetails key={food._id} food={food} />)}
       {food?.length === 0 && <div>No records</div>}
     </Table>
   );

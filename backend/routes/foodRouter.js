@@ -13,7 +13,7 @@ const requireAuth = require('../middlewares/requireAuth')
 
 router.use(requireAuth)
 
-router.get('/:record_id', getAllFood)
+router.get('/', getAllFood)
 
 router.get('/:record_id/:id', getSingleFood)
 

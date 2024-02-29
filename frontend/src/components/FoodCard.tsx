@@ -11,7 +11,7 @@ export interface FoodCardProps {
 
 const FoodCard = ({ title, price, image }: FoodCardProps) => {
   return (
-    <Card className="shadow mb-5 rounded" style={{ width: "14rem" }}>
+    <Card className="shadow mb-5 mx-3 rounded" style={{ width: "14rem" }}>
       <Image className="mx-auto" src={image} width="100px" />
       <Card.Body className="text-center">
         <Card.Title>
