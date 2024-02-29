@@ -46,7 +46,7 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
 
     const food = { date, title, price };
     const response = await fetch(
-      `http://localhost:4000/api/records/${record_id}/food${
+      `http://localhost:4000/api/food/${record_id}/${
         action === "N" ? "" : foodDetails!._id
       }`,
       {
@@ -68,7 +68,7 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
       if (action === "N") {
         dispatch({ type: "CREATE_FOOD", payload: json });
         const recordResp = await fetch(
-          `http://localhost:4000/api/records/${record_id}`,
+          `http://localhost:4000/api/food/${record_id}`,
           {
             method: "PATCH",
             body: JSON.stringify(foodDetails),
@@ -83,7 +83,7 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
         
       } else {
         const updatedResp = await fetch(
-          `http://localhost:4000/api/records/${record_id}/${
+          `http://localhost:4000/api/food/${record_id}/${
             foodDetails!._id
           }`,
           {

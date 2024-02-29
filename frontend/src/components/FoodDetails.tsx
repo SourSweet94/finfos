@@ -33,7 +33,7 @@ const FoodDetails = ({ food }: FoodDetailsProps) => {
       return;
     }
     const response = await fetch(
-      `http://localhost:4000/api/records/${record_id}/food/${food._id}`,
+      `http://localhost:4000/api/food/${record_id}/${food._id}`,
       {
         method: "DELETE",
         headers: {

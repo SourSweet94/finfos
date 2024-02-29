@@ -18,7 +18,7 @@ const FoodTable = () => {
   useEffect(() => {
     const fetchFood = async () => {
       const response = await fetch(
-        `http://localhost:4000/api/records/${record_id}/food`,
+        `http://localhost:4000/api/food/${record_id}`,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,

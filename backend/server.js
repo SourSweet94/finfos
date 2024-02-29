@@ -18,7 +18,7 @@ app.use(cors())
 
 app.use('/api/records', recordRouters)
 
-app.use('/api/records', foodRouters)
+app.use('/api/food', foodRouters)
 
 app.use('/api/user', userRouters)
 
