@@ -8,6 +8,7 @@ import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import Menu from "./pages/Menu";
 import Manage from "./pages/Manage";
+import Cart from "./pages/Cart";
 
 function App() {
   const {
@@ -23,7 +24,7 @@ function App() {
           <Route path="/order" element={<div>Order</div>} />
 
           <Route path="/menu" element={<Menu />} />
-          <Route path="/cart" element={<div>cart</div>} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/review" element={<div>review</div>} />
         </Route>
         <Route

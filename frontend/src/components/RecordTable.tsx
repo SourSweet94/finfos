@@ -30,17 +30,15 @@ const RecordTable = () => {
     }
   }, [dispatch, user]);
 
-  const tableHeader = ["name"];
+  const tableHeader = ["#", "name", "action"];
 
   return (
     <>
       <Table tableHeader={tableHeader}>
         {records &&
-          records.map((record) => (
-            <Record key={record._id} record={record} />
-          ))}
-        {records?.length === 0 && <div>No records</div>}
+          records.map((record) => <Record key={record._id} record={record} />)}
       </Table>
+      {records?.length === 0 && <div>No records</div>}
     </>
   );
 };

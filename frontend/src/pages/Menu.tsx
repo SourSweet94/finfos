@@ -28,7 +28,7 @@ const Menu = () => {
         return selectedWeek === 0 || itemWeek === selectedWeek;
       });
       const selectedDates = generateWeekDates(selectedWeek);
-      console.log(selectedDates);
+      // console.log(selectedDates);
       if (response.ok) {
         dispatch({ type: "SET_FOOD", payload: filteredJson });
       }
@@ -71,26 +71,41 @@ const Menu = () => {
   return (
     <>
       <Container>
-      <Row>
-        <Col>
-          <Dropdown as={ButtonGroup }>
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
-              {selectedWeek === 0 ? "All Weeks" : `Week ${selectedWeek}`}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => handleWeekSelect(0)}>All Weeks</Dropdown.Item>
-              <Dropdown.Item onClick={() => handleWeekSelect(7)}>Week 7</Dropdown.Item>
-              <Dropdown.Item onClick={() => handleWeekSelect(8)}>Week 8</Dropdown.Item>
-              <Dropdown.Item onClick={() => handleWeekSelect(9)}>Week 9</Dropdown.Item>
-              <Dropdown.Item onClick={() => handleWeekSelect(10)}>Week 10</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </Col>
-      </Row>
+        <Row>
+          <Col>
+            <Dropdown as={ButtonGroup}>
+              <Dropdown.Toggle variant="success" id="dropdown-basic">
+                {selectedWeek === 0 ? "All Weeks" : `Week ${selectedWeek}`}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={() => handleWeekSelect(0)}>
+                  All Weeks
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => handleWeekSelect(7)}>
+                  Week 7
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => handleWeekSelect(8)}>
+                  Week 8
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => handleWeekSelect(9)}>
+                  Week 9
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => handleWeekSelect(10)}>
+                  Week 10
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Col>
+        </Row>
         <Row style={{ display: "flex" }}>
           {food?.map((food) => {
             return (
-              <FoodCard key={food._id} title={food.title} price={food.price} />
+              <FoodCard
+                key={food._id}
+                _id={food._id}
+                title={food.title}
+                price={food.price}
+              />
             );
           })}
         </Row>

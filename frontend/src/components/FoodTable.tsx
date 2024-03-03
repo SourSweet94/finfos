@@ -38,10 +38,12 @@ const FoodTable = () => {
   const tableHeader = ["#", "Date", "Title", "Price", "Action"];
 
   return (
-    <Table tableHeader={tableHeader}>
-      {food && food.map((food) => <FoodDetails key={food._id} food={food} />)}
-      {food?.length === 0 && <div>No records</div>}
-    </Table>
+    <>
+      <Table tableHeader={tableHeader}>
+        {food && food.map((food) => <FoodDetails key={food._id} food={food} />)}
+      </Table>
+      <div>{food?.length === 0 && "No records"}</div>
+    </>
   );
 };
 

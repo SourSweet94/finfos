@@ -11,7 +11,21 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         require: true
-    }
+    },
+    cart: [
+        {
+            food_id: {
+                type: String,
+                ref: 'food'
+            },
+            qty: {
+                type: Number
+            },
+            purchased: {
+                type: Boolean
+            }
+        }
+    ]
 })
 UserSchema.statics.login = async function (email, password) {
     if (!email || !password) {

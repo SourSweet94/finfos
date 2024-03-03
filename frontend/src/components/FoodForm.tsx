@@ -68,7 +68,7 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
       if (action === "N") {
         dispatch({ type: "CREATE_FOOD", payload: json });
         const recordResp = await fetch(
-          `http://localhost:4000/api/food/${record_id}`,
+          `http://localhost:4000/api/records/${record_id}`,
           {
             method: "PATCH",
             body: JSON.stringify(foodDetails),
