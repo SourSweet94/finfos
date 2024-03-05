@@ -1,0 +1,25 @@
+.container {
+  width: 700px;
+}
+
+.prim-info {
+  display: inline-block;
+  float: left;
+}
+
+.cart-item-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-grp {
+  /* display: inline-block; */
+  justify-content: center;
+  background-color: aqua;
+}
+
+.qty {
+  width: 60px;
+  justify-content: center;
+}

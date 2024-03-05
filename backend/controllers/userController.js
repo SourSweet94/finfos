@@ -57,8 +57,28 @@ const getCartItem = async (req, res) => {
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
+}
 
+const deleteCartItem = async (req, res) => {
+    const { _id } = req.body // food_id
+
+    try {
+        const user_id = req.user._id
+        const user = await User.findById(user_id)
+        // user.cart.filter((item) => (item.food_id !== _id))
+
+        console.log(_id)
+        // console.log(user.cart[0]._id)
+
+        user.cart.splice(user.cart.indexOf(_id), 1)
+        await user.save()
+        console.log(user.cart)
+
+        res.status(200).json(user)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
 }
 
 
-module.exports = { userLogin, userSignUp, addToCart, getCartItem }
+module.exports = { userLogin, userSignUp, addToCart, getCartItem, deleteCartItem }

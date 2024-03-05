@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const {userLogin, userSignUp, addToCart, getCartItem} = require('../controllers/userController')
+const {userLogin, userSignUp, addToCart, getCartItem, deleteCartItem} = require('../controllers/userController')
 const requireAuth = require('../middlewares/requireAuth');
 
 router.post('/login', userLogin)
@@ -13,6 +13,8 @@ router.use(requireAuth);
 router.patch('/addtocart', addToCart)
 
 router.get('/cart', getCartItem)
+
+router.delete('/cart', deleteCartItem)
 
 module.exports = router
 

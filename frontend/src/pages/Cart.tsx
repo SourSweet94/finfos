@@ -3,6 +3,7 @@ import CartItem from "../components/CartItem";
 import { AuthContext } from "../context/AuthContext";
 import { FoodContext } from "../context/FoodContext";
 import { AppContext } from "../context/AppContext";
+import { Container } from "react-bootstrap";
 
 const Cart = () => {
   const {
@@ -50,11 +51,11 @@ const Cart = () => {
   }, []);
 
   return (
-    <>
+    <Container className="cart-container">
       {loading &&
         food &&
         food.map((food) => <CartItem key={food._id} food={food} />)}
-    </>
+    </Container>
   );
 };
 
