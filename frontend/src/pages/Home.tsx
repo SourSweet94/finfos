@@ -9,11 +9,11 @@ const Home = () => {
     <>
       <Container fluid>
         <Row>
-          <Col lg={2} style={{ background: "pink" }}>
+          <Col lg={2} md={2} style={{ background: "pink" }}>
             <Sidebar />
           </Col>
 
-          <Col lg={10} className="main-content">
+          <Col lg={10} md={10} className="main-content">
             <Container>
               <Breadcrumb />
             </Container>

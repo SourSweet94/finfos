@@ -3,6 +3,7 @@ const Food = require('../models/foodModel')
 const mongoose = require('mongoose')
 
 const getAllRecords = async (req, res) => {
+    // no need user_id since only one admin
     const user_id = req.user._id
     const record = await Record.find({ user_id }).sort({ createdAt: -1 })
     res.status(200).json(record)

@@ -10,7 +10,7 @@ const FoodTable = () => {
     state: { food },
     dispatch,
   } = useContext(FoodContext);
-  const { record_id, food_id } = useContext(ItemContext);
+  const { food_id } = useContext(ItemContext);
   const {
     state: { user },
   } = useContext(AuthContext);

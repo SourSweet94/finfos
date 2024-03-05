@@ -26,7 +26,6 @@ const FoodCard = ({ title, price, image, _id }: FoodCardProps) => {
       },
       body: JSON.stringify({ _id }),
     });
-    console.log(JSON.stringify({ _id }));
   };
 
   return (

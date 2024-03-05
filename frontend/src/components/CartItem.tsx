@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Card } from "react-bootstrap";
 import Button from "./Button";
+import { FoodCardProps } from "./FoodCard";
 
 interface CartItemProps {
-  title: string;
-  price: number;
+  food: FoodCardProps;
 }
 
-const CartItem = ({ title, price }: CartItemProps) => {
+const CartItem = ({ food: {title, price, image, _id} }: CartItemProps) => {
   const [qty, setQty] = useState<number>(1);
 
   const handleIncrease = () => {
@@ -17,7 +17,7 @@ const CartItem = ({ title, price }: CartItemProps) => {
   const handleDecrease = () => {
     setQty((prev) => (prev > 1 ? prev - 1 : prev));
   };
-  
+
   return (
     <Card className="shadow mb-5 mx-3 rounded" style={{ width: "14rem" }}>
       {/* <Image className="mx-auto" src={image} width="100px" /> */}
