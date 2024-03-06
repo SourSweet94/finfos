@@ -27,7 +27,7 @@ const Menu = () => {
         const itemWeek = getISOWeek(new Date(item.date));
         return selectedWeek === 0 || itemWeek === selectedWeek;
       });
-      const selectedDates = generateWeekDates(selectedWeek);
+      // const selectedDates = generateWeekDates(selectedWeek);
       // console.log(selectedDates);
       if (response.ok) {
         dispatch({ type: "SET_FOOD", payload: filteredJson });
@@ -47,23 +47,23 @@ const Menu = () => {
     return isoWeek;
   };
 
-  const generateWeekDates = (week: number) => {
-    const currentDate = new Date();
-    const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 1);
-    const firstDayOfWeek = new Date(firstDayOfYear);
-    firstDayOfWeek.setDate(
-      firstDayOfYear.getDate() + (week - 1) * 7 - firstDayOfYear.getDay()
-    );
+  // const generateWeekDates = (week: number) => {
+  //   const currentDate = new Date();
+  //   const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 1);
+  //   const firstDayOfWeek = new Date(firstDayOfYear);
+  //   firstDayOfWeek.setDate(
+  //     firstDayOfYear.getDate() + (week - 1) * 7 - firstDayOfYear.getDay()
+  //   );
 
-    const dates = Array.from({ length: 7 }, (_, index) => {
-      const date = new Date(firstDayOfWeek);
-      //from Sunday to Saturday
-      date.setDate(firstDayOfWeek.getDate() + index + 1);
-      return date.toISOString().substring(0, 10);
-    });
+  //   const dates = Array.from({ length: 7 }, (_, index) => {
+  //     const date = new Date(firstDayOfWeek);
+  //     //from Sunday to Saturday
+  //     date.setDate(firstDayOfWeek.getDate() + index + 1);
+  //     return date.toISOString().substring(0, 10);
+  //   });
 
-    return dates;
-  };
+  //   return dates;
+  // };
 
   const handleWeekSelect = (week: number) => {
     setSelectedWeek(week);

@@ -11,50 +11,51 @@ interface CartItemProps {
 }
 
 const CartItem = ({ food: { title, price, image, _id } }: CartItemProps) => {
-
   const stylesheet = {
     btn: {
       width: "30px",
-      display: 'flex',
-      justifyContent: "center"
-    }
-  }
+      display: "flex",
+      justifyContent: "center",
+    },
+  };
 
-  const { state: {user} } = useContext(AuthContext)
+  const {
+    state: { user },
+  } = useContext(AuthContext);
   const {
     state: { food },
     dispatch,
   } = useContext(FoodContext);
 
   const [qty, setQty] = useState<number>(1);
+  const [totalPrice, setTotalPrice] = useState<number>(price);
 
   const handleIncrease = () => {
     setQty((prev) => prev + 1);
+    setTotalPrice((prev) => prev + price);
   };
 
   const handleDecrease = () => {
-    setQty((prev) => (prev > 1 ? prev - 1 : prev));
+    setQty((prevQty) => (prevQty > 1 ? prevQty - 1 : prevQty));
+    setTotalPrice((prevTotalPrice) =>
+      qty > 1 ? prevTotalPrice - price : prevTotalPrice
+    );
   };
 
   const handleDelete = async () => {
     if (!user) {
       return;
     }
-    const response = await fetch(
-      `http://localhost:4000/api/user/cart`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-        body: JSON.stringify({ _id }),
-      }
-    );
-    const json = await response.json();
-    if (response.ok) {
-      dispatch({ type: "DELETE_FOOD", payload: json });
-    }
-  }
+    await fetch(`http://localhost:4000/api/user/cart`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+      body: JSON.stringify({ _id }),
+    });
+
+    dispatch({ type: "DELETE_FOOD", payload: _id });
+  };
 
   return (
     <Card className="shadow mb-5 mx-3 container">
@@ -70,11 +71,16 @@ const CartItem = ({ food: { title, price, image, _id } }: CartItemProps) => {
           </Col>
           <Col className="cart-item-col">
             <InputGroup className="input-grp  flex-nowrap">
-              <Button onClick={handleDecrease} style={stylesheet.btn}>-</Button>
+              <Button onClick={handleDecrease} style={stylesheet.btn}>
+                -
+              </Button>
               <InputGroup.Text className="qty">{qty}</InputGroup.Text>
-              <Button onClick={handleIncrease} style={stylesheet.btn}>+</Button>
+              <Button onClick={handleIncrease} style={stylesheet.btn}>
+                +
+              </Button>
             </InputGroup>
           </Col>
+          <Col className="cart-item-col">{totalPrice}</Col>
           <Col className="cart-item-col">
             <Button onClick={handleDelete}>Delete</Button>
           </Col>

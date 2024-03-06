@@ -43,7 +43,7 @@ const FoodDetails = ({ food }: FoodDetailsProps) => {
     );
     const json = await response.json();
     if (response.ok) {
-      dispatch({ type: "DELETE_FOOD", payload: json });
+      dispatch({ type: "DELETE_FOOD", payload: json._id });
     }
   };
 

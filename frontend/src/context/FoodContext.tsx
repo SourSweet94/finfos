@@ -34,7 +34,8 @@ const foodReducer = (state: any, action: any) => {
       };
     case "DELETE_FOOD":
       return {
-        food: state.food.filter((food: any) => food._id !== action.payload._id),
+        // food: state.food.filter((food: any) => food._id !== action.payload._id),
+        food: state.food.filter((food: any) => food._id !== action.payload),
       };
     default:
       return state;

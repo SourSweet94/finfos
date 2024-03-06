@@ -17,6 +17,8 @@ const Cart = () => {
     dispatch,
   } = useContext(FoodContext);
 
+  const [amount, setAmount] = useState(0);
+
   useEffect(() => {
     const fetchCart = async () => {
       dispatch({ type: "SET_FOOD", payload: null });
@@ -33,7 +35,6 @@ const Cart = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      setLoading(true);
 
       const foodData = await responseFood.json();
       const filteredFood = foodData.filter((food: any) =>
@@ -41,20 +42,29 @@ const Cart = () => {
       );
 
       dispatch({ type: "SET_FOOD", payload: filteredFood });
-      
+      setAmount(
+        filteredFood.reduce((total: number, item: any) => total + item.price, 0)
+      );
+      setLoading(false);
     };
     if (user) {
+      setLoading(true);
+      console.log(loading);
       fetchCart();
-      
     }
-    setLoading(false);
   }, []);
 
+  console.log(loading);
   return (
     <Container className="cart-container">
-      {loading &&
-        food &&
-        food.map((food) => <CartItem key={food._id} food={food} />)}
+      {!loading ? (
+        <>
+          {food && food.map((food) => <CartItem key={food._id} food={food} />)}
+          Amount: {amount}
+        </>
+      ) : (
+        <div>LOADING</div>
+      )}
     </Container>
   );
 };
