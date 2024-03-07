@@ -4,6 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import { FoodContext } from "../context/FoodContext";
 import { AppContext } from "../context/AppContext";
 import { Container } from "react-bootstrap";
+import { FoodProps } from "../components/FoodDetails";
 
 const Cart = () => {
   const {
@@ -19,8 +20,25 @@ const Cart = () => {
 
   const [amount, setAmount] = useState(0);
 
+  const handleDelete = async ({ _id, price }: FoodProps) => {
+    if (!user) {
+      return;
+    }
+    await fetch(`http://localhost:4000/api/user/cart`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+      body: JSON.stringify({ _id }),
+    });
+
+    dispatch({ type: "DELETE_FOOD", payload: _id });
+    setAmount((prev) => prev - price);
+  };
+
   useEffect(() => {
     const fetchCart = async () => {
+      setLoading(true);
       dispatch({ type: "SET_FOOD", payload: null });
       const responseCart = await fetch("http://localhost:4000/api/user/cart", {
         headers: {
@@ -48,23 +66,21 @@ const Cart = () => {
       setLoading(false);
     };
     if (user) {
-      setLoading(true);
-      console.log(loading);
       fetchCart();
     }
   }, []);
 
-  console.log(loading);
   return (
     <Container className="cart-container">
-      {!loading ? (
-        <>
-          {food && food.map((food) => <CartItem key={food._id} food={food} />)}
-          Amount: {amount}
-        </>
-      ) : (
-        <div>LOADING</div>
-      )}
+      {food &&
+        food.map((food) => (
+          <CartItem
+            key={food._id}
+            food={food}
+            onDelete={() => handleDelete(food)}
+          />
+        ))}
+      Amount: {amount}
     </Container>
   );
 };

@@ -2,9 +2,15 @@ import { Col, Container, Row } from "react-bootstrap";
 import Sidebar from "../components/Sidebar";
 import { Outlet } from "react-router-dom";
 import Breadcrumb from "../components/Breadcrumb";
-import "../styles/home.css"
+import "../styles/home.css";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
+import Loading from "../components/Loading";
 
 const Home = () => {
+  const { loading } = useContext(AppContext);
+  console.log(loading);
+
   return (
     <>
       <Container fluid>
@@ -17,8 +23,11 @@ const Home = () => {
             <Container>
               <Breadcrumb />
             </Container>
+              {loading && <Loading />}
 
-            <Outlet />
+            <Container style={{ display: loading ? "none" : "" }}>
+              <Outlet />
+            </Container>
           </Col>
         </Row>
       </Container>

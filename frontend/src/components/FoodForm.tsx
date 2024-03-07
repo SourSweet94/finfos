@@ -15,6 +15,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { RecordContext } from "../context/RecordContext";
 import { ItemContext } from "../context/ItemContext";
+import Button from "./Button";
 
 interface FoodFormProps {
   foodDetails?: FoodProps;
@@ -28,7 +29,7 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
     state: { user },
   } = useContext(AuthContext);
   const { action } = useContext(ScreenContext);
-  const { record_id} = useContext(ItemContext)
+  const { record_id } = useContext(ItemContext);
 
   const [date, setDate] = useState<Date | null>(
     action === "E" && foodDetails ? new Date(foodDetails.date) : null
@@ -80,12 +81,9 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
         );
         const updatedJson = await recordResp.json();
         dispatchRecord({ type: "UPDATE_RECORD", payload: updatedJson });
-        
       } else {
         const updatedResp = await fetch(
-          `http://localhost:4000/api/food/${record_id}/${
-            foodDetails!._id
-          }`,
+          `http://localhost:4000/api/food/${record_id}/${foodDetails!._id}`,
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
@@ -138,7 +136,9 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
         />
       </Form.Group>
 
-      <button type="submit">{action === "N" ? "Submit" : "Save"}</button>
+      <Button type="submit" onClick={() => {}}>
+        {action === "N" ? "Submit" : "Save"}
+      </Button>
       {error && <div>{error}</div>}
     </form>
   );

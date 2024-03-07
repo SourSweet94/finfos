@@ -1,0 +1,19 @@
+.btn {
+  background-color: aliceblue;
+  color: black;
+  border-color: black;
+  border-radius: 0;
+}
+
+.btn:hover {
+  background-color: black;
+}
+
+/* .btn:active{
+  background-color: red;
+} */
+
+.btn-primary {
+  --bs-btn-active-bg: aliceblue;
+  --bs-btn-active-color: black
+}

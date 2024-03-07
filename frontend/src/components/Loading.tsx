@@ -1,23 +1,13 @@
-import { useContext } from "react";
 import { Container } from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 
 const Loading = () => {
-  const stylesheet = {};
+  const stylesheet = {
+    background: "red",
+    width: "200px",
+  };
 
-  return (
-    <Container
-      id={"LoadingBackgroundCtn"}
-      // styles={stylesheet["backgroundStyle"]}
-    >
-      <Container
-        id={"LoadingCtn"}
-        // styles={stylesheet["spinnerBackgroundStyle"]}
-      >
-        Loading
-        {/* <Container styles={{ ...theme["DefSpinner"] }} id={"Loading"} /> */}
-      </Container>
-    </Container>
-  );
+  return <Spinner animation="border" />;
 };
 
 export default Loading;

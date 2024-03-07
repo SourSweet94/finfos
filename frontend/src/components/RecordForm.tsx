@@ -11,6 +11,7 @@ import { RecordContext } from "../context/RecordContext";
 import { AuthContext } from "../context/AuthContext";
 import { ScreenContext } from "../context/ScreenContext";
 import { RecordProps } from "./Record";
+import Button from "./Button";
 
 interface RecordFormProps {
   record?: RecordProps;
@@ -92,7 +93,7 @@ const RecordForm = ({ record, setModalShow }: RecordFormProps) => {
         />
       </Form.Group>
 
-      <button type="submit">{action === "N" ? "Submit" : "Save"}</button>
+      <Button type="submit" onClick={()=>{}}>{action === "N" ? "Submit" : "Save"}</Button>
       {error && <div>{error}</div>}
     </form>
   );
