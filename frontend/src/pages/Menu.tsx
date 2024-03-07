@@ -3,6 +3,8 @@ import { FoodContext } from "../context/FoodContext";
 import { AuthContext } from "../context/AuthContext";
 import FoodCard from "../components/FoodCard";
 import { ButtonGroup, Col, Container, Dropdown, Row } from "react-bootstrap";
+import { AppContext } from "../context/AppContext";
+import "../styles/menu.css";
 
 const Menu = () => {
   const {
@@ -12,10 +14,12 @@ const Menu = () => {
   const {
     state: { user },
   } = useContext(AuthContext);
+  const { setLoading } = useContext(AppContext);
   const [selectedWeek, setSelectedWeek] = useState<number>(0);
 
   useEffect(() => {
     const fetchFood = async () => {
+      setLoading(true);
       const response = await fetch(`http://localhost:4000/api/food`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -32,6 +36,7 @@ const Menu = () => {
       if (response.ok) {
         dispatch({ type: "SET_FOOD", payload: filteredJson });
       }
+      setLoading(false);
     };
     if (user) {
       fetchFood();
@@ -69,48 +74,46 @@ const Menu = () => {
     setSelectedWeek(week);
   };
   return (
-    <>
-      <Container>
-        <Row>
-          <Col>
-            <Dropdown as={ButtonGroup}>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
-                {selectedWeek === 0 ? "All Weeks" : `Week ${selectedWeek}`}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item onClick={() => handleWeekSelect(0)}>
-                  All Weeks
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleWeekSelect(7)}>
-                  Week 7
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleWeekSelect(8)}>
-                  Week 8
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleWeekSelect(9)}>
-                  Week 9
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleWeekSelect(10)}>
-                  Week 10
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Col>
-        </Row>
-        <Row style={{ display: "flex" }}>
-          {food?.map((food) => {
-            return (
-              <FoodCard
-                key={food._id}
-                _id={food._id}
-                title={food.title}
-                price={food.price}
-              />
-            );
-          })}
-        </Row>
-      </Container>
-    </>
+    <Container className="menu-container">
+      <Row>
+        <Col>
+          <Dropdown as={ButtonGroup}>
+            <Dropdown.Toggle variant="success" id="dropdown-basic">
+              {selectedWeek === 0 ? "All Weeks" : `Week ${selectedWeek}`}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => handleWeekSelect(0)}>
+                All Weeks
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => handleWeekSelect(7)}>
+                Week 7
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => handleWeekSelect(8)}>
+                Week 8
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => handleWeekSelect(9)}>
+                Week 9
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => handleWeekSelect(10)}>
+                Week 10
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Col>
+      </Row>
+      <Row style={{ display: "flex" }}>
+        {food?.map((food) => {
+          return (
+            <FoodCard
+              key={food._id}
+              _id={food._id}
+              title={food.title}
+              price={food.price}
+            />
+          );
+        })}
+      </Row>
+    </Container>
   );
 };
 

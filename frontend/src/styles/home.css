@@ -17,9 +17,11 @@
 }
 
 .main-content {
-  margin-left: 160px; /* Same as the width of the sidenav */
+  margin-left: 160px;
   /* font-size: 28px; */
   padding: 0px 10px;
+  /* background-color: aqua; */
+  /* display: flex; */
 }
 
 .main {

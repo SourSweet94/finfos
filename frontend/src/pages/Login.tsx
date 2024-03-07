@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import useLogin from "../hooks/useLogin";
+import Button from "../components/Button";
 
 const Login = () => {
   // const { dispatch } = useContext(AuthContext);
@@ -46,7 +47,7 @@ const Login = () => {
         />
       </Form.Group>
 
-      <Button variant="primary" type="submit" disabled={isLoading}>
+      <Button type="submit" disabled={isLoading} onClick={()=>{}}>
         Log in
       </Button>
       {error && <div>{error}</div>}

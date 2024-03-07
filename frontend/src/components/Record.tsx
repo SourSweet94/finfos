@@ -5,6 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 import Button from "./Button";
 import ActionModal from "./ActionModal";
 import { ItemContext } from "../context/ItemContext";
+import { AppContext } from "../context/AppContext";
 
 export interface RecordProps {
   name: string;
@@ -22,6 +23,7 @@ const Record = ({ record }: RecordDetailsProps) => {
     state: { user },
   } = useContext(AuthContext);
   const [showActionModal, setShowActionModal] = useState(false);
+  const {setLoading} = useContext(AppContext)
 
   const handleDelete = async () => {
     if (!user) {
@@ -48,6 +50,7 @@ const Record = ({ record }: RecordDetailsProps) => {
   };
 
   const handleView = async () => {
+    setLoading(true)
     setScreenType("Action");
     setRecordID(record._id);
 
@@ -65,6 +68,7 @@ const Record = ({ record }: RecordDetailsProps) => {
       // the food_id array from current viewed Record
       setFoodID(currentRecord.food_id)
     }
+    setLoading(false)
   };
 
   return (

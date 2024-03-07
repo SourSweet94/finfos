@@ -3,11 +3,20 @@ import { Spinner } from "react-bootstrap";
 
 const Loading = () => {
   const stylesheet = {
-    background: "red",
-    width: "200px",
+    // width: "200px",
+    // background: "red",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
   };
 
-  return <Spinner animation="border" />;
+  return (
+    <Container style={stylesheet}>
+      <Spinner animation="border" />
+
+      {/* <div>Loading...</div> */}
+    </Container>
+  );
 };
 
 export default Loading;

@@ -1,20 +1,33 @@
-import React from 'react'
-import { Button as BSButton } from 'react-bootstrap'
-import "../styles/button.css"
+import React from "react";
+import { Button as BSButton } from "react-bootstrap";
+import "../styles/button.css";
 
 interface ButtonProps {
-  onClick: ()=>void
-  type?: 'button' | 'submit'
-  children: React.ReactNode
-  style?: {}
+  onClick: () => void;
+  type?: "button" | "submit";
+  disabled?: boolean;
+  children: React.ReactNode;
+  style?: {};
 }
 
-const Button = ({onClick, type = "button", children, style}: ButtonProps) => {
+const Button = ({
+  onClick,
+  type = "button",
+  disabled,
+  children,
+  style,
+}: ButtonProps) => {
   return (
-    <BSButton type={type} style={style} onClick={onClick} className='mx-2 btn'>
+    <BSButton
+      type={type}
+      disabled={disabled}
+      style={style}
+      onClick={onClick}
+      className="mx-2 btn"
+    >
       {children}
     </BSButton>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;

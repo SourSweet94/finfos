@@ -5,13 +5,14 @@ import { FoodContext } from "../context/FoodContext";
 import { AppContext } from "../context/AppContext";
 import { Container } from "react-bootstrap";
 import { FoodProps } from "../components/FoodDetails";
+import "../styles/cart.css";
 
 const Cart = () => {
   const {
     state: { user },
   } = useContext(AuthContext);
 
-  const { loading, setLoading } = useContext(AppContext);
+  const { setLoading } = useContext(AppContext);
 
   const {
     state: { food },
@@ -80,7 +81,7 @@ const Cart = () => {
             onDelete={() => handleDelete(food)}
           />
         ))}
-      Amount: {amount}
+      <Container className="cart-amount ">Amount: {amount}</Container>
     </Container>
   );
 };
