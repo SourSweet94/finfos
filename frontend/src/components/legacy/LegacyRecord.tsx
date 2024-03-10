@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
-import { ScreenContext } from "../context/ScreenContext";
-import { RecordContext } from "../context/RecordContext";
-import { AuthContext } from "../context/AuthContext";
-import Button from "./Button";
-import ActionModal from "./ActionModal";
-import { ItemContext } from "../context/ItemContext";
-import { AppContext } from "../context/AppContext";
+import { ScreenContext } from "../../context/ScreenContext";
+import { RecordContext } from "../../context/RecordContext";
+import { AuthContext } from "../../context/AuthContext";
+import Button from "../Button";
+import ActionModal from "../ActionModal";
+import { ItemContext } from "../../context/ItemContext";
+import { AppContext } from "../../context/AppContext";
 
 export interface RecordProps {
   name: string;

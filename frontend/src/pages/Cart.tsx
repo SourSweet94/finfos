@@ -1,11 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CartItem from "../components/CartItem";
 import { AuthContext } from "../context/AuthContext";
 import { FoodContext } from "../context/FoodContext";
 import { AppContext } from "../context/AppContext";
-import { Container } from "react-bootstrap";
-import { FoodProps } from "../components/FoodDetails";
+import { Col, Container, Row } from "react-bootstrap";
+import { FoodProps } from "../components/legacy/LegacyFoodDetails";
 import "../styles/cart.css";
+import Button from "../components/Button";
 
 const Cart = () => {
   const {
@@ -37,6 +38,8 @@ const Cart = () => {
     setAmount((prev) => prev - price);
   };
 
+  const handleOrder = () => {};
+
   useEffect(() => {
     const fetchCart = async () => {
       setLoading(true);
@@ -60,7 +63,10 @@ const Cart = () => {
         cartData.some((cartItem: any) => cartItem.food_id === food._id)
       );
 
-      dispatch({ type: "SET_FOOD", payload: filteredFood });
+      dispatch({
+        type: "SET_FOOD",
+        payload: filteredFood,
+      });
       setAmount(
         filteredFood.reduce((total: number, item: any) => total + item.price, 0)
       );
@@ -70,19 +76,39 @@ const Cart = () => {
       fetchCart();
     }
   }, []);
-
+  console.log(food?.length);
   return (
-    <Container className="cart-container">
-      {food &&
-        food.map((food) => (
-          <CartItem
-            key={food._id}
-            food={food}
-            onDelete={() => handleDelete(food)}
-          />
-        ))}
-      <Container className="cart-amount ">Amount: {amount}</Container>
-    </Container>
+    <>
+      {food?.length !== 0 ? (
+        <Container className="border pb-3">
+          <Row className="cart-header py-3 mx-3">
+            <Col>Image</Col>
+            <Col>Title</Col>
+            <Col>Price</Col>
+            <Col>Action</Col>
+          </Row>
+          <Row className="cart-item mx-3">
+            {food?.map((food) => (
+              <CartItem
+                key={food._id}
+                food={food}
+                onDelete={() => handleDelete(food)}
+              />
+            ))}
+          </Row>
+        </Container>
+      ) : (
+        <div>Cart is empty</div>
+      )}
+      <Container className="cart-amount ">
+        <Row>
+          <Col>Amount: {amount}</Col>
+          <Col>
+            <Button onClick={handleOrder}>Order Now</Button>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 

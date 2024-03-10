@@ -10,7 +10,7 @@ import { Form } from "react-bootstrap";
 import { RecordContext } from "../context/RecordContext";
 import { AuthContext } from "../context/AuthContext";
 import { ScreenContext } from "../context/ScreenContext";
-import { RecordProps } from "./Record";
+import { RecordProps } from "./legacy/LegacyRecord";
 import Button from "./Button";
 
 interface RecordFormProps {

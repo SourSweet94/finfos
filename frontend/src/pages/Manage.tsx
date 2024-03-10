@@ -1,22 +1,20 @@
 import { useContext } from "react";
-import RecordTable from "../components/RecordTable";
-import FoodTable from "../components/FoodTable";
 import { ScreenContext } from "../context/ScreenContext";
-import Button from "../components/Button";
 import { ItemContext } from "../context/ItemContext";
-import { FoodContext } from "../context/FoodContext";
+import FoodTable from "../components/FoodTable";
+import RecordTable from "../components/RecordTable";
+import Button from "../components/Button";
 
 const Manage = () => {
   const { screenType, setScreenType } = useContext(ScreenContext);
   const { setFoodID } = useContext(ItemContext);
-  const { dispatch } = useContext(FoodContext);
+
   return (
     <>
       <Button
         onClick={() => {
           setScreenType("Browse");
           setFoodID([]);
-          dispatch({ type: "SET_FOOD", payload: null });
         }}
       >
         Back
@@ -25,6 +23,7 @@ const Manage = () => {
       {screenType === "Browse" && <RecordTable />}
 
       {screenType === "Action" && <FoodTable />}
+
     </>
   );
 };

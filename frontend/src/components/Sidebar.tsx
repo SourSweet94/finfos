@@ -15,7 +15,6 @@ const Sidebar = () => {
         activeKey="/home"
         onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
       >
-        <div className="sidebar-sticky"></div>
         {userType === "admin" && (
           <>
             <Nav.Item>
@@ -25,7 +24,7 @@ const Sidebar = () => {
               <Link to="/manage">Manage</Link>
             </Nav.Item>
             <Nav.Item>
-              <Link to="/order">Order</Link>
+              <Link to="/user-order">User Order</Link>
             </Nav.Item>
           </>
         )}
@@ -36,6 +35,9 @@ const Sidebar = () => {
             </Nav.Item>
             <Nav.Item>
               <Link to="/cart">Cart</Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Link to="/order">Order</Link>
             </Nav.Item>
             <Nav.Item>
               <Link to="/review">Review</Link>

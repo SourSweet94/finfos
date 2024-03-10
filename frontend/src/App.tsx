@@ -9,6 +9,7 @@ import { AuthContext } from "./context/AuthContext";
 import Menu from "./pages/Menu";
 import Manage from "./pages/Manage";
 import Cart from "./pages/Cart";
+import Order from "./pages/Order";
 
 function App() {
   const {
@@ -21,10 +22,11 @@ function App() {
         <Route path="/" element={user ? <Home /> : <Navigate to="/login" />}>
           <Route path="/dashboard" element={<div>Dashboard</div>} />
           <Route path="/manage" element={<Manage />} />
-          <Route path="/order" element={<div>Order</div>} />
+          <Route path="/user-order" element={<div>User Order</div>} />
 
           <Route path="/menu" element={<Menu />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/order" element={<Order />} />
           <Route path="/review" element={<div>review</div>} />
         </Route>
         <Route

@@ -1,22 +1,31 @@
-import { useContext, useEffect } from "react";
-import { FoodContext } from "../context/FoodContext";
+import { useContext, useEffect, useState } from "react";
+import { FoodContext, FoodProps } from "../context/FoodContext";
 import { AuthContext } from "../context/AuthContext";
-import FoodDetails from "./FoodDetails";
-import Table from "./Table";
+import ActionModal from "./ActionModal";
+import Button from "./Button";
+import { ScreenContext } from "../context/ScreenContext";
 import { ItemContext } from "../context/ItemContext";
+import NewTable from "./Table";
+import { AppContext } from "../context/AppContext";
 
 const FoodTable = () => {
+  const { setAction } = useContext(ScreenContext);
   const {
     state: { food },
     dispatch,
   } = useContext(FoodContext);
-  const { food_id } = useContext(ItemContext);
+  const { food_id, record_id } = useContext(ItemContext);
   const {
     state: { user },
   } = useContext(AuthContext);
+  const { setLoading } = useContext(AppContext);
+
+  const [showActionModal, setShowActionModal] = useState(false);
+  const [selectedFood, setSelectedFood] = useState<FoodProps>();
 
   useEffect(() => {
     const fetchFood = async () => {
+      setLoading(true);
       const response = await fetch("http://localhost:4000/api/food", {
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -29,20 +38,64 @@ const FoodTable = () => {
       if (response.ok) {
         dispatch({ type: "SET_FOOD", payload: filteredJson });
       }
+      setLoading(false);
     };
     if (user) {
       fetchFood();
     }
   }, [dispatch, user, food_id]);
 
-  const tableHeader = ["#", "Date", "Title", "Price", "Action"];
+  const handleDelete = async (food_id: string) => {
+    if (!user) {
+      return;
+    }
+    const response = await fetch(
+      `http://localhost:4000/api/food/${record_id}/${food_id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    const json = await response.json();
+    if (response.ok) {
+      dispatch({ type: "DELETE_FOOD", payload: json._id });
+    }
+  };
 
+  const handleEdit = (selectedFoodID: FoodProps) => {
+    const foodToEdit = food!.find((item: any) => item._id === selectedFoodID);
+    setShowActionModal(true);
+    setAction("E");
+    setSelectedFood(foodToEdit);
+  };
+
+  const headers = ["_id", "Date", "Title", "Price"];
+
+  const customCol = {
+    Action: (row: any) => (
+      <>
+        <Button onClick={() => handleEdit(row._id)}>Edit</Button>
+        <Button onClick={() => handleDelete(row._id)}>Delete</Button>
+      </>
+    ),
+  };
+  
   return (
     <>
-      <Table tableHeader={tableHeader}>
-        {food && food.map((food) => <FoodDetails key={food._id} food={food} />)}
-      </Table>
-      <div>{food?.length === 0 && "No records"}</div>
+      <NewTable
+        headers={headers}
+        data={food}
+        customCol={customCol}
+      />
+
+      <ActionModal
+        buttonLabel="test"
+        show={showActionModal}
+        setShow={setShowActionModal}
+        food={selectedFood}
+      />
     </>
   );
 };

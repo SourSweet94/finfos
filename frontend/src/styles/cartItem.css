@@ -3,14 +3,14 @@
 }
 
 .prim-info {
-  display: inline-block;
-  float: left;
+  /* display: inline-block; */
+  /* float: left; */
 }
 
 .cart-item-col {
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
 }
 
 .input-grp {

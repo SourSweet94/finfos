@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
-import { FoodContext } from "../context/FoodContext";
-import { AuthContext } from "../context/AuthContext";
-import ActionModal from "./ActionModal";
-import Button from "./Button";
-import { ScreenContext } from "../context/ScreenContext";
-import { ItemContext } from "../context/ItemContext";
+import { FoodContext } from "../../context/FoodContext";
+import { AuthContext } from "../../context/AuthContext";
+import ActionModal from "../ActionModal";
+import Button from "../Button";
+import { ScreenContext } from "../../context/ScreenContext";
+import { ItemContext } from "../../context/ItemContext";
 
 export interface FoodProps {
   date: string;

@@ -1,8 +1,12 @@
 import { ReactNode, createContext, useReducer } from "react";
-import { RecordProps } from "../components/Record";
 
 interface RecordContextProps {
   children: ReactNode;
+}
+
+export interface RecordProps {
+  name: string;
+  _id: string;
 }
 
 interface RecordState {

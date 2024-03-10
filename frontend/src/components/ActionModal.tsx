@@ -1,9 +1,10 @@
 import { Dispatch, SetStateAction, useContext } from "react";
 import Modal from "./Modal";
 import FoodForm from "./FoodForm";
-import { FoodProps } from "./FoodDetails";
+// import { FoodProps } from "./FoodDetails";
+import { FoodProps } from "../context/FoodContext";
 import { ScreenContext } from "../context/ScreenContext";
-import { RecordProps } from "./Record";
+import { RecordProps } from "./legacy/LegacyRecord";
 import RecordForm from "./RecordForm";
 
 interface ActionModalProps {

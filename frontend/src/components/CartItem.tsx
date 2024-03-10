@@ -8,10 +8,13 @@ import { AuthContext } from "../context/AuthContext";
 
 interface CartItemProps {
   food: FoodCardProps;
-  onDelete: () => void
+  onDelete: () => void;
 }
 
-const CartItem = ({ food: { title, price, image, _id }, onDelete }: CartItemProps) => {
+const CartItem = ({
+  food: { title, price, image, _id },
+  onDelete,
+}: CartItemProps) => {
   const stylesheet = {
     btn: {
       width: "30px",
@@ -43,21 +46,18 @@ const CartItem = ({ food: { title, price, image, _id }, onDelete }: CartItemProp
   //   );
   // };
 
-
-
   return (
-    <Card className="shadow mb-5 mx-3 container">
+    <Container className="py-3 border-top">
       {/* <Image className="mx-auto" src={image} width="100px" /> */}
-      <Card.Body className="text-center card-body">
-        {/* <Container> */}
-        <Row>
-          <Col className="cart-item-col prim-info">
-            {image}
-
-            <Card.Title>{title}</Card.Title>
-            <Card.Text style={{ color: "green" }}>RM {price}</Card.Text>
-          </Col>
-          {/* <Col className="cart-item-col">
+      <Row>
+        <Col className="cart-item-col">
+          {image}
+        </Col>
+        <Col className="cart-item-col">
+          {title}
+        </Col>
+        <Col className="cart-item-col">RM {price}</Col>
+        {/* <Col className="cart-item-col">
             <InputGroup className="input-grp  flex-nowrap">
               <Button onClick={handleDecrease} style={stylesheet.btn}>
                 -
@@ -68,14 +68,12 @@ const CartItem = ({ food: { title, price, image, _id }, onDelete }: CartItemProp
               </Button>
             </InputGroup>
           </Col> */}
-          {/* <Col className="cart-item-col">{totalPrice}</Col> */}
-          <Col className="cart-item-col">
-            <Button onClick={onDelete}>Delete</Button>
-          </Col>
-        </Row>
-        {/* </Container> */}
-      </Card.Body>
-    </Card>
+        {/* <Col className="cart-item-col">{totalPrice}</Col> */}
+        <Col className="cart-item-col">
+          <Button onClick={onDelete}>Delete</Button>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

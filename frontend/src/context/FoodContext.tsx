@@ -1,8 +1,16 @@
 import { ReactNode, createContext, useReducer } from "react";
-import { FoodProps } from "../components/FoodDetails";
+// import { FoodProps } from "../components/FoodDetails";
 
 interface FoodContextProps {
   children: ReactNode;
+}
+
+export interface FoodProps {
+  date: string;
+  _id: string;
+  title: string;
+  price: number;
+  createdAt: string;
 }
 
 interface FoodState {
@@ -44,7 +52,11 @@ const foodReducer = (state: any, action: any) => {
 
 const FoodContextProvider = ({ children }: FoodContextProps) => {
   const [state, dispatch] = useReducer(foodReducer, { food: null });
-  return <FoodContext.Provider value={{ state, dispatch }}>{children}</FoodContext.Provider>;
+  return (
+    <FoodContext.Provider value={{ state, dispatch }}>
+      {children}
+    </FoodContext.Provider>
+  );
 };
 
 export default FoodContextProvider;

@@ -9,7 +9,8 @@ import {
 import { Form } from "react-bootstrap";
 import { FoodContext } from "../context/FoodContext";
 import { AuthContext } from "../context/AuthContext";
-import { FoodProps } from "./FoodDetails";
+// import { FoodProps } from "./FoodDetails";
+import { FoodProps } from "../context/FoodContext";
 import { ScreenContext } from "../context/ScreenContext";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
