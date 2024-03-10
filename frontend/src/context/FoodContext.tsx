@@ -1,5 +1,4 @@
 import { ReactNode, createContext, useReducer } from "react";
-// import { FoodProps } from "../components/FoodDetails";
 
 interface FoodContextProps {
   children: ReactNode;

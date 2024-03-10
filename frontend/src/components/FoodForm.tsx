@@ -9,14 +9,13 @@ import {
 import { Form } from "react-bootstrap";
 import { FoodContext } from "../context/FoodContext";
 import { AuthContext } from "../context/AuthContext";
-// import { FoodProps } from "./FoodDetails";
 import { FoodProps } from "../context/FoodContext";
 import { ScreenContext } from "../context/ScreenContext";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { RecordContext } from "../context/RecordContext";
 import { ItemContext } from "../context/ItemContext";
 import Button from "./Button";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 interface FoodFormProps {
   foodDetails?: FoodProps;
@@ -32,6 +31,8 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
   const { action } = useContext(ScreenContext);
   const { record_id } = useContext(ItemContext);
 
+  const [image, setImage] = useState<File | null>(null);
+
   const [date, setDate] = useState<Date | null>(
     action === "E" && foodDetails ? new Date(foodDetails.date) : null
   );
@@ -46,7 +47,7 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const food = { date, title, price };
+    const food = {image, date, title, price };
     const response = await fetch(
       `http://localhost:4000/api/food/${record_id}/${
         action === "N" ? "" : foodDetails!._id
@@ -61,6 +62,15 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
       }
     );
 
+    await fetch('http://localhost:4000/api/food/upload-image', {
+      method: "POST",
+      body: JSON.stringify(image),
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${user.token}`,
+      }
+    })
+
     const json = await response.json();
 
     if (response.ok) {
@@ -69,19 +79,19 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
 
       if (action === "N") {
         dispatch({ type: "CREATE_FOOD", payload: json });
-        const recordResp = await fetch(
-          `http://localhost:4000/api/records/${record_id}`,
-          {
-            method: "PATCH",
-            body: JSON.stringify(foodDetails),
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${user.token}`,
-            },
-          }
-        );
-        const updatedJson = await recordResp.json();
-        dispatchRecord({ type: "UPDATE_RECORD", payload: updatedJson });
+        // const recordResp = await fetch(
+        //   `http://localhost:4000/api/records/${record_id}`,
+        //   {
+        //     method: "PATCH",
+        //     body: JSON.stringify(foodDetails),
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //       Authorization: `Bearer ${user.token}`,
+        //     },
+        //   }
+        // );
+        // const updatedJson = await recordResp.json();
+        // dispatchRecord({ type: "UPDATE_RECORD", payload: updatedJson });
       } else {
         const updatedResp = await fetch(
           `http://localhost:4000/api/food/${record_id}/${foodDetails!._id}`,
@@ -102,8 +112,24 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
     }
   };
 
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setImage(e.target.files[0]);
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit}>
+
+      <Form.Group className="mb-3">
+        <Form.Label>Image</Form.Label>
+        <Form.Control
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+        />
+      </Form.Group>
+
       <Form.Group className="mb-3">
         <Form.Label>Date</Form.Label>
         <DatePicker

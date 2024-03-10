@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction, useContext } from "react";
 import Modal from "./Modal";
 import FoodForm from "./FoodForm";
-// import { FoodProps } from "./FoodDetails";
 import { FoodProps } from "../context/FoodContext";
 import { ScreenContext } from "../context/ScreenContext";
 import { RecordProps } from "./legacy/LegacyRecord";
@@ -36,7 +35,7 @@ const ActionModal = ({ food, record, show, setShow }: ActionModalProps) => {
       // width: '50%',
     },
   };
-
+  
   return (
     <Modal
       show={show}

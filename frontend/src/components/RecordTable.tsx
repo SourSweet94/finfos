@@ -92,14 +92,18 @@ const RecordTable = () => {
     setSelectedRecord(recordToEdit);
   };
 
-  const headers = ["_id", "Name"];
+  const headers = ["Name"];
 
   const customCol = {
     Action: (row: any) => (
       <>
         <Button onClick={() => handleView(row._id)}>View</Button>
-        <Button onClick={() => handleEdit(row._id)}>Edit</Button>
-        <Button onClick={() => handleDelete(row._id)}>Delete</Button>
+        <Button onClick={() => handleEdit(row._id)} variant="warning">
+          Edit
+        </Button>
+        <Button onClick={() => handleDelete(row._id)} variant="danger">
+          Delete
+        </Button>
       </>
     ),
   };

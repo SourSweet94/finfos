@@ -1,12 +1,13 @@
 import React from "react";
 import { Button as BSButton } from "react-bootstrap";
-import "../styles/button.css";
+// import "../styles/button.css";
 
 interface ButtonProps {
   onClick: () => void;
   type?: "button" | "submit";
   disabled?: boolean;
   children: React.ReactNode;
+  variant?: string;
   style?: {};
 }
 
@@ -15,6 +16,7 @@ const Button = ({
   type = "button",
   disabled,
   children,
+  variant = "secondary",
   style,
 }: ButtonProps) => {
   return (
@@ -24,6 +26,7 @@ const Button = ({
       style={style}
       onClick={onClick}
       className="mx-2 btn"
+      variant={variant}
     >
       {children}
     </BSButton>

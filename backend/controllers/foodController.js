@@ -23,12 +23,12 @@ const getSingleFood = async (req, res) => {
 }
 
 const createFood = async (req, res) => {
-    const { date, title, price } = req.body
+    const { img, date, title, price } = req.body
     const { record_id } = req.params
     try {
         const user_id = req.user._id
         const formattedDate = new Date(date).toLocaleDateString();
-        const food = await Food.create({ date: formattedDate, title, price, user_id })
+        const food = await Food.create({ img, date: formattedDate, title, price, user_id })
         const record = await Record.findById(record_id)
         if (!record) {
             return res.status(404).json({ error: 'Record not found' });

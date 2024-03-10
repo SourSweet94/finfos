@@ -1,19 +1,20 @@
 .btn {
-  background-color: aliceblue;
-  color: black;
-  border-color: black;
-  border-radius: 0;
+  background-color: rgb(208, 39, 39);
+  border: none;
+  border-radius: 4px;
 }
 
 .btn:hover {
   background-color: black;
+  background: "red";
+  filter: brightness(120%);
 }
 
-/* .btn:active{
+.btn:active{
   background-color: red;
-} */
+}
 
 .btn-primary {
-  --bs-btn-active-bg: aliceblue;
+  --bs-btn-active-bg: red;
   --bs-btn-active-color: black
 }

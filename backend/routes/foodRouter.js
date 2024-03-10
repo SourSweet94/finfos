@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
 
 const {
     getAllFood,
@@ -16,6 +18,10 @@ router.use(requireAuth)
 router.get('/', getAllFood)
 
 router.get('/:record_id/:id', getSingleFood)
+
+router.post("/upload-image", upload.single("image"), async (req, res) => {
+    console.log(req.body)
+})
 
 router.post('/:record_id', createFood)
 

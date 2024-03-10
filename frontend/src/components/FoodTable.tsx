@@ -71,24 +71,30 @@ const FoodTable = () => {
     setSelectedFood(foodToEdit);
   };
 
-  const headers = ["_id", "Date", "Title", "Price"];
+  const headers = ["Image", "Date", "Title", "Price"];
 
   const customCol = {
     Action: (row: any) => (
       <>
-        <Button onClick={() => handleEdit(row._id)}>Edit</Button>
-        <Button onClick={() => handleDelete(row._id)}>Delete</Button>
+        <Button
+          onClick={() => handleEdit(row._id)}
+          variant="warning"
+        >
+          Edit
+        </Button>
+        <Button
+          onClick={() => handleDelete(row._id)}
+          variant="danger"
+        >
+          Delete
+        </Button>
       </>
     ),
   };
-  
+
   return (
     <>
-      <NewTable
-        headers={headers}
-        data={food}
-        customCol={customCol}
-      />
+      <NewTable headers={headers} data={food} customCol={customCol} />
 
       <ActionModal
         buttonLabel="test"

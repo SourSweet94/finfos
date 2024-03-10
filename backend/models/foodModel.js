@@ -3,6 +3,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const foodSchema = new Schema({
+    image: {
+        type: String
+    },
+
     date: {
         type: String,
         required: true,

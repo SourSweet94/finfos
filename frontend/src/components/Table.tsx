@@ -21,7 +21,7 @@ const NewTable = ({ headers, data, customCol }: TableProps) => {
 
   return (
     <>
-      <BSTable striped bordered hover style={{ width: "80%" }}>
+      <BSTable striped bordered hover>
         <thead>
           <tr>
             {headers.map((header) => (
