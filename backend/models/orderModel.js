@@ -14,7 +14,11 @@ const OrderSchema = new mongoose.Schema({
       },
       food_title: {
         type: String,
-        requrie: true
+        require: true
+      },
+      food_price: {
+        type: Number,
+        require: true
       }
     }
   ],

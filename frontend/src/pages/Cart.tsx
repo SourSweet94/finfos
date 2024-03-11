@@ -23,9 +23,9 @@ const Cart = () => {
 
   const [amount, setAmount] = useState<number>(0);
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
-  const [cartItem, setCartItem] = useState<{ _id: string; title: string }[]>(
-    []
-  );
+  const [cartItem, setCartItem] = useState<
+    { _id: string; title: string; price: number }[]
+  >([]);
 
   const handleDelete = async ({ _id, price }: FoodProps) => {
     if (!user) {
@@ -53,7 +53,7 @@ const Cart = () => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${user.token}`,
       },
-      body: JSON.stringify({cartItem, amount}),
+      body: JSON.stringify({ cartItem, amount }),
     });
   };
 
@@ -80,7 +80,7 @@ const Cart = () => {
         cartData.some((cartItem: any) => cartItem.food_id === food._id)
       );
       setCartItem(
-        filteredFood.map(({ _id, title }: FoodProps) => ({ _id, title }))
+        filteredFood.map(({ _id, title, price }: FoodProps) => ({ _id, title, price }))
       );
       dispatch({
         type: "SET_FOOD",
@@ -95,7 +95,7 @@ const Cart = () => {
       fetchCart();
     }
   }, []);
-  
+
   return (
     <>
       {food?.length !== 0 ? (

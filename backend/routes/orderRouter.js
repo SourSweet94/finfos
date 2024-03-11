@@ -14,7 +14,7 @@ router.use(requireAuth)
 
 router.get('/', getOrder)
 
-router.get('/:_id', getSingleUserOrder)
+router.get('/user', getSingleUserOrder)
 
 router.post('/', createOrder)
 

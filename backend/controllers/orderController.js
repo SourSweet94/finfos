@@ -1,6 +1,6 @@
 const Order = require('../models/orderModel')
 
-const getOrder  = async (req, res) => {
+const getOrder = async (req, res) => {
   const user_id = req.user._id
   // const food = await Food.find({ user_id }).sort({ createdAt: -1 })
   const order = await Order.find({}).sort({ createdAt: -1 })
@@ -8,10 +8,10 @@ const getOrder  = async (req, res) => {
 }
 
 const getSingleUserOrder = async (req, res) => {
-  const { id } = req.params
-  const order = await Order.findById(id)
+  // const { id } = req.params
+  const order = await Order.find({ buyer_id: req.user._id })
   if (!order) {
-      return res.status(400).json({ err: 'not found' })
+    return res.status(400).json({ err: 'not found' })
   }
   res.status(200).json(order)
 }
@@ -19,13 +19,12 @@ const getSingleUserOrder = async (req, res) => {
 
 const createOrder = async (req, res) => {
   const { cartItem, amount } = req.body
-  console.log(cartItem)
-  console.log(req.user)
   try {
     const user_id = req.user._id
     const items = cartItem.map(item => ({
       food_id: item._id,
       food_title: item.title,
+      food_price: item.price
     }));
     const order = await Order.create({ buyer_id: user_id, items, amount })
     // const record = await Record.findById(record_id)
@@ -34,6 +33,8 @@ const createOrder = async (req, res) => {
     // }
     // record.food_id.push(food._id)
     // await record.save()
+    console.log(order)
+
     res.status(200).json(order)
   } catch (error) {
     res.status(400).json({ error: error.message })
