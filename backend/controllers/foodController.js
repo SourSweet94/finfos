@@ -3,7 +3,7 @@ const Record = require('../models/recordModel')
 const mongoose = require('mongoose')
 
 const getAllFood = async (req, res) => {
-    const user_id = req.user._id
+    // const user_id = req.user._id
     // const food = await Food.find({ user_id }).sort({ createdAt: -1 })
     const food = await Food.find({}).sort({ createdAt: -1 })
     res.status(200).json(food)

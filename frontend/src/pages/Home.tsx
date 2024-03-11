@@ -9,7 +9,6 @@ import Loading from "../components/Loading";
 
 const Home = () => {
   const { loading } = useContext(AppContext);
-  console.log(loading);
 
   return (
     <>

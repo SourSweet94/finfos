@@ -17,12 +17,24 @@ const UserSchema = new mongoose.Schema({
             food_id: {
                 type: String,
                 ref: 'food'
+            }
+            // qty: {
+            //     type: Number
+            // },
+            // purchased: {
+            //     type: Boolean
+            // }
+        }
+    ],
+    order: [
+        {
+            food_id: {
+                type: String,
+                ref: "food"
             },
-            qty: {
-                type: Number
-            },
-            purchased: {
-                type: Boolean
+            food_title: {
+                type: String,
+                required: true
             }
         }
     ]

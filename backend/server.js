@@ -5,6 +5,7 @@ require('dotenv').config()
 const foodRouters = require('./routes/foodRouter')
 const userRouters = require('./routes/userRouter')
 const recordRouters = require("./routes/recordRouter")
+const orderRouters = require("./routes/orderRouter")
 const app = express()
 
 app.use('/', (req, res, next) => {
@@ -21,6 +22,8 @@ app.use('/api/records', recordRouters)
 app.use('/api/food', foodRouters)
 
 app.use('/api/user', userRouters)
+
+app.use('/api/order', orderRouters)
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {

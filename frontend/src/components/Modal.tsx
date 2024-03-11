@@ -7,7 +7,8 @@ interface ModalProps {
   children?: JSX.Element | JSX.Element[];
   className?: string;
   headerTitle?: string;
-  footer?: JSX.Element;
+  footer?: JSX.Element | JSX.Element[];
+  closeButton?: boolean;
 
   styles?: {
     main?: {};
@@ -24,6 +25,7 @@ const Modal: React.FC<ModalProps> = ({
   className,
   headerTitle,
   footer,
+  closeButton = true,
   styles,
 }) => {
   const onHide = () => {
@@ -39,13 +41,15 @@ const Modal: React.FC<ModalProps> = ({
       backdrop="static"
       style={styles?.main}
     >
-      <BSModal.Header closeButton>
-        {headerTitle && <BSModal.Title>{headerTitle}</BSModal.Title>}
-      </BSModal.Header>
+      {headerTitle && (
+        <BSModal.Header closeButton={closeButton}>
+          <BSModal.Title>{headerTitle}</BSModal.Title>
+        </BSModal.Header>
+      )}
 
       <BSModal.Body>{children}</BSModal.Body>
 
-      {footer && <BSModal.Footer>{footer}</BSModal.Footer>}
+      {footer && <BSModal.Footer style={{border: 'none'}}>{footer}</BSModal.Footer>}
     </BSModal>
   );
 };

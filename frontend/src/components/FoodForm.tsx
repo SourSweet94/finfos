@@ -62,14 +62,14 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
       }
     );
 
-    await fetch('http://localhost:4000/api/food/upload-image', {
-      method: "POST",
-      body: JSON.stringify(image),
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${user.token}`,
-      }
-    })
+    // await fetch('http://localhost:4000/api/food/upload-image', {
+    //   method: "POST",
+    //   body: JSON.stringify(image),
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //     Authorization: `Bearer ${user.token}`,
+    //   }
+    // })
 
     const json = await response.json();
 

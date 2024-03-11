@@ -6,23 +6,22 @@ const OrderSchema = new mongoose.Schema({
     type: String,
     require: true
   },
-
   items: [
     {
       food_id: {
         type: String,
         require: true
       },
-      qty: {
-        type: Number,
-        require: true
-      },
-      amount: {
-        type: Number,
-        require: true
+      food_title: {
+        type: String,
+        requrie: true
       }
     }
-  ]
+  ],
+  amount: {
+    type: Number,
+    require: true
+  }
 
 })
 

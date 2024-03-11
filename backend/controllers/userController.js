@@ -73,5 +73,37 @@ const deleteCartItem = async (req, res) => {
     }
 }
 
+const getOrder = async (req, res) => {
+    try {
+        const user_id = req.user._id
+        const user = await User.findById(user_id)
+        const item = user.order
+        res.status(200).json(item)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
 
-module.exports = { userLogin, userSignUp, addToCart, getCartItem, deleteCartItem }
+const addOrder = async (req, res) => {
+    const {cartItem} = req.body
+    // console.log(req.body)
+    try {
+        const user_id = req.user._id
+        const user = await User.findById(user_id)
+
+        // if (user.cart.find(item => item.food_id === cartItem)) {
+        //     return
+        // }
+
+        user.order.push(cartItem)
+        await user.save()
+        res.status(200).json(user)
+
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
+
+
+module.exports = { userLogin, userSignUp, addToCart, getCartItem, deleteCartItem, getOrder, addOrder }
