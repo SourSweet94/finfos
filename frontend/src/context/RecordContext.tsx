@@ -30,10 +30,10 @@ const recordReducer = (state: any, action: any) => {
   switch (action.type) {
     case "SET_RECORD":
       return {
-        records: action.payload.map((food: RecordProps) => ({
-          ...food,
-          startDate: new Date(food.startDate).toLocaleDateString(),
-          endDate: new Date(food.endDate).toLocaleDateString(),
+        records: action.payload.map((record: RecordProps) => ({
+          ...record,
+          startDate: new Date(record.startDate).toLocaleDateString(),
+          endDate: new Date(record.endDate).toLocaleDateString(),
         })),
       };
     case "CREATE_RECORD":

@@ -13,7 +13,7 @@ const userLogin = async (req, res) => {
         const user = await User.login(email, password)
         const token = createToken(user._id)
         const user_id = user._id
-        res.status(200).json({ email, token, user_id})
+        res.status(200).json({ email, token, user_id })
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -60,15 +60,26 @@ const getCartItem = async (req, res) => {
     }
 }
 
-const deleteCartItem = async (req, res) => {
-    const { _id } = req.body // food_id
-
+const deleteSingleCartItem = async (req, res) => {
+    const { _id } = req.params // food_id
     try {
         const user_id = req.user._id
         const user = await User.findById(user_id)
         user.cart.splice(user.cart.indexOf(_id), 1)
         await user.save()
         res.status(200).json(user)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
+const deleteAllCartItem = async (req, res) => {
+    try {
+        const user_id = req.user._id
+        const user = await User.findById(user_id)
+        user.cart = []
+        await user.save()
+        res.status(200).json(user.cart)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -86,7 +97,7 @@ const getOrder = async (req, res) => {
 }
 
 const addOrder = async (req, res) => {
-    const {cartItem} = req.body
+    const { cartItem } = req.body
     // console.log(req.body)
     try {
         const user_id = req.user._id
@@ -105,6 +116,13 @@ const addOrder = async (req, res) => {
     }
 }
 
-
-
-module.exports = { userLogin, userSignUp, addToCart, getCartItem, deleteCartItem, getOrder, addOrder }
+module.exports = {
+    userLogin,
+    userSignUp,
+    addToCart,
+    getCartItem,
+    deleteSingleCartItem,
+    deleteAllCartItem,
+    getOrder,
+    addOrder
+}

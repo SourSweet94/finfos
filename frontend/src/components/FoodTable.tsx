@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { FoodContext, FoodProps } from "../context/FoodContext";
 import { AuthContext } from "../context/AuthContext";
-import ActionModal from "./ActionModal";
-import Button from "./Button";
 import { ScreenContext } from "../context/ScreenContext";
 import { ItemContext } from "../context/ItemContext";
-import Table from "./Table";
 import { AppContext } from "../context/AppContext";
+import ActionModal from "./ActionModal";
+import Button from "./Button";
+import Table from "./Table";
 
 const FoodTable = () => {
   const { setAction } = useContext(ScreenContext);
@@ -38,6 +38,7 @@ const FoodTable = () => {
       if (response.ok) {
         dispatch({ type: "SET_FOOD", payload: filteredJson });
       }
+      console.log(filteredJson)
       setLoading(false);
     };
     if (user) {

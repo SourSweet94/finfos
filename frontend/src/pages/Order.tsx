@@ -1,15 +1,14 @@
-import { useContext, useEffect, useState } from 'react'
-import { AuthContext } from '../context/AuthContext';
-import { AppContext } from '../context/AppContext';
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { AppContext } from "../context/AppContext";
 
 const Order = () => {
-
   const {
     state: { user },
   } = useContext(AuthContext);
 
   const { setLoading } = useContext(AppContext);
-  const [order, setOrder] = useState([])
+  const [order, setOrder] = useState([]);
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -22,8 +21,8 @@ const Order = () => {
 
       const json = await response.json();
 
-      setOrder(json)
-      console.log(json)
+      setOrder(json);
+      console.log(json);
 
       setLoading(false);
     };
@@ -32,26 +31,29 @@ const Order = () => {
     }
   }, []);
 
-  
   return (
     <div>
-    {order.map((order: any) => (
-      <div key={order._id}>
-        <h2>Order #{order._id}</h2>
-        <ul>
-          {order.items.map((item: any) => (
-            <li key={item._id}>
-              <div>{item.food_title}</div>
-              <div>Price: {item.food_price}</div>
-            </li>
-          ))}
-        </ul>
-        <p>Total Amount: {order.amount}</p>
-        <hr />
-      </div>
-    ))}
-  </div>
-  )
-}
+      {order.length !== 0 ? (
+        order.map((order: any) => (
+          <div key={order._id}>
+            <h2>Order #{order._id}</h2>
+            <ul>
+              {order.items.map((item: any) => (
+                <li key={item._id}>
+                  <div>{item.food_title}</div>
+                  <div>Price: {item.food_price}</div>
+                </li>
+              ))}
+            </ul>
+            <p>Total Amount: {order.amount}</p>
+            <hr />
+          </div>
+        ))
+      ) : (
+        <div>Order is empty</div>
+      )}
+    </div>
+  );
+};
 
-export default Order
+export default Order;

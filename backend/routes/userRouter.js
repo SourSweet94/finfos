@@ -1,7 +1,16 @@
 const express = require('express')
 const router = express.Router()
 
-const { userLogin, userSignUp, addToCart, getCartItem, deleteCartItem, getOrder, addOrder } = require('../controllers/userController')
+const {
+  userLogin,
+  userSignUp,
+  addToCart,
+  getCartItem,
+  deleteSingleCartItem,
+  deleteAllCartItem,
+  getOrder,
+  addOrder
+} = require('../controllers/userController')
 const requireAuth = require('../middlewares/requireAuth');
 
 router.post('/login', userLogin)
@@ -14,7 +23,9 @@ router.patch('/addtocart', addToCart)
 
 router.get('/cart', getCartItem)
 
-router.delete('/cart', deleteCartItem)
+router.delete('/cart/:food_id', deleteSingleCartItem)
+
+router.delete('/cart', deleteAllCartItem)
 
 // router.get('/order', getOrder)
 

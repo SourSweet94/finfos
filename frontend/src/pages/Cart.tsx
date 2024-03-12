@@ -4,7 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import { FoodContext } from "../context/FoodContext";
 import { AppContext } from "../context/AppContext";
 import { Col, Container, Row } from "react-bootstrap";
-import { FoodProps } from "../components/legacy/LegacyFoodDetails";
+import { FoodProps } from "../context/FoodContext";
 import Button from "../components/Button";
 import InfoModal from "../components/InfoModal";
 import "../styles/cart.css";
@@ -31,12 +31,11 @@ const Cart = () => {
     if (!user) {
       return;
     }
-    await fetch(`http://localhost:4000/api/user/cart`, {
+    await fetch(`http://localhost:4000/api/user/cart/${_id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
-      body: JSON.stringify({ _id }),
     });
     setCartItem((prev) => prev.filter((item) => item._id !== _id));
     dispatch({ type: "DELETE_FOOD", payload: _id });
@@ -47,6 +46,11 @@ const Cart = () => {
     if (!user) {
       return;
     }
+    if(cartItem.length === 0){
+      console.log("Cart is empty")
+      setShowInfoModal(false)
+      return
+    }
     await fetch("http://localhost:4000/api/order", {
       method: "POST",
       headers: {
@@ -55,12 +59,21 @@ const Cart = () => {
       },
       body: JSON.stringify({ cartItem, amount }),
     });
+    const respDeleted = await fetch('http://localhost:4000/api/user/cart/', {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    console.log(respDeleted)
+    // setCartItem([])
+    // dispatch({ type: "DELETE_FOOD", payload: filteredFood });
+    setShowInfoModal(false)
   };
 
   useEffect(() => {
     const fetchCart = async () => {
       setLoading(true);
-      dispatch({ type: "SET_FOOD", payload: null });
       const responseCart = await fetch("http://localhost:4000/api/user/cart", {
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -80,12 +93,13 @@ const Cart = () => {
         cartData.some((cartItem: any) => cartItem.food_id === food._id)
       );
       setCartItem(
-        filteredFood.map(({ _id, title, price }: FoodProps) => ({ _id, title, price }))
+        filteredFood.map(({ _id, title, price }: FoodProps) => ({
+          _id,
+          title,
+          price,
+        }))
       );
-      dispatch({
-        type: "SET_FOOD",
-        payload: filteredFood,
-      });
+      dispatch({ type: "SET_FOOD", payload: filteredFood });
       setAmount(
         filteredFood.reduce((total: number, item: any) => total + item.price, 0)
       );
@@ -94,8 +108,8 @@ const Cart = () => {
     if (user) {
       fetchCart();
     }
-  }, []);
-
+  }, [setCartItem]);
+console.log(cartItem)
   return (
     <>
       {food?.length !== 0 ? (

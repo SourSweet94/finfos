@@ -12,19 +12,22 @@ const Manage = () => {
 
   return (
     <Container>
-      <Button
-        onClick={() => {
-          setScreenType("Browse");
-          setFoodID([]);
-        }}
-      >
-        Back
-      </Button>
-
       {screenType === "Browse" && <RecordTable />}
 
-      {screenType === "Action" && <FoodTable />}
-
+      {screenType === "Action" && (
+        <>
+          {" "}
+          <Button
+            onClick={() => {
+              setScreenType("Browse");
+              setFoodID([]);
+            }}
+          >
+            Back
+          </Button>
+          <FoodTable />
+        </>
+      )}
     </Container>
   );
 };

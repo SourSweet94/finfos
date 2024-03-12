@@ -27,8 +27,8 @@ const createFood = async (req, res) => {
     const { record_id } = req.params
     try {
         const user_id = req.user._id
-        const formattedDate = date? new Date(date).toLocaleDateString(): null;
-        const food = await Food.create({ img, date: formattedDate, title, price, user_id })
+        // const formattedDate = date? new Date(date).toLocaleDateString(): null;
+        const food = await Food.create({ img, date, title, price, user_id })
         const record = await Record.findById(record_id)
         if (!record) {
             return res.status(404).json({ error: 'Record not found' });
@@ -68,7 +68,7 @@ const updateFood = async (req, res) => {
         return res.status(404).json({ err: 'invalid id' })
     }
     const food = await Food.findOneAndUpdate({ _id: id }, {
-        ...req.body, date: new Date(req.body.date).toLocaleDateString()
+        ...req.body
     })
     if (!food) {
         return res.status(400).json({ err: 'not found' })

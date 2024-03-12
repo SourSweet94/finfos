@@ -35,7 +35,6 @@ const ActionModal = ({ food, record, show, setShow }: ActionModalProps) => {
       // width: '50%',
     },
   };
-  console.log(record)
   
   return (
     <Modal

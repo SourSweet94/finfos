@@ -1,18 +1,17 @@
 import { useContext, useState } from "react";
 import { Card, Col, Container, InputGroup, Row } from "react-bootstrap";
 import Button from "./Button";
-import { FoodCardProps } from "./FoodCard";
 import "../styles/cartItem.css";
-import { FoodContext } from "../context/FoodContext";
+import { FoodContext, FoodProps } from "../context/FoodContext";
 import { AuthContext } from "../context/AuthContext";
 
 interface CartItemProps {
-  food: FoodCardProps;
+  food: FoodProps;
   onDelete: () => void;
 }
 
 const CartItem = ({
-  food: { title, price, image, _id },
+  food: { title, price, img, _id },
   onDelete,
 }: CartItemProps) => {
   const stylesheet = {
@@ -51,7 +50,7 @@ const CartItem = ({
       {/* <Image className="mx-auto" src={image} width="100px" /> */}
       <Row>
         <Col className="cart-item-col">
-          {image}
+          {img}
         </Col>
         <Col className="cart-item-col">
           {title}

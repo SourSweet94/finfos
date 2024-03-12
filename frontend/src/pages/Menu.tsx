@@ -26,7 +26,7 @@ const Menu = () => {
         },
       });
       const json = await response.json();
-
+      console.log(json)
       const filteredJson = json.filter((item: any) => {
         const itemWeek = getISOWeek(new Date(item.date));
         return selectedWeek === 0 || itemWeek === selectedWeek;
@@ -106,6 +106,7 @@ const Menu = () => {
           return (
             <FoodCard
               key={food._id}
+              date={food.date}
               _id={food._id}
               title={food.title}
               price={food.price}

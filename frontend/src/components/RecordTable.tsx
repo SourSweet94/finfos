@@ -24,7 +24,7 @@ const RecordTable = () => {
   const [selectedRecord, setSelectedRecord] = useState<RecordProps>();
 
   useEffect(() => {
-    const fetchFood = async () => {
+    const fetchRecord = async () => {
       setLoading(true);
       const response = await fetch("http://localhost:4000/api/records", {
         headers: {
@@ -39,7 +39,7 @@ const RecordTable = () => {
       setLoading(false);
     };
     if (user) {
-      fetchFood();
+      fetchRecord();
     }
   }, [dispatch, user]);
 
@@ -108,7 +108,7 @@ const RecordTable = () => {
       </>
     ),
   };
-console.log(selectedRecord)
+  
   return (
     <>
       <Table headers={headers} data={records} customCol={customCol} />

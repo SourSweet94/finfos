@@ -5,11 +5,12 @@ interface FoodContextProps {
 }
 
 export interface FoodProps {
-  date: string;
+  img?: string;
+  date: Date;
   _id: string;
   title: string;
   price: number;
-  createdAt: string;
+  createdAt?: string;
 }
 
 interface FoodState {
@@ -30,19 +31,37 @@ export const FoodContext = createContext<{
 const foodReducer = (state: any, action: any) => {
   switch (action.type) {
     case "SET_FOOD":
-      return { food: action.payload };
+      return {
+        food: action.payload.map((food: FoodProps) => ({
+          ...food,
+          date: new Date(food.date).toLocaleDateString(),
+        })),
+      };
     case "CREATE_FOOD":
-      return { food: [action.payload, ...state.food] };
+      return {
+        food: [
+          {
+            ...action.payload,
+            date: new Date(action.payload.date).toLocaleDateString(),
+          },
+          ...state.food
+        ],
+      };
     case "UPDATE_FOOD":
       return {
-        food: state.food.map((food: any) => {
-          return food._id === action.payload._id ? action.payload : food;
+        food: state.food.map((food: FoodProps) => {
+          return food._id === action.payload._id
+            ? {
+                ...action.payload,
+                date: new Date(action.payload.date).toLocaleDateString(),
+              }
+            : food;
         }),
       };
     case "DELETE_FOOD":
       return {
         // food: state.food.filter((food: any) => food._id !== action.payload._id),
-        food: state.food.filter((food: any) => food._id !== action.payload),
+        food: state.food.filter((food: FoodProps) => food._id !== action.payload),
       };
     default:
       return state;
