@@ -5,7 +5,9 @@ interface RecordContextProps {
 }
 
 export interface RecordProps {
-  name: string;
+  // name: string;
+  startDate: Date;
+  endDate: Date;
   _id: string;
 }
 
@@ -27,13 +29,36 @@ export const RecordContext = createContext<{
 const recordReducer = (state: any, action: any) => {
   switch (action.type) {
     case "SET_RECORD":
-      return { records: action.payload };
+      return {
+        records: action.payload.map((food: RecordProps) => ({
+          ...food,
+          startDate: new Date(food.startDate).toLocaleDateString(),
+          endDate: new Date(food.endDate).toLocaleDateString(),
+        })),
+      };
     case "CREATE_RECORD":
-      return { records: [action.payload, ...state.records] };
+      return {
+        records: [
+          {
+            ...action.payload,
+            startDate: new Date(action.payload.startDate).toLocaleDateString(),
+            endDate: new Date(action.payload.endDate).toLocaleDateString(),
+          },
+          ...state.records,
+        ],
+      };
     case "UPDATE_RECORD":
       return {
         records: state.records.map((records: any) => {
-          return records._id === action.payload._id ? action.payload : records;
+          return records._id === action.payload._id
+            ? {
+                ...action.payload,
+                startDate: new Date(
+                  action.payload.startDate
+                ).toLocaleDateString(),
+                endDate: new Date(action.payload.endDate).toLocaleDateString(),
+              }
+            : records;
         }),
       };
     case "DELETE_RECORD":

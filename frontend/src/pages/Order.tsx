@@ -23,7 +23,7 @@ const Order = () => {
       const json = await response.json();
 
       setOrder(json)
-      
+      console.log(json)
 
       setLoading(false);
     };
@@ -34,7 +34,23 @@ const Order = () => {
 
   
   return (
-    <div>order</div>
+    <div>
+    {order.map((order: any) => (
+      <div key={order._id}>
+        <h2>Order #{order._id}</h2>
+        <ul>
+          {order.items.map((item: any) => (
+            <li key={item._id}>
+              <div>{item.food_title}</div>
+              <div>Price: {item.food_price}</div>
+            </li>
+          ))}
+        </ul>
+        <p>Total Amount: {order.amount}</p>
+        <hr />
+      </div>
+    ))}
+  </div>
   )
 }
 

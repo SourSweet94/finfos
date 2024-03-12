@@ -6,6 +6,10 @@ const OrderSchema = new mongoose.Schema({
     type: String,
     require: true
   },
+  buyer_email: {
+    type: String,
+    require: true
+  },
   items: [
     {
       food_id: {

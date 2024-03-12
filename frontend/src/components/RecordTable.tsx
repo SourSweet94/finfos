@@ -6,7 +6,7 @@ import { AppContext } from "../context/AppContext";
 import { RecordContext, RecordProps } from "../context/RecordContext";
 import ActionModal from "./ActionModal";
 import Button from "./Button";
-import NewTable from "./Table";
+import Table from "./Table";
 
 const RecordTable = () => {
   const { setScreenType, setAction } = useContext(ScreenContext);
@@ -32,6 +32,7 @@ const RecordTable = () => {
         },
       });
       const json = await response.json();
+      console.log(json)
       if (response.ok) {
         dispatch({ type: "SET_RECORD", payload: json });
       }
@@ -92,7 +93,7 @@ const RecordTable = () => {
     setSelectedRecord(recordToEdit);
   };
 
-  const headers = ["Name"];
+  const headers = ["startDate", "endDate"];
 
   const customCol = {
     Action: (row: any) => (
@@ -107,10 +108,10 @@ const RecordTable = () => {
       </>
     ),
   };
-
+console.log(selectedRecord)
   return (
     <>
-      <NewTable headers={headers} data={records} customCol={customCol} />
+      <Table headers={headers} data={records} customCol={customCol} />
 
       <ActionModal
         buttonLabel="test"

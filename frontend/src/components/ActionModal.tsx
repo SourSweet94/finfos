@@ -3,7 +3,7 @@ import Modal from "./Modal";
 import FoodForm from "./FoodForm";
 import { FoodProps } from "../context/FoodContext";
 import { ScreenContext } from "../context/ScreenContext";
-import { RecordProps } from "./legacy/LegacyRecord";
+import { RecordProps } from "../context/RecordContext";
 import RecordForm from "./RecordForm";
 
 interface ActionModalProps {
@@ -35,6 +35,7 @@ const ActionModal = ({ food, record, show, setShow }: ActionModalProps) => {
       // width: '50%',
     },
   };
+  console.log(record)
   
   return (
     <Modal

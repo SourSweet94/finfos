@@ -7,11 +7,12 @@ import {
   useState,
 } from "react";
 import { Form } from "react-bootstrap";
-import { RecordContext } from "../context/RecordContext";
+import { RecordContext, RecordProps } from "../context/RecordContext";
 import { AuthContext } from "../context/AuthContext";
 import { ScreenContext } from "../context/ScreenContext";
-import { RecordProps } from "./legacy/LegacyRecord";
 import Button from "./Button";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 interface RecordFormProps {
   record?: RecordProps;
@@ -24,9 +25,16 @@ const RecordForm = ({ record, setModalShow }: RecordFormProps) => {
     state: { user },
   } = useContext(AuthContext);
   const { action } = useContext(ScreenContext);
+  // const [name, setName] = useState<string | null>(
+  //   action === "E" && record ? record.name : null
+  // );
 
-  const [name, setName] = useState<string | null>(
-    action === "E" && record ? record.name : null
+  const [startDate, setStartDate] = useState<Date | null>(
+    action === "E" && record ? new Date(record.startDate) : null
+  );
+
+  const [endDate, setEndDate] = useState<Date | null>(
+    action === "E" && record ? new Date(record.endDate) : null
   );
 
   const [error, setError] = useState<string | null>(null);
@@ -42,7 +50,7 @@ const RecordForm = ({ record, setModalShow }: RecordFormProps) => {
       }`,
       {
         method: action === "N" ? "POST" : "PATCH",
-        body: JSON.stringify({name}),
+        body: JSON.stringify({startDate, endDate}),
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
@@ -54,7 +62,9 @@ const RecordForm = ({ record, setModalShow }: RecordFormProps) => {
 
     if (response.ok) {
       // update UI
-      setName(null)
+      // setName(null)
+      setStartDate(null)
+      setEndDate(null)
       console.log(action)
       if (action === "N") {
         dispatch({ type: "CREATE_RECORD", payload: json });
@@ -82,14 +92,20 @@ const RecordForm = ({ record, setModalShow }: RecordFormProps) => {
     <form onSubmit={handleSubmit}>
 
       <Form.Group className="mb-3">
-        <Form.Label>Name</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Name"
-          value={name === null ? "" : name}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setName(e.target.value)
-          }
+        <Form.Label>Start Date</Form.Label>
+        <DatePicker
+          selected={startDate}
+          onChange={(selectedDate: Date | null) => setStartDate(selectedDate)}
+          dateFormat="yyyy-MM-dd"
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label>End Date</Form.Label>
+        <DatePicker
+          selected={endDate}
+          onChange={(selectedDate: Date | null) => setEndDate(selectedDate)}
+          dateFormat="yyyy-MM-dd"
         />
       </Form.Group>
 

@@ -10,8 +10,6 @@ const NavBar = () => {
     state: { user },
   } = useContext(AuthContext);
 
-  // console.log(user)
-
   return (
     <Navbar bg="dark" data-bs-theme="dark">
       <Container>

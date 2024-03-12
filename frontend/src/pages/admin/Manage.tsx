@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { ScreenContext } from "../context/ScreenContext";
-import { ItemContext } from "../context/ItemContext";
-import FoodTable from "../components/FoodTable";
-import RecordTable from "../components/RecordTable";
-import Button from "../components/Button";
+import { ScreenContext } from "../../context/ScreenContext";
+import { ItemContext } from "../../context/ItemContext";
+import FoodTable from "../../components/FoodTable";
+import RecordTable from "../../components/RecordTable";
+import Button from "../../components/Button";
 import { Container } from "react-bootstrap";
 
 const Manage = () => {

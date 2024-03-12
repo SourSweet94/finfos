@@ -61,6 +61,8 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
         },
       }
     );
+console.log(date)
+console.log(title)
 
     // await fetch('http://localhost:4000/api/food/upload-image', {
     //   method: "POST",

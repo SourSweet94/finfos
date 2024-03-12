@@ -1,4 +1,5 @@
 const Order = require('../models/orderModel')
+const User = require('../models/userModel')
 
 const getOrder = async (req, res) => {
   const user_id = req.user._id
@@ -20,13 +21,16 @@ const getSingleUserOrder = async (req, res) => {
 const createOrder = async (req, res) => {
   const { cartItem, amount } = req.body
   try {
-    const user_id = req.user._id
+    const user = await User.findById(req.user._id)
+
     const items = cartItem.map(item => ({
       food_id: item._id,
       food_title: item.title,
       food_price: item.price
     }));
-    const order = await Order.create({ buyer_id: user_id, items, amount })
+    const order = await Order.create({
+      buyer_id: req.user._id, buyer_email: user.email, items, amount
+    })
     // const record = await Record.findById(record_id)
     // if (!record) {
     //     return res.status(404).json({ error: 'Record not found' });

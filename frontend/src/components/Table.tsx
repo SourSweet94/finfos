@@ -9,9 +9,10 @@ interface TableProps {
   headers: string[];
   data: any[] | null;
   customCol?: { [key: string]: (row: any) => React.ReactNode };
+  showBtn?: boolean;
 }
 
-const NewTable = ({ headers, data, customCol }: TableProps) => {
+const Table = ({ headers, data, customCol, showBtn = true }: TableProps) => {
   const [showActionModal, setShowActionModal] = useState(false);
   const { setAction } = useContext(ScreenContext);
   const handleAddClick = () => {
@@ -38,7 +39,7 @@ const NewTable = ({ headers, data, customCol }: TableProps) => {
             data.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 {headers.map((header, colIndex) => (
-                  <td key={colIndex}>{row[header.toLowerCase()]}</td>
+                  <td key={colIndex}>{row[header]}</td>
                 ))}
                 {customCol &&
                   Object.values(customCol).map((renderColumn, colIndex) => (
@@ -48,7 +49,7 @@ const NewTable = ({ headers, data, customCol }: TableProps) => {
             ))}
         </tbody>
       </BSTable>
-      <Button onClick={handleAddClick}>Add</Button>
+      {showBtn && <Button onClick={handleAddClick}>Add</Button>}
       <ActionModal
         buttonLabel="test"
         show={showActionModal}
@@ -58,4 +59,4 @@ const NewTable = ({ headers, data, customCol }: TableProps) => {
   );
 };
 
-export default NewTable;
+export default Table;

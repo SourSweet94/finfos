@@ -5,7 +5,7 @@ import ActionModal from "./ActionModal";
 import Button from "./Button";
 import { ScreenContext } from "../context/ScreenContext";
 import { ItemContext } from "../context/ItemContext";
-import NewTable from "./Table";
+import Table from "./Table";
 import { AppContext } from "../context/AppContext";
 
 const FoodTable = () => {
@@ -71,7 +71,7 @@ const FoodTable = () => {
     setSelectedFood(foodToEdit);
   };
 
-  const headers = ["Image", "Date", "Title", "Price"];
+  const headers = ["image", "date", "title", "price"];
 
   const customCol = {
     Action: (row: any) => (
@@ -94,7 +94,7 @@ const FoodTable = () => {
 
   return (
     <>
-      <NewTable headers={headers} data={food} customCol={customCol} />
+      <Table headers={headers} data={food} customCol={customCol} />
 
       <ActionModal
         buttonLabel="test"

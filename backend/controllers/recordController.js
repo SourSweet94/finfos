@@ -18,18 +18,27 @@ const getSingleRecord = async (req, res) => {
     if (!record) {
         return res.status(400).json({ err: 'not found' })
     }
-    res.status(200).json(record)
+    return res.status(200).json(record)
 }
 
 const createRecord = async (req, res) => {
-    console.log('req.body:', req.body);
-    const { name } = req.body
+    const { startDate, endDate } = req.body
     try {
+        if (startDate > endDate) {
+            return res.status(400).json({ error: "Start date cannot be greater than end date" });
+
+        }
         const user_id = req.user._id
-        const record = await Record.create({ name, user_id })
-        res.status(200).json(record)
+        const formattedStartDate = startDate ? new Date(startDate).toLocaleDateString() : null;
+        const formattedEndDate = endDate ? new Date(endDate).toLocaleDateString() : null;
+        const record = await Record.create({
+            startDate,
+            endDate,
+            user_id
+        })
+        return res.status(200).json(record)
     } catch (error) {
-        res.status(400).json({ error: error.message })
+        return res.status(400).json({ error: error.message })
     }
 }
 
@@ -57,7 +66,7 @@ const updateRecord = async (req, res) => {
     if (!record) {
         return res.status(400).json({ err: 'not found' })
     }
-    res.status(200).json(record)
+    return res.status(200).json(record)
 }
 
 module.exports = {
