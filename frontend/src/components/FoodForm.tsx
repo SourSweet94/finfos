@@ -24,7 +24,6 @@ interface FoodFormProps {
 
 const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
   const { dispatch } = useContext(FoodContext);
-  const { dispatch: dispatchRecord } = useContext(RecordContext);
   const {
     state: { user },
   } = useContext(AuthContext);

@@ -1,40 +1,44 @@
 import { Col, Container, Row } from "react-bootstrap";
-import Sidebar from "../components/Sidebar";
 import { Outlet } from "react-router-dom";
-import Breadcrumb from "../components/Breadcrumb";
-import "../styles/home.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import Loading from "../components/Loading";
+import Breadcrumb from "../components/Breadcrumb";
+import Sidebar from "../components/Sidebar";
 import NavBar from "../components/Navbar";
-import { AuthContext } from "../context/AuthContext";
+import "../styles/home.css";
+
 const Home = () => {
   const { loading } = useContext(AppContext);
-  const {
-    state: { user },
-  } = useContext(AuthContext);
+
+  const [collapsed, setCollapsed] = useState(false);
+
+  const handleToggleSidebar = () => {
+    setCollapsed(!collapsed);
+  };
 
   return (
     <>
-      <Container fluid>
-        <Row>
-          <Col lg={2} md={2} style={{ background: "pink" }}>
-            <Sidebar />
-          </Col>
+      <NavBar />
+      <div className="home-container">
+        <div className={`sidebar ${collapsed ? "collapsed" : ""}`}>
+          <Sidebar
+            collapsed={collapsed}
+            handleToggleSidebar={handleToggleSidebar}
+          />
+        </div>
 
-          <Col lg={10} md={10} className="main-content">
-            <NavBar />
-            <Container>
-              <Breadcrumb />
-            </Container>
-            {loading && <Loading />}
+        <div className={`main-content ${collapsed ? "collapsed" : ""}`}>
+          <Container>
+            <Breadcrumb />
+          </Container>
+          {loading && <Loading />}
 
-            <Container style={{ display: loading ? "none" : "" }}>
-              <Outlet />
-            </Container>
-          </Col>
-        </Row>
-      </Container>
+          <Container style={{ display: loading ? "none" : "" }}>
+            <Outlet />
+          </Container>
+        </div>
+      </div>
     </>
   );
 };

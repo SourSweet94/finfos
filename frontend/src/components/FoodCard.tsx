@@ -1,24 +1,25 @@
 import { Card, Image } from "react-bootstrap";
 import Button from "./Button";
-import { useContext } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { FoodProps } from "../context/FoodContext";
+import { Toast } from "react-bootstrap";
 
-// export interface FoodCardProps {
-//   date: string;
-//   title: string;
-//   price: number;
-//   image?: string; //enter path, or create upload image function
-//   // day: string;
-//   _id: string;
-// }
+interface FoodCardProps {
+  food: FoodProps;
+  setShowToast: Dispatch<SetStateAction<boolean>>;
+}
 
-const FoodCard = ({ date, title, price, img, _id }: FoodProps) => {
+const FoodCard = ({ food, setShowToast }: FoodCardProps) => {
+
+  const {_id, date, title, price, img} = food
   const {
     state: { user },
   } = useContext(AuthContext);
 
+
   const handleAddToCart = async () => {
+    setShowToast(true)
     await fetch("http://localhost:4000/api/user/addtocart", {
       method: "PATCH",
       headers: {
@@ -28,7 +29,6 @@ const FoodCard = ({ date, title, price, img, _id }: FoodProps) => {
       body: JSON.stringify({ _id }),
     });
   };
-  console.log(typeof date);
 
   return (
     <Card className="shadow mb-5 mx-3 rounded" style={{ width: "14rem" }}>

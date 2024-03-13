@@ -22,8 +22,6 @@ const Order = () => {
       const json = await response.json();
 
       setOrder(json);
-      console.log(json);
-
       setLoading(false);
     };
     if (user) {

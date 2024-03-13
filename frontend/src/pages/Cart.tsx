@@ -59,15 +59,15 @@ const Cart = () => {
       },
       body: JSON.stringify({ cartItem, amount }),
     });
-    const respDeleted = await fetch('http://localhost:4000/api/user/cart/', {
+    const response = await fetch('http://localhost:4000/api/user/cart/', {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
     });
-    console.log(respDeleted)
-    // setCartItem([])
-    // dispatch({ type: "DELETE_FOOD", payload: filteredFood });
+    const json = await response.json();
+    dispatch({ type: "SET_FOOD", payload: json });
+    setAmount(0)
     setShowInfoModal(false)
   };
 
@@ -108,8 +108,8 @@ const Cart = () => {
     if (user) {
       fetchCart();
     }
-  }, [setCartItem]);
-console.log(cartItem)
+  }, []);
+
   return (
     <>
       {food?.length !== 0 ? (
@@ -133,14 +133,14 @@ console.log(cartItem)
       ) : (
         <div>Cart is empty</div>
       )}
-      <Container className="cart-amount ">
-        <Row>
-          <Col>Amount: {amount}</Col>
-          <Col>
+      <div className="cart-amount ">
+        {/* <Row> */}
+          <div>Amount: {amount}</div>
+          <div>
             <Button onClick={() => setShowInfoModal(true)}>Order Now</Button>
-          </Col>
-        </Row>
-      </Container>
+          </div>
+        {/* </Row> */}
+      </div>
 
       <InfoModal
         show={showInfoModal}

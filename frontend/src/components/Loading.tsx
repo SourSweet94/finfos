@@ -13,8 +13,6 @@ const Loading = () => {
   return (
     <Container style={stylesheet}>
       <Spinner animation="border" />
-
-      {/* <div>Loading...</div> */}
     </Container>
   );
 };

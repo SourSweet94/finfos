@@ -1,5 +1,4 @@
 import {
-  ChangeEvent,
   Dispatch,
   FormEvent,
   SetStateAction,
@@ -25,9 +24,6 @@ const RecordForm = ({ record, setModalShow }: RecordFormProps) => {
     state: { user },
   } = useContext(AuthContext);
   const { action } = useContext(ScreenContext);
-  // const [name, setName] = useState<string | null>(
-  //   action === "E" && record ? record.name : null
-  // );
 
   const [startDate, setStartDate] = useState<Date | null>(
     action === "E" && record ? new Date(record.startDate) : null
@@ -41,8 +37,6 @@ const RecordForm = ({ record, setModalShow }: RecordFormProps) => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // const record = { name };
 
     const response = await fetch(
       `http://localhost:4000/api/records/${
@@ -61,8 +55,6 @@ const RecordForm = ({ record, setModalShow }: RecordFormProps) => {
     const json = await response.json();
 
     if (response.ok) {
-      // update UI
-      // setName(null)
       setStartDate(null)
       setEndDate(null)
       console.log(action)

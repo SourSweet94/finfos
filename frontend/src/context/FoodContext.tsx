@@ -32,7 +32,7 @@ const foodReducer = (state: any, action: any) => {
   switch (action.type) {
     case "SET_FOOD":
       return {
-        food: action.payload.map((food: FoodProps) => ({
+        food: action.payload?.map((food: FoodProps) => ({
           ...food,
           date: new Date(food.date).toLocaleDateString(),
         })),

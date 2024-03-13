@@ -5,7 +5,8 @@ const mongoose = require('mongoose')
 const getAllRecords = async (req, res) => {
     // no need user_id since only one admin
     const user_id = req.user._id
-    const record = await Record.find({ user_id }).sort({ createdAt: -1 })
+    // const record = await Record.find({ user_id }).sort({ createdAt: -1 })
+    const record = await Record.find({}).sort({ createdAt: -1 })
     res.status(200).json(record)
 }
 
@@ -29,8 +30,6 @@ const createRecord = async (req, res) => {
 
         }
         const user_id = req.user._id
-        const formattedStartDate = startDate ? new Date(startDate).toLocaleDateString() : null;
-        const formattedEndDate = endDate ? new Date(endDate).toLocaleDateString() : null;
         const record = await Record.create({
             startDate,
             endDate,

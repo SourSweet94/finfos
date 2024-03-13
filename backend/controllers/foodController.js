@@ -27,7 +27,6 @@ const createFood = async (req, res) => {
     const { record_id } = req.params
     try {
         const user_id = req.user._id
-        // const formattedDate = date? new Date(date).toLocaleDateString(): null;
         const food = await Food.create({ img, date, title, price, user_id })
         const record = await Record.findById(record_id)
         if (!record) {

@@ -11,7 +11,7 @@ const NavBar = () => {
   } = useContext(AuthContext);
 
   return (
-    <Navbar bg="dark" data-bs-theme="dark">
+    <Navbar bg="dark" data-bs-theme="dark" style={{height: '10vh'}}>
       <Container>
         <Link to="/">
           <Navbar.Brand>Home</Navbar.Brand>

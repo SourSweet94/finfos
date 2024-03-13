@@ -2,9 +2,17 @@ import { useContext, useEffect, useState } from "react";
 import { FoodContext } from "../context/FoodContext";
 import { AuthContext } from "../context/AuthContext";
 import FoodCard from "../components/FoodCard";
-import { ButtonGroup, Col, Container, Dropdown, Row } from "react-bootstrap";
+import {
+  ButtonGroup,
+  Col,
+  Container,
+  Dropdown,
+  Row,
+  Toast,
+  ToastContainer,
+} from "react-bootstrap";
 import { AppContext } from "../context/AppContext";
-import "../styles/menu.css";
+import { RecordProps } from "../context/RecordContext";
 
 const Menu = () => {
   const {
@@ -16,6 +24,8 @@ const Menu = () => {
   } = useContext(AuthContext);
   const { setLoading } = useContext(AppContext);
   const [selectedWeek, setSelectedWeek] = useState<number>(0);
+  const [showToast, setShowToast] = useState<boolean>(false);
+  const [dateInterval, setDateInterval] = useState([]);
 
   useEffect(() => {
     const fetchFood = async () => {
@@ -26,7 +36,7 @@ const Menu = () => {
         },
       });
       const json = await response.json();
-      console.log(json)
+      console.log(json);
       const filteredJson = json.filter((item: any) => {
         const itemWeek = getISOWeek(new Date(item.date));
         return selectedWeek === 0 || itemWeek === selectedWeek;
@@ -38,8 +48,25 @@ const Menu = () => {
       }
       setLoading(false);
     };
+
+    const fetchDate = async () => {
+      const response = await fetch(`http://localhost:4000/api/records`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      const json = await response.json();
+      console.log(json);
+      setDateInterval(
+        json.map((record: RecordProps) => ({
+          startDate: record.startDate,
+          endDate: record.endDate,
+        }))
+      );
+    };
     if (user) {
       fetchFood();
+      fetchDate();
     }
   }, [dispatch, user, selectedWeek]);
 
@@ -70,11 +97,30 @@ const Menu = () => {
   //   return dates;
   // };
 
-  const handleWeekSelect = (week: number) => {
-    setSelectedWeek(week);
+  const handleDateSelect = (startDate: Date, endDate: Date) => {
+    // setSelectedWeek(week);
   };
   return (
     <Container className="menu-container">
+      {/* <ToastContainer position="middle-center">
+        <Toast
+          onClose={() => setShowToast(false)}
+          show={showToast}
+          delay={3000}
+          autohide
+        >
+          <Toast.Header>
+            <img
+              src="holder.js/20x20?text=%20"
+              className="rounded me-2"
+              alt=""
+            />
+            <strong className="me-auto">Bootstrap</strong>
+            <small>11 mins ago</small>
+          </Toast.Header>
+          <Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>
+        </Toast>
+      </ToastContainer> */}
       <Row>
         <Col>
           <Dropdown as={ButtonGroup}>
@@ -82,21 +128,14 @@ const Menu = () => {
               {selectedWeek === 0 ? "All Weeks" : `Week ${selectedWeek}`}
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => handleWeekSelect(0)}>
-                All Weeks
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => handleWeekSelect(7)}>
-                Week 7
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => handleWeekSelect(8)}>
-                Week 8
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => handleWeekSelect(9)}>
-                Week 9
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => handleWeekSelect(10)}>
-                Week 10
-              </Dropdown.Item>
+              {dateInterval.map((date: any) => (
+                <Dropdown.Item
+                  key={date.startDate}
+                  onClick={() => handleDateSelect(date.startDate, date.endDate)}
+                >
+                  {date.startDate} - {date.endDate}
+                </Dropdown.Item>
+              ))}
             </Dropdown.Menu>
           </Dropdown>
         </Col>
@@ -106,10 +145,13 @@ const Menu = () => {
           return (
             <FoodCard
               key={food._id}
-              date={food.date}
-              _id={food._id}
-              title={food.title}
-              price={food.price}
+              food={{
+                date: food.date,
+                _id: food._id,
+                title: food.title,
+                price: food.price,
+              }}
+              setShowToast={setShowToast}
             />
           );
         })}
