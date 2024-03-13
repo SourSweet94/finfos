@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { FoodContext } from "../context/FoodContext";
+import { FoodContext, FoodProps } from "../context/FoodContext";
 import { AuthContext } from "../context/AuthContext";
 import FoodCard from "../components/FoodCard";
 import {
@@ -13,6 +13,7 @@ import {
 } from "react-bootstrap";
 import { AppContext } from "../context/AppContext";
 import { RecordProps } from "../context/RecordContext";
+import { isEqual } from "lodash";
 
 const Menu = () => {
   const {
@@ -23,11 +24,32 @@ const Menu = () => {
     state: { user },
   } = useContext(AuthContext);
   const { setLoading } = useContext(AppContext);
-  const [selectedWeek, setSelectedWeek] = useState<number>(0);
   const [showToast, setShowToast] = useState<boolean>(false);
-  const [dateInterval, setDateInterval] = useState([]);
+  const [dateInterval, setDateInterval] = useState<
+    { startDate: Date; endDate: Date }[]
+  >([]);
+  const [selectedDateInterval, setSelectedDateInterval] = useState({
+    startDate: new Date(),
+    endDate: new Date(),
+  });
 
   useEffect(() => {
+    const fetchDate = async () => {
+      const response = await fetch(`http://localhost:4000/api/records`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      const json = await response.json();
+      setDateInterval(
+        json.map((record: RecordProps) => ({
+          startDate: record.startDate,
+          endDate: record.endDate,
+        }))
+      );
+      
+    };
+
     const fetchFood = async () => {
       setLoading(true);
       const response = await fetch(`http://localhost:4000/api/food`, {
@@ -37,68 +59,31 @@ const Menu = () => {
       });
       const json = await response.json();
       console.log(json);
-      const filteredJson = json.filter((item: any) => {
-        const itemWeek = getISOWeek(new Date(item.date));
-        return selectedWeek === 0 || itemWeek === selectedWeek;
-      });
-      // const selectedDates = generateWeekDates(selectedWeek);
-      // console.log(selectedDates);
+      // const filteredJson = json.filter((food: FoodProps) => {
+      //   const foodDate = food.date.getTime();
+      //   const startDate = dateInterval[0].startDate.getTime();
+      //   const endDate = dateInterval[0].endDate.getTime();
+      //   return foodDate >= startDate && foodDate <= endDate;
+      // });
+
       if (response.ok) {
-        dispatch({ type: "SET_FOOD", payload: filteredJson });
+        dispatch({ type: "SET_FOOD", payload: json });
       }
       setLoading(false);
     };
 
-    const fetchDate = async () => {
-      const response = await fetch(`http://localhost:4000/api/records`, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const json = await response.json();
-      console.log(json);
-      setDateInterval(
-        json.map((record: RecordProps) => ({
-          startDate: record.startDate,
-          endDate: record.endDate,
-        }))
-      );
-    };
     if (user) {
-      fetchFood();
       fetchDate();
+      fetchFood();
     }
-  }, [dispatch, user, selectedWeek]);
-
-  const getISOWeek = (date: Date) => {
-    const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
-    const days = Math.round(
-      (date.getTime() - firstDayOfYear.getTime()) / (24 * 3600 * 1000)
-    );
-    const isoWeek = Math.ceil((days + firstDayOfYear.getDay() + 1) / 7);
-    return isoWeek;
-  };
-
-  // const generateWeekDates = (week: number) => {
-  //   const currentDate = new Date();
-  //   const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 1);
-  //   const firstDayOfWeek = new Date(firstDayOfYear);
-  //   firstDayOfWeek.setDate(
-  //     firstDayOfYear.getDate() + (week - 1) * 7 - firstDayOfYear.getDay()
-  //   );
-
-  //   const dates = Array.from({ length: 7 }, (_, index) => {
-  //     const date = new Date(firstDayOfWeek);
-  //     //from Sunday to Saturday
-  //     date.setDate(firstDayOfWeek.getDate() + index + 1);
-  //     return date.toISOString().substring(0, 10);
-  //   });
-
-  //   return dates;
-  // };
+  }, [dispatch, user, selectedDateInterval]);
+  console.log(dateInterval[0].endDate);
 
   const handleDateSelect = (startDate: Date, endDate: Date) => {
-    // setSelectedWeek(week);
+    setSelectedDateInterval({
+      startDate: startDate,
+      endDate: endDate,
+    });
   };
   return (
     <Container className="menu-container">
@@ -125,7 +110,9 @@ const Menu = () => {
         <Col>
           <Dropdown as={ButtonGroup}>
             <Dropdown.Toggle variant="success" id="dropdown-basic">
-              {selectedWeek === 0 ? "All Weeks" : `Week ${selectedWeek}`}
+              {selectedDateInterval === dateInterval[0]
+                ? "Current Week"
+                : `${selectedDateInterval.startDate} - ${selectedDateInterval.endDate}`}
             </Dropdown.Toggle>
             <Dropdown.Menu>
               {dateInterval.map((date: any) => (
