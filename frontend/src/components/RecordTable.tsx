@@ -1,4 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ScreenContext } from "../context/ScreenContext";
 import { ItemContext } from "../context/ItemContext";
@@ -8,7 +14,15 @@ import ActionModal from "./ActionModal";
 import Button from "./Button";
 import Table from "./Table";
 
-const RecordTable = () => {
+interface RecordTableProps {
+  showActionModal: boolean;
+  setShowActionModal: Dispatch<SetStateAction<boolean>>;
+}
+
+const RecordTable = ({
+  showActionModal,
+  setShowActionModal,
+}: RecordTableProps) => {
   const { setScreenType, setAction } = useContext(ScreenContext);
   const {
     state: { records },
@@ -20,7 +34,6 @@ const RecordTable = () => {
   } = useContext(AuthContext);
   const { setLoading } = useContext(AppContext);
 
-  const [showActionModal, setShowActionModal] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState<RecordProps>();
 
   useEffect(() => {
@@ -32,7 +45,7 @@ const RecordTable = () => {
         },
       });
       const json = await response.json();
-      console.log(json)
+      console.log(json);
       if (response.ok) {
         dispatch({ type: "SET_RECORD", payload: json });
       }
@@ -108,10 +121,14 @@ const RecordTable = () => {
       </>
     ),
   };
-  
+
   return (
     <>
-      <Table headers={headers} data={records} customCol={customCol} />
+      {records?.length !== 0 ? (
+        <Table headers={headers} data={records} customCol={customCol} />
+      ) : (
+        <div>No data</div>
+      )}
 
       <ActionModal
         buttonLabel="test"

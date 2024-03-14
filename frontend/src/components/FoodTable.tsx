@@ -1,4 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { FoodContext, FoodProps } from "../context/FoodContext";
 import { AuthContext } from "../context/AuthContext";
 import { ScreenContext } from "../context/ScreenContext";
@@ -8,7 +14,12 @@ import ActionModal from "./ActionModal";
 import Button from "./Button";
 import Table from "./Table";
 
-const FoodTable = () => {
+interface FoodTableProps {
+  showActionModal: boolean;
+  setShowActionModal: Dispatch<SetStateAction<boolean>>;
+}
+
+const FoodTable = ({ showActionModal, setShowActionModal }: FoodTableProps) => {
   const { setAction } = useContext(ScreenContext);
   const {
     state: { food },
@@ -20,7 +31,6 @@ const FoodTable = () => {
   } = useContext(AuthContext);
   const { setLoading } = useContext(AppContext);
 
-  const [showActionModal, setShowActionModal] = useState(false);
   const [selectedFood, setSelectedFood] = useState<FoodProps>();
 
   useEffect(() => {
@@ -38,7 +48,6 @@ const FoodTable = () => {
       if (response.ok) {
         dispatch({ type: "SET_FOOD", payload: filteredJson });
       }
-      console.log(filteredJson)
       setLoading(false);
     };
     if (user) {
@@ -77,16 +86,10 @@ const FoodTable = () => {
   const customCol = {
     Action: (row: any) => (
       <>
-        <Button
-          onClick={() => handleEdit(row._id)}
-          variant="warning"
-        >
+        <Button onClick={() => handleEdit(row._id)} variant="warning">
           Edit
         </Button>
-        <Button
-          onClick={() => handleDelete(row._id)}
-          variant="danger"
-        >
+        <Button onClick={() => handleDelete(row._id)} variant="danger">
           Delete
         </Button>
       </>
@@ -95,7 +98,11 @@ const FoodTable = () => {
 
   return (
     <>
-      <Table headers={headers} data={food} customCol={customCol} />
+      {food?.length !== 0 ? (
+        <Table headers={headers} data={food} customCol={customCol} />
+      ) : (
+        <div>No data</div>
+      )}
 
       <ActionModal
         buttonLabel="test"

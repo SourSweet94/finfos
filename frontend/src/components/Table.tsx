@@ -1,24 +1,16 @@
-import { useContext, useState } from "react";
-import { ScreenContext } from "../context/ScreenContext";
+import { useState } from "react";
 import { Table as BSTable } from "react-bootstrap";
 import ActionModal from "./ActionModal";
-import Button from "./Button";
 import "../styles/table.css";
 
 interface TableProps {
   headers: string[];
   data: any[] | null;
   customCol?: { [key: string]: (row: any) => React.ReactNode };
-  showBtn?: boolean;
 }
 
-const Table = ({ headers, data, customCol, showBtn = true }: TableProps) => {
+const Table = ({ headers, data, customCol }: TableProps) => {
   const [showActionModal, setShowActionModal] = useState(false);
-  const { setAction } = useContext(ScreenContext);
-  const handleAddClick = () => {
-    setShowActionModal(true);
-    setAction("N");
-  };
 
   return (
     <>
@@ -49,7 +41,7 @@ const Table = ({ headers, data, customCol, showBtn = true }: TableProps) => {
             ))}
         </tbody>
       </BSTable>
-      {showBtn && <Button onClick={handleAddClick}>Add</Button>}
+
       <ActionModal
         buttonLabel="test"
         show={showActionModal}

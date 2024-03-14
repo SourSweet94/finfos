@@ -19,16 +19,30 @@ const Home = () => {
 
   return (
     <>
-      <NavBar />
+      <div style={{ position: "sticky", top: "0" }}>
+        <NavBar />
+      </div>
+
       <div className="home-container">
-        <div className={`sidebar ${collapsed ? "collapsed" : ""}`}>
+        <div
+          className={`sidebar ${collapsed ? "collapsed" : ""}`}
+          // style={{ position: "fixed", left: 0 }}
+        >
           <Sidebar
             collapsed={collapsed}
             handleToggleSidebar={handleToggleSidebar}
           />
         </div>
 
-        <div className={`main-content ${collapsed ? "collapsed" : ""}`}>
+        <div
+          className={`main-content ${collapsed ? "collapsed" : ""}`}
+          // style={{
+          //   position: "relative",
+          //   width: "calc(100vw - 200px)",
+          //   left: "200px",
+          //   zIndex: -1,
+          // }}
+        >
           <Container>
             <Breadcrumb />
           </Container>
