@@ -47,7 +47,7 @@ const Sidebar = ({ collapsed, handleToggleSidebar }: SidebarProps) => {
         // collapsedWidth="0px"
         // breakPoint="md"
         transitionDuration={0}
-        width="200px"
+        width="250px"
         style={{ height: "90vh", background: "lightgray" }}
       >
         <Button

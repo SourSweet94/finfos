@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Card, Col, Container, InputGroup, Row } from "react-bootstrap";
+import { Card, Col, Container, Image, InputGroup, Row } from "react-bootstrap";
 import Button from "./Button";
 import "../styles/cartItem.css";
 import { FoodContext, FoodProps } from "../context/FoodContext";
@@ -11,7 +11,7 @@ interface CartItemProps {
 }
 
 const CartItem = ({
-  food: { title, price, img, _id },
+  food: { title, price, image, _id },
   onDelete,
 }: CartItemProps) => {
   const stylesheet = {
@@ -47,14 +47,15 @@ const CartItem = ({
 
   return (
     <Container className="py-3 border-top">
-      {/* <Image className="mx-auto" src={image} width="100px" /> */}
       <Row>
         <Col className="cart-item-col">
-          {img}
+          <Image
+            className="mx-auto"
+            src={`../../public/uploads/${image}`}
+            width="100px"
+          />
         </Col>
-        <Col className="cart-item-col">
-          {title}
-        </Col>
+        <Col className="cart-item-col">{title}</Col>
         <Col className="cart-item-col">RM {price}</Col>
         {/* <Col className="cart-item-col">
             <InputGroup className="input-grp  flex-nowrap">

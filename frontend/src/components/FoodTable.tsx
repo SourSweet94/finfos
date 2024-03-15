@@ -108,7 +108,7 @@ const FoodTable = ({ showActionModal, setShowActionModal }: FoodTableProps) => {
         buttonLabel="test"
         show={showActionModal}
         setShow={setShowActionModal}
-        food={selectedFood}
+        data={selectedFood}
       />
     </>
   );

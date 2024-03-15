@@ -134,7 +134,7 @@ const RecordTable = ({
         buttonLabel="test"
         show={showActionModal}
         setShow={setShowActionModal}
-        record={selectedRecord}
+        data={selectedRecord}
       />
     </>
   );

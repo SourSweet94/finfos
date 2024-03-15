@@ -19,15 +19,16 @@ const getSingleFood = async (req, res) => {
         return res.status(400).json({ err: 'not found' })
     }
     res.status(200).json(food)
-    console.log(req.params)
 }
 
 const createFood = async (req, res) => {
-    const { img, date, title, price } = req.body
+    const { date, title, price } = req.body
     const { record_id } = req.params
+    const image = req.file?.originalname
+    console.log(req.body, image)
     try {
         const user_id = req.user._id
-        const food = await Food.create({ img, date, title, price, user_id })
+        const food = await Food.create({ date, title, price, user_id, image })
         const record = await Record.findById(record_id)
         if (!record) {
             return res.status(404).json({ error: 'Record not found' });
@@ -63,11 +64,16 @@ const deleteFood = async (req, res) => {
 
 const updateFood = async (req, res) => {
     const { id } = req.params
+    let image = req.file?.originalname
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ err: 'invalid id' })
     }
+    if (!image) {
+        const food = await Food.findById(id)
+        image = food.image
+    }
     const food = await Food.findOneAndUpdate({ _id: id }, {
-        ...req.body
+        ...req.body, image: image
     })
     if (!food) {
         return res.status(400).json({ err: 'not found' })

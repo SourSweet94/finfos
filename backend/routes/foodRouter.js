@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
+const upload = require('../middlewares/upload')
 
 const {
     getAllFood,
@@ -19,14 +18,10 @@ router.get('/', getAllFood)
 
 router.get('/:record_id/:id', getSingleFood)
 
-router.post("/upload-image", upload.single("image"), async (req, res) => {
-    console.log(req.body)
-})
-
-router.post('/:record_id', createFood)
+router.post('/:record_id', upload.single('image'), createFood)
 
 router.delete('/:record_id/:id', deleteFood)
 
-router.patch('/:record_id/:id', updateFood)
+router.patch('/:record_id/:id', upload.single('image'), updateFood)
 
 module.exports = router

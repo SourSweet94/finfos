@@ -13,7 +13,6 @@ import {
 } from "react-bootstrap";
 import { AppContext } from "../context/AppContext";
 import { RecordProps } from "../context/RecordContext";
-import { isEqual } from "lodash";
 
 const Menu = () => {
   const {
@@ -89,9 +88,9 @@ const Menu = () => {
           : "";
         return foodDate >= startDate && foodDate <= endDate;
       });
-
+      // REMEMBER TO CHANGE TO filteredJson
       if (response.ok) {
-        dispatch({ type: "SET_FOOD", payload: filteredJson });
+        dispatch({ type: "SET_FOOD", payload: json });
         console.log(food);
       }
       setLoading(false);
@@ -159,6 +158,7 @@ const Menu = () => {
               <FoodCard
                 key={food._id}
                 food={{
+                  image: food.image,
                   date: food.date,
                   _id: food._id,
                   title: food.title,

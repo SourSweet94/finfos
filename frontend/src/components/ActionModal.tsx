@@ -1,14 +1,11 @@
 import { Dispatch, SetStateAction, useContext } from "react";
 import Modal from "./Modal";
 import FoodForm from "./FoodForm";
-import { FoodProps } from "../context/FoodContext";
 import { ScreenContext } from "../context/ScreenContext";
-import { RecordProps } from "../context/RecordContext";
 import RecordForm from "./RecordForm";
 
 interface ActionModalProps {
-  food?: FoodProps;
-  record?: RecordProps;
+  data?: any;
 
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
@@ -21,7 +18,7 @@ interface ActionModalProps {
   onClick2?: () => void;
 }
 
-const ActionModal = ({ food, record, show, setShow }: ActionModalProps) => {
+const ActionModal = ({ data, show, setShow }: ActionModalProps) => {
   const { screenType, action, setAction } = useContext(ScreenContext);
   const handleCloseModal = () => {
     setShow(false);
@@ -46,12 +43,12 @@ const ActionModal = ({ food, record, show, setShow }: ActionModalProps) => {
       <>
         {screenType === "Action" && (
           <FoodForm
-            foodDetails={food}
+            foodDetails={data}
             setModalShow={handleCloseModal}
           />
         )}
         {screenType === 'Browse' && (
-          <RecordForm record={record} setModalShow={handleCloseModal} />
+          <RecordForm record={data} setModalShow={handleCloseModal} />
         )}
       </>
     </Modal>

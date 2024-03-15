@@ -31,7 +31,21 @@ const Table = ({ headers, data, customCol }: TableProps) => {
             data.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 {headers.map((header, colIndex) => (
-                  <td key={colIndex}>{row[header]}</td>
+                  <td key={colIndex}>
+                    {row[header] === row.image ? (
+                      row.image ? (
+                        <img
+                          src={`../../public/uploads/${row.image}`}
+                          alt={row.image}
+                          style={{ width: "200px" }}
+                        />
+                      ) : (
+                        <text>No image</text>
+                      )
+                    ) : (
+                      row[header]
+                    )}
+                  </td>
                 ))}
                 {customCol &&
                   Object.values(customCol).map((renderColumn, colIndex) => (

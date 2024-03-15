@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ScreenContext } from "../context/ScreenContext";
-import { FoodContext } from "../context/FoodContext";
+import { FoodContext, FoodProps } from "../context/FoodContext";
 import { ItemContext } from "../context/ItemContext";
 import { AuthContext } from "../context/AuthContext";
 import { AppContext } from "../context/AppContext";
@@ -34,6 +34,8 @@ const FoodTable2 = () => {
   const [dateArray, setDateArray] = useState<string[]>([]);
 
   const [showActionModal, setShowActionModal] = useState(false);
+
+  const [selectedFoodDate, setSelectedFoodDate] = useState<FoodProps | null>(null);
 
   useEffect(() => {
     const fetchDate = async () => {
@@ -80,6 +82,12 @@ const FoodTable2 = () => {
     return dates;
   };
 
+  const handleAdd = (date: string) => {
+    setShowActionModal(true);
+    setSelectedFoodDate({date: new Date (date), _id: null, title: null, price: null});
+    setAction("N")
+  };
+
   console.log(dateArray);
 
   return (
@@ -88,7 +96,7 @@ const FoodTable2 = () => {
         {dateArray.map((date) => (
           <div>
             {date}
-            <Button onClick={() => setShowActionModal(true)}>Add</Button>
+            <Button onClick={() => handleAdd(date)}>Add</Button>
           </div>
         ))}
       </div>
@@ -97,6 +105,7 @@ const FoodTable2 = () => {
         buttonLabel="test"
         show={showActionModal}
         setShow={setShowActionModal}
+        data={selectedFoodDate}
       />
     </div>
   );

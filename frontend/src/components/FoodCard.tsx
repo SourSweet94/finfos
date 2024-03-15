@@ -1,6 +1,6 @@
 import { Card, Image } from "react-bootstrap";
 import Button from "./Button";
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { FoodProps } from "../context/FoodContext";
 import { Toast } from "react-bootstrap";
@@ -12,7 +12,7 @@ interface FoodCardProps {
 
 const FoodCard = ({ food, setShowToast }: FoodCardProps) => {
 
-  const {_id, date, title, price, img} = food
+  const {_id, date, title, price, image} = food
   const {
     state: { user },
   } = useContext(AuthContext);
@@ -29,10 +29,10 @@ const FoodCard = ({ food, setShowToast }: FoodCardProps) => {
       body: JSON.stringify({ _id }),
     });
   };
-
+console.log(image)
   return (
     <Card className="shadow mb-5 mx-3 rounded" style={{ width: "14rem" }}>
-      <Image className="mx-auto" src={img} width="100px" />
+      <Image className="mx-auto" src={`../../public/uploads/${image}`} width="100px" />
       <Card.Body className="text-center">
         <Card.Title>{title}</Card.Title>
         <Card.Title>{date.toString()}</Card.Title>

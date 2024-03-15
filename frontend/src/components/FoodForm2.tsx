@@ -18,11 +18,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 interface FoodFormProps {
+  date: any;
   foodDetails?: FoodProps;
   setModalShow?: Dispatch<SetStateAction<boolean>>;
 }
 
-const FoodForm2 = ({ foodDetails, setModalShow }: FoodFormProps) => {
+const FoodForm2 = ({ date, foodDetails, setModalShow }: FoodFormProps) => {
   const { dispatch } = useContext(FoodContext);
   const {
     state: { user },
@@ -32,9 +33,9 @@ const FoodForm2 = ({ foodDetails, setModalShow }: FoodFormProps) => {
 
   const [image, setImage] = useState<File | null>(null);
 
-  const [date, setDate] = useState<Date | null>(
-    action === "E" && foodDetails ? new Date(foodDetails.date) : null
-  );
+  // const [date, setDate] = useState<Date | null>(
+  //   action === "E" && foodDetails ? new Date(foodDetails.date) : null
+  // );
   const [title, setTitle] = useState<string | null>(
     action === "E" && foodDetails ? foodDetails.title : null
   );
@@ -106,6 +107,8 @@ const FoodForm2 = ({ foodDetails, setModalShow }: FoodFormProps) => {
 
   return (
     <form onSubmit={handleSubmit}>
+
+      <div>{date}</div>
 
       <Form.Group className="mb-3">
         <Form.Label>Image</Form.Label>

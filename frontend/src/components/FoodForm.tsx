@@ -46,29 +46,27 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const food = {image, date, title, price };
+    // const food = {image, date, title, price };
+
+    const formData = new FormData();
+
+    formData.append("date", date!.toString());
+    formData.append("title", title!);
+    formData.append("price", price!.toString());
+    formData.append("image", image!);
+
     const response = await fetch(
       `http://localhost:4000/api/food/${record_id}/${
         action === "N" ? "" : foodDetails!._id
       }`,
       {
         method: action === "N" ? "POST" : "PATCH",
-        body: JSON.stringify(food),
+        body: formData,
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
         },
       }
     );
-
-    // await fetch('http://localhost:4000/api/food/upload-image', {
-    //   method: "POST",
-    //   body: JSON.stringify(image),
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //     Authorization: `Bearer ${user.token}`,
-    //   }
-    // })
 
     const json = await response.json();
 
@@ -99,14 +97,14 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
+    if (e.target.files) {
       setImage(e.target.files[0]);
+      console.log("CONRAIN");
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-
       <Form.Group className="mb-3">
         <Form.Label>Image</Form.Label>
         <Form.Control
@@ -142,6 +140,7 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
         <Form.Control
           type="number"
           placeholder="Price"
+          min="0"
           value={price === null ? "" : price}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setPrice(e.target.valueAsNumber)

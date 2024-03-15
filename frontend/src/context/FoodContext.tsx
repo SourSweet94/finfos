@@ -5,7 +5,7 @@ interface FoodContextProps {
 }
 
 export interface FoodProps {
-  img?: string;
+  image?: string;
   date: Date;
   _id: string;
   title: string;
