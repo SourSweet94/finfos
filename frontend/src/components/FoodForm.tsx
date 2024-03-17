@@ -11,7 +11,6 @@ import { FoodContext } from "../context/FoodContext";
 import { AuthContext } from "../context/AuthContext";
 import { FoodProps } from "../context/FoodContext";
 import { ScreenContext } from "../context/ScreenContext";
-import { RecordContext } from "../context/RecordContext";
 import { ItemContext } from "../context/ItemContext";
 import Button from "./Button";
 import DatePicker from "react-datepicker";
@@ -46,13 +45,17 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // const food = {image, date, title, price };
+    // const food = { image, date, title, price };
 
     const formData = new FormData();
 
-    formData.append("date", date!.toString());
-    formData.append("title", title!);
-    formData.append("price", price!.toString());
+    if (!date || !title || !price) {
+      setError("Please fill in all required fields.");
+      return;
+    }
+    formData.append("date", date.toString());
+    formData.append("title", title);
+    formData.append("price", price.toString());
     formData.append("image", image!);
 
     const response = await fetch(
@@ -99,7 +102,6 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setImage(e.target.files[0]);
-      console.log("CONRAIN");
     }
   };
 
@@ -116,6 +118,7 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
 
       <Form.Group className="mb-3">
         <Form.Label>Date</Form.Label>
+        <br/>
         <DatePicker
           selected={date}
           onChange={(selectedDate: Date | null) => setDate(selectedDate)}

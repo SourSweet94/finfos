@@ -16,7 +16,9 @@ const Sidebar = ({ collapsed, handleToggleSidebar }: SidebarProps) => {
     state: { user, userType },
   } = useContext(AuthContext);
 
-  const [activeMenuItem, setActiveMenuItem] = useState<string>("");
+  const [activeMenuItem, setActiveMenuItem] = useState<string>(
+    userType === "admin" ? "dashboard" : "menu"
+  );
 
   // const [cartItemCount, setCartItemCount] = useState<number>(0);
 
@@ -45,13 +47,13 @@ const Sidebar = ({ collapsed, handleToggleSidebar }: SidebarProps) => {
       <ProSidebar
         collapsed={collapsed}
         // collapsedWidth="0px"
-        // breakPoint="md"
+        breakPoint="md"
         transitionDuration={0}
         width="250px"
-        style={{ height: "90vh", background: "lightgray" }}
+        style={{ height: "100vh", background: "lightgray" }}
       >
         <Button
-          // style={{ height: "60px", borderRadius: "0px 7px 7px 0px" }}
+          style={{minWidth: '50px'}}
           onClick={handleToggleSidebar}
         >
           {<Icon iconName="List" />}
@@ -136,12 +138,6 @@ const Sidebar = ({ collapsed, handleToggleSidebar }: SidebarProps) => {
           )}
         </Menu>
       </ProSidebar>
-      {/* <Button
-        style={{ height: "60px", borderRadius: "0px 7px 7px 0px" }}
-        onClick={handleToggleSidebar}
-      >
-        {<Icon iconName="List" />}
-      </Button> */}
     </>
   );
 };

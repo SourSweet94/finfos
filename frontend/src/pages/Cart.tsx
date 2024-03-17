@@ -46,10 +46,10 @@ const Cart = () => {
     if (!user) {
       return;
     }
-    if(cartItem.length === 0){
-      console.log("Cart is empty")
-      setShowInfoModal(false)
-      return
+    if (cartItem.length === 0) {
+      console.log("Cart is empty");
+      setShowInfoModal(false);
+      return;
     }
     await fetch("http://localhost:4000/api/order", {
       method: "POST",
@@ -59,7 +59,7 @@ const Cart = () => {
       },
       body: JSON.stringify({ cartItem, amount }),
     });
-    const response = await fetch('http://localhost:4000/api/user/cart/', {
+    const response = await fetch("http://localhost:4000/api/user/cart/", {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -67,8 +67,8 @@ const Cart = () => {
     });
     const json = await response.json();
     dispatch({ type: "SET_FOOD", payload: json });
-    setAmount(0)
-    setShowInfoModal(false)
+    setAmount(0);
+    setShowInfoModal(false);
   };
 
   useEffect(() => {
@@ -135,24 +135,29 @@ const Cart = () => {
       )}
       <div className="cart-amount ">
         {/* <Row> */}
-          <div>Amount: {amount}</div>
-          <div>
-            <Button onClick={() => setShowInfoModal(true)}>Order Now</Button>
-          </div>
+        <div>Amount: {amount}</div>
+        <div>
+          <Button
+            disabled={amount === 0}
+            onClick={() => setShowInfoModal(true)}
+          >
+            Order Now
+          </Button>
+        </div>
         {/* </Row> */}
       </div>
 
       <InfoModal
         show={showInfoModal}
         setShow={setShowInfoModal}
-        status="fail"
-        headerTitle="a title"
+        status="info"
+        headerTitle="Place Order"
         buttonLbl="Yes"
         onClickBtn1={handleOrder}
         buttonLbl2="No"
         onClickBtn2={() => setShowInfoModal(false)}
       >
-        <div>Confirm order</div>
+        <div>Are you sure you want to place an order?</div>
       </InfoModal>
     </>
   );

@@ -25,7 +25,6 @@ const createFood = async (req, res) => {
     const { date, title, price } = req.body
     const { record_id } = req.params
     const image = req.file?.originalname
-    console.log(req.body, image)
     try {
         const user_id = req.user._id
         const food = await Food.create({ date, title, price, user_id, image })

@@ -14,16 +14,22 @@ import UserOrder from "./components/UserOrderTable";
 
 function App() {
   const {
-    state: { user },
+    state: { user, userType },
   } = useContext(AuthContext);
   return (
     <>
       {/* <NavBar /> */}
       <Routes>
         <Route path="/" element={user ? <Home /> : <Navigate to="/login" />}>
+          <Route
+            index
+            element={
+              <Navigate to={userType === "admin" ? "/dashboard" : "/menu"} replace/>
+            }
+          />
           <Route path="/dashboard" element={<div>Dashboard</div>} />
           <Route path="/manage" element={<Manage />} />
-          <Route path="/user-order" element={<UserOrder/>} />
+          <Route path="/user-order" element={<UserOrder />} />
 
           <Route path="/menu" element={<Menu />} />
           <Route path="/cart" element={<Cart />} />

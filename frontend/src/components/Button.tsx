@@ -23,7 +23,7 @@ const Button = ({
     <BSButton
       type={type}
       disabled={disabled}
-      style={style}
+      style={{minWidth: '80px', ...style}}
       onClick={onClick}
       className="mx-2 btn"
       variant={variant}

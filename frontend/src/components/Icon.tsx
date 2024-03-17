@@ -3,11 +3,12 @@ import * as icons from "react-bootstrap-icons";
 interface IconProps {
   iconName: keyof typeof icons;
   color?: string
+  size?: string
 }
 
-const Icon = ({ iconName, color, ...props }: IconProps) => {
+const Icon = ({ iconName, ...props }: IconProps) => {
   const BSIcon = icons[iconName];
-  return <BSIcon color={color} {...props} />;
+  return <BSIcon  {...props} />;
 };
 
 export default Icon;

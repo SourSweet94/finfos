@@ -12,6 +12,7 @@ import { ScreenContext } from "../context/ScreenContext";
 import Button from "./Button";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import '../styles/recordForm.css'
 
 interface RecordFormProps {
   record?: RecordProps;
@@ -37,6 +38,11 @@ const RecordForm = ({ record, setModalShow }: RecordFormProps) => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!startDate || !endDate) {
+      setError("Please fill in all required fields.");
+      return;
+    }
 
     const response = await fetch(
       `http://localhost:4000/api/records/${
@@ -84,7 +90,7 @@ const RecordForm = ({ record, setModalShow }: RecordFormProps) => {
     <form onSubmit={handleSubmit}>
 
       <Form.Group className="mb-3">
-        <Form.Label>Start Date</Form.Label>
+        <Form.Label className="form-label">Start Date</Form.Label>
         <DatePicker
           selected={startDate}
           onChange={(selectedDate: Date | null) => setStartDate(selectedDate)}
@@ -93,7 +99,7 @@ const RecordForm = ({ record, setModalShow }: RecordFormProps) => {
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label>End Date</Form.Label>
+        <Form.Label className="form-label">End Date</Form.Label>
         <DatePicker
           selected={endDate}
           onChange={(selectedDate: Date | null) => setEndDate(selectedDate)}

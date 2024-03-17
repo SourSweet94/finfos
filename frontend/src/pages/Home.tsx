@@ -1,4 +1,4 @@
-import { Col, Container, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { Outlet } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AppContext } from "../context/AppContext";
@@ -19,30 +19,17 @@ const Home = () => {
 
   return (
     <>
-      <div style={{ position: "sticky", top: "0" }}>
-        <NavBar />
-      </div>
+      <NavBar />
 
       <div className="home-container">
-        <div
-          className={`sidebar ${collapsed ? "collapsed" : ""}`}
-          // style={{ position: "fixed", left: 0 }}
-        >
+        <div className={"sidebar"}>
           <Sidebar
             collapsed={collapsed}
             handleToggleSidebar={handleToggleSidebar}
           />
         </div>
 
-        <div
-          className={`main-content ${collapsed ? "collapsed" : ""}`}
-          // style={{
-          //   position: "relative",
-          //   width: "calc(100vw - 200px)",
-          //   left: "200px",
-          //   zIndex: -1,
-          // }}
-        >
+        <div className={"main-content"}>
           <Container>
             <Breadcrumb />
           </Container>

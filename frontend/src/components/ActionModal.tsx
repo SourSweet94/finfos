@@ -38,7 +38,7 @@ const ActionModal = ({ data, show, setShow }: ActionModalProps) => {
       show={show}
       setShow={setShow}
       headerTitle={header}
-      styles={{ main: styleSheet.main }}
+      style={{ main: styleSheet.main }}
     >
       <>
         {screenType === "Action" && (

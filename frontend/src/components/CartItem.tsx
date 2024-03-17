@@ -70,7 +70,7 @@ const CartItem = ({
           </Col> */}
         {/* <Col className="cart-item-col">{totalPrice}</Col> */}
         <Col className="cart-item-col">
-          <Button onClick={onDelete}>Delete</Button>
+          <Button onClick={onDelete} variant="danger">Delete</Button>
         </Col>
       </Row>
     </Container>

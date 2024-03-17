@@ -1,25 +1,22 @@
-import { Card, Image } from "react-bootstrap";
+import { Card, Container, Image } from "react-bootstrap";
 import Button from "./Button";
 import { Dispatch, SetStateAction, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { FoodProps } from "../context/FoodContext";
-import { Toast } from "react-bootstrap";
 
 interface FoodCardProps {
   food: FoodProps;
-  setShowToast: Dispatch<SetStateAction<boolean>>;
+  setShowInfoModal: Dispatch<SetStateAction<boolean>>;
 }
 
-const FoodCard = ({ food, setShowToast }: FoodCardProps) => {
-
-  const {_id, date, title, price, image} = food
+const FoodCard = ({ food, setShowInfoModal }: FoodCardProps) => {
+  const { _id, date, title, price, image } = food;
   const {
     state: { user },
   } = useContext(AuthContext);
 
-
   const handleAddToCart = async () => {
-    setShowToast(true)
+    setShowInfoModal(true);
     await fetch("http://localhost:4000/api/user/addtocart", {
       method: "PATCH",
       headers: {
@@ -29,11 +26,20 @@ const FoodCard = ({ food, setShowToast }: FoodCardProps) => {
       body: JSON.stringify({ _id }),
     });
   };
-console.log(image)
   return (
     <Card className="shadow mb-5 mx-3 rounded" style={{ width: "14rem" }}>
-      <Image className="mx-auto" src={`../../public/uploads/${image}`} width="100px" />
       <Card.Body className="text-center">
+        <Container style={{top: 0, height: '100px', marginBottom: '10px'}}>
+          {image ? (
+            <Image
+              className="mx-auto"
+              src={`../../public/uploads/${image}`}
+              width="100%"
+            />
+          ) : (
+            <text>No image</text>
+          )}
+        </Container>
         <Card.Title>{title}</Card.Title>
         <Card.Title>{date.toString()}</Card.Title>
         <Card.Text style={{ color: "green" }}>RM {price}</Card.Text>

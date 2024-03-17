@@ -1,24 +1,18 @@
 .home-container {
   display: flex;
+  position: relative;
+  top: 60px;
 }
 
 .sidebar {
-  /* display: flex; */
+  height: calc(100vh - 60px);
+  overflow: hidden;
+  position: sticky;
+  top: 60px;
 }
 
 .main-content {
-  /* flex: 1; */
-  width: 100%;
+  flex: 1;
 }
 
-/* .collapsed .sidebar {
-  width: 0;
-}
 
-.collapsed .main-content {
-  margin-left: 0;
-}
-
-.main-content-container {
-  padding-top: 20px;
-} */

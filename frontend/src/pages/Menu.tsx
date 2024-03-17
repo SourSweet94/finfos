@@ -2,17 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import { FoodContext, FoodProps } from "../context/FoodContext";
 import { AuthContext } from "../context/AuthContext";
 import FoodCard from "../components/FoodCard";
-import {
-  ButtonGroup,
-  Col,
-  Container,
-  Dropdown,
-  Row,
-  Toast,
-  ToastContainer,
-} from "react-bootstrap";
+import { ButtonGroup, Col, Container, Dropdown, Row } from "react-bootstrap";
 import { AppContext } from "../context/AppContext";
 import { RecordProps } from "../context/RecordContext";
+import InfoModal from "../components/InfoModal";
 
 const Menu = () => {
   const {
@@ -23,7 +16,7 @@ const Menu = () => {
     state: { user },
   } = useContext(AuthContext);
   const { setLoading } = useContext(AppContext);
-  const [showToast, setShowToast] = useState<boolean>(false);
+  const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
   const [dateInterval, setDateInterval] = useState<
     { startDate: Date; endDate: Date }[]
   >([]);
@@ -101,27 +94,23 @@ const Menu = () => {
     }
   }, [dispatch, user, selectedDateInterval]);
 
+  useEffect(() => {
+    let timer: NodeJS.Timeout | null = null;
+    if (showInfoModal) {
+      timer = setTimeout(() => {
+        setShowInfoModal(false);
+      }, 1000);
+    }
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
+  }, [showInfoModal]);
+
   return (
     <Container className="menu-container">
-      {/* <ToastContainer position="middle-center">
-        <Toast
-          onClose={() => setShowToast(false)}
-          show={showToast}
-          delay={3000}
-          autohide
-        >
-          <Toast.Header>
-            <img
-              src="holder.js/20x20?text=%20"
-              className="rounded me-2"
-              alt=""
-            />
-            <strong className="me-auto">Bootstrap</strong>
-            <small>11 mins ago</small>
-          </Toast.Header>
-          <Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>
-        </Toast>
-      </ToastContainer> */}
       <Row>
         <Col>
           <Dropdown as={ButtonGroup}>
@@ -164,7 +153,7 @@ const Menu = () => {
                   title: food.title,
                   price: food.price,
                 }}
-                setShowToast={setShowToast}
+                setShowInfoModal={setShowInfoModal}
               />
             );
           })
@@ -172,6 +161,16 @@ const Menu = () => {
           <div>No data</div>
         )}
       </Row>
+      {showInfoModal && (
+        <InfoModal
+          show={showInfoModal}
+          setShow={setShowInfoModal}
+          status="success"
+          headerTitle="lalala"
+          closeButton={false}
+          bsModalProps={{ backdrop: true, animation: false }}
+        />
+      )}
     </Container>
   );
 };

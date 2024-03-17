@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 
 const createToken = (_id) => {
     return jwt.sign({ _id }, process.env.SECRET,
-        // { expiresIn: '2d' }
+        // { expiresIn: '10s' }
     )
 }
 
@@ -98,7 +98,6 @@ const getOrder = async (req, res) => {
 
 const addOrder = async (req, res) => {
     const { cartItem } = req.body
-    // console.log(req.body)
     try {
         const user_id = req.user._id
         const user = await User.findById(user_id)
