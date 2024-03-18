@@ -40,7 +40,7 @@ const InfoModal = ({
       case "info":
         return icon("InfoCircleFill", "#a4c6de");
       case "success":
-        return icon("InfoCircleFill", "green");
+        return icon("CheckCircleFill", "green");
       case "fail":
         return icon("ExclamationCircle", "red");
       case "warning":

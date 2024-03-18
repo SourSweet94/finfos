@@ -99,7 +99,7 @@ const RecordTable = ({
 
   const handleEdit = (selectedRecordID: string) => {
     const recordToEdit = records!.find(
-      (item: any) => item._id === selectedRecordID
+      (item: RecordProps) => item._id === selectedRecordID
     );
     setShowActionModal(true);
     setAction("E");
@@ -121,7 +121,7 @@ const RecordTable = ({
       </>
     ),
   };
-
+console.log(selectedRecord)
   return (
     <>
       {records?.length !== 0 ? (

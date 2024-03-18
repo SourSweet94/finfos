@@ -19,13 +19,12 @@ const Home = () => {
 
   return (
     <>
-      <NavBar />
+      <NavBar handleToggleSidebar={handleToggleSidebar}/>
 
       <div className="home-container">
         <div className={"sidebar"}>
           <Sidebar
             collapsed={collapsed}
-            handleToggleSidebar={handleToggleSidebar}
           />
         </div>
 

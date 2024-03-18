@@ -26,7 +26,8 @@ const createOrder = async (req, res) => {
     const items = cartItem.map(item => ({
       food_id: item._id,
       food_title: item.title,
-      food_price: item.price
+      food_price: item.price,
+      food_date: item.date
     }));
     const order = await Order.create({
       buyer_id: req.user._id, buyer_email: user.email, items, amount

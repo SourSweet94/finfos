@@ -40,7 +40,7 @@ const Table = ({ headers, data, customCol }: TableProps) => {
                           style={{ width: "200px" }}
                         />
                       ) : (
-                        <text>No image</text>
+                        <span>No image</span>
                       )
                     ) : (
                       row[header]

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Form } from "react-bootstrap";
+import { Container, Form, NavLink } from "react-bootstrap";
 import useLogin from "../hooks/useLogin";
 import Button from "../components/Button";
+import "../styles/login.css";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   // const { dispatch } = useContext(AuthContext);
@@ -25,34 +27,52 @@ const Login = () => {
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </Form.Group>
+      <Container className="Auth-form-container">
+        <Form className="Auth-form" onSubmit={handleSubmit}>
+          <Container className="Auth-form-content">
+            <h1 className="Auth-form-title">Sign in</h1>
+            <Form.Group controlId="formEmail" className="form-group mt-3">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Email address"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="form-control mt-1"
+              />
+            </Form.Group>
 
-        <Form.Group controlId="formPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </Form.Group>
+            <Form.Group controlId="formPassword" className="form-group mt-3">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="form-control mt-1"
+              />
+            </Form.Group>
 
-        <Button type="submit" disabled={isLoading} onClick={() => {}}>
-          Log in
-        </Button>
-        {error && <div>{error}</div>}
-      </Form>
+            <div className="d-grid gap-2 mt-3 my-3">
+              <Button type="submit" disabled={isLoading} onClick={() => {}}>
+                Log in
+              </Button>
+              <Button
+                type="submit"
+                disabled={isLoading}
+                onClick={() => {}}
+                style={{ background: "white", color: "grey" }}
+              >
+                <NavLink href="/sign-up">Sign up</NavLink>
+              </Button>
+            </div>
+
+            {error && <span className="error">*{error}</span>}
+          </Container>
+        </Form>
+      </Container>
     </>
   );
 };

@@ -140,7 +140,7 @@ const Menu = () => {
           </Dropdown>
         </Col>
       </Row>
-      <Row style={{ display: "flex" }}>
+      <Row style={{ display: "flex", justifyContent: 'space-between', flexWrap: 'wrap' }}>
         {food?.length !== 0 ? (
           food?.map((food) => {
             return (
@@ -166,10 +166,10 @@ const Menu = () => {
           show={showInfoModal}
           setShow={setShowInfoModal}
           status="success"
-          headerTitle="lalala"
+          // headerTitle="lalala"
           closeButton={false}
           bsModalProps={{ backdrop: true, animation: false }}
-        />
+        ><span>Item has been added in your cart</span></InfoModal>
       )}
     </Container>
   );

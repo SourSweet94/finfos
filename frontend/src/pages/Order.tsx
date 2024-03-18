@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { AppContext } from "../context/AppContext";
+import { Col, Container, Row } from "react-bootstrap";
 
 const Order = () => {
   const {
@@ -20,7 +21,7 @@ const Order = () => {
       });
 
       const json = await response.json();
-
+      console.log(json);
       setOrder(json);
       setLoading(false);
     };
@@ -33,19 +34,40 @@ const Order = () => {
     <div>
       {order.length !== 0 ? (
         order.map((order: any) => (
-          <div key={order._id}>
-            <h2>Order #{order._id}</h2>
-            <ul>
+          <Container key={order._id}>
+            <div
+              style={{
+                background: "#ededed",
+                borderRadius: "10px",
+                padding: "0px 10px",
+                margin: "10px 0px",
+              }}
+            >
+              Order #{order._id}
+            </div>
+
+            <ol>
               {order.items.map((item: any) => (
                 <li key={item._id}>
-                  <div>{item.food_title}</div>
-                  <div>Price: {item.food_price}</div>
+                  <Container>
+                    <Row>
+                      <Col>
+                        {new Date(item.food_date).toLocaleDateString("en-GB")}
+                      </Col>
+                      <Col>{item.food_title}</Col>
+                      <Col style={{ display: "flex", justifyContent: "right" }}>
+                        RM {item.food_price}
+                      </Col>
+                    </Row>
+                  </Container>
                 </li>
               ))}
-            </ul>
-            <p>Total Amount: {order.amount}</p>
+            </ol>
+            <div style={{ display: "flex", justifyContent: "right" }}>
+              Total Amount: RM {order.amount}
+            </div>
             <hr />
-          </div>
+          </Container>
         ))
       ) : (
         <div>Order is empty</div>

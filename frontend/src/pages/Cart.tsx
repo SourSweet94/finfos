@@ -24,7 +24,7 @@ const Cart = () => {
   const [amount, setAmount] = useState<number>(0);
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
   const [cartItem, setCartItem] = useState<
-    { _id: string; title: string; price: number }[]
+    { _id: string; title: string; price: number, date: Date }[]
   >([]);
 
   const handleDelete = async ({ _id, price }: FoodProps) => {
@@ -93,10 +93,11 @@ const Cart = () => {
         cartData.some((cartItem: any) => cartItem.food_id === food._id)
       );
       setCartItem(
-        filteredFood.map(({ _id, title, price }: FoodProps) => ({
+        filteredFood.map(({ _id, title, price, date }: FoodProps) => ({
           _id,
           title,
           price,
+          date
         }))
       );
       dispatch({ type: "SET_FOOD", payload: filteredFood });
@@ -111,7 +112,7 @@ const Cart = () => {
   }, []);
 
   return (
-    <>
+    <div className="cart-container">
       {food?.length !== 0 ? (
         <Container className="border pb-3">
           <Row className="cart-header py-3 mx-3">
@@ -159,7 +160,7 @@ const Cart = () => {
       >
         <div>Are you sure you want to place an order?</div>
       </InfoModal>
-    </>
+    </div>
   );
 };
 

@@ -23,6 +23,10 @@ const OrderSchema = new mongoose.Schema({
       food_price: {
         type: Number,
         require: true
+      },
+      food_date: {
+        type: Date,
+        require: true
       }
     }
   ],

@@ -1,13 +1,18 @@
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Container, Nav, Navbar as BSNavbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import useLogout from "../hooks/useLogout";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import "../styles/navbar.css";
 import Button from "./Button";
 import InfoModal from "./InfoModal";
+import Icon from "./Icon";
+import "../styles/navbar.css";
 
-const NavBar = () => {
+interface NavbarProps {
+  handleToggleSidebar: () => void;
+}
+
+const Navbar = ({ handleToggleSidebar }: NavbarProps) => {
   const { logout } = useLogout();
   const {
     state: { user },
@@ -17,21 +22,33 @@ const NavBar = () => {
 
   return (
     <>
-      <Navbar
+      <BSNavbar
         className="navbar"
         bg="dark"
         data-bs-theme="dark"
-        // style={{ height: "10vh" }}
       >
         <div className="navbar-left">
-          <Link to="/">
-            <Navbar.Brand>Home</Navbar.Brand>
-          </Link>
+          <Container
+            className="d-none d-md-block"
+            style={{ width: "80px", display: "flex", justifyContent: "center" }}
+          >
+            <Button
+              style={{ minWidth: "50px", margin: 0 }}
+              onClick={handleToggleSidebar}
+            >
+              {<Icon iconName="List" />}
+            </Button>
+          </Container>
+          <Container>
+            <Link to="/">
+              <BSNavbar.Brand>Home</BSNavbar.Brand>
+            </Link>
+          </Container>
         </div>
         <div className="navbar-right">
           {user ? (
-            <Nav className="">
-              <text className="navbar-user">{user.email}</text>
+            <Nav>
+              <span className="navbar-user">{user.email}</span>
               <Button onClick={() => setShowInfoModal(true)}>Logout</Button>
             </Nav>
           ) : (
@@ -41,7 +58,7 @@ const NavBar = () => {
             </Nav>
           )}
         </div>
-      </Navbar>
+      </BSNavbar>
       <InfoModal
         show={showInfoModal}
         setShow={setShowInfoModal}
@@ -52,10 +69,10 @@ const NavBar = () => {
         buttonLbl2="No"
         onClickBtn2={() => setShowInfoModal(false)}
       >
-        <text>Do you want to log out?</text>
+        <span>Do you want to log out?</span>
       </InfoModal>
     </>
   );
 };
 
-export default NavBar;
+export default Navbar;

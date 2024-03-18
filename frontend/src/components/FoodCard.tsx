@@ -3,6 +3,7 @@ import Button from "./Button";
 import { Dispatch, SetStateAction, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { FoodProps } from "../context/FoodContext";
+import { AppContext } from "../context/AppContext";
 
 interface FoodCardProps {
   food: FoodProps;
@@ -14,8 +15,10 @@ const FoodCard = ({ food, setShowInfoModal }: FoodCardProps) => {
   const {
     state: { user },
   } = useContext(AuthContext);
+  const { setLoading } = useContext(AppContext);
 
   const handleAddToCart = async () => {
+    setLoading(true);
     setShowInfoModal(true);
     await fetch("http://localhost:4000/api/user/addtocart", {
       method: "PATCH",
@@ -25,11 +28,12 @@ const FoodCard = ({ food, setShowInfoModal }: FoodCardProps) => {
       },
       body: JSON.stringify({ _id }),
     });
+    setLoading(false);
   };
   return (
     <Card className="shadow mb-5 mx-3 rounded" style={{ width: "14rem" }}>
       <Card.Body className="text-center">
-        <Container style={{top: 0, height: '100px', marginBottom: '10px'}}>
+        <Container style={{ top: 0, height: "100px", marginBottom: "10px" }}>
           {image ? (
             <Image
               className="mx-auto"
@@ -37,7 +41,7 @@ const FoodCard = ({ food, setShowInfoModal }: FoodCardProps) => {
               width="100%"
             />
           ) : (
-            <text>No image</text>
+            <span>No image</span>
           )}
         </Container>
         <Card.Title>{title}</Card.Title>

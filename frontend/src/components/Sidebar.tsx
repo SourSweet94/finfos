@@ -3,15 +3,13 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 import { Sidebar as ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
-import Button from "./Button";
 import Icon from "./Icon";
 
 interface SidebarProps {
   collapsed: boolean;
-  handleToggleSidebar: () => void;
 }
 
-const Sidebar = ({ collapsed, handleToggleSidebar }: SidebarProps) => {
+const Sidebar = ({ collapsed }: SidebarProps) => {
   const {
     state: { user, userType },
   } = useContext(AuthContext);
@@ -52,12 +50,7 @@ const Sidebar = ({ collapsed, handleToggleSidebar }: SidebarProps) => {
         width="250px"
         style={{ height: "100vh", background: "lightgray" }}
       >
-        <Button
-          style={{minWidth: '50px'}}
-          onClick={handleToggleSidebar}
-        >
-          {<Icon iconName="List" />}
-        </Button>
+        
         <Menu
           menuItemStyles={{
             button: ({ level, active }) => {

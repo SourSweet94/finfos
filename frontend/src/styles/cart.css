@@ -1,14 +1,19 @@
-.cart-header {
-  /* text-align: center; */
+.cart-container {
+  display: flex;
+  justify-content: center;
+  
 }
 
 .cart-amount {
-  /* position: fixed; */
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   /* left: 0; */
-  /* bottom: 0; */
-  /* width: 30%; */
-  background-color: rgb(248, 255, 188);
+  bottom: 0;
+  width: 400px;
+  background-color: #529cd9;
   padding: 10px;
   box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.1);
-  border: solid
+  /* border: solid; */
 }

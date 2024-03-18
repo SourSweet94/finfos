@@ -49,11 +49,12 @@ const CartItem = ({
     <Container className="py-3 border-top">
       <Row>
         <Col className="cart-item-col">
-          <Image
+          {image? <Image
             className="mx-auto"
             src={`../../public/uploads/${image}`}
             width="100px"
-          />
+          />: <span>No image</span>}
+          
         </Col>
         <Col className="cart-item-col">{title}</Col>
         <Col className="cart-item-col">RM {price}</Col>

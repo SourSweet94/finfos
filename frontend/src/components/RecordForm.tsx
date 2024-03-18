@@ -94,7 +94,7 @@ const RecordForm = ({ record, setModalShow }: RecordFormProps) => {
         <DatePicker
           selected={startDate}
           onChange={(selectedDate: Date | null) => setStartDate(selectedDate)}
-          dateFormat="yyyy-MM-dd"
+          dateFormat="dd-MM-yyyy"
         />
       </Form.Group>
 
@@ -103,7 +103,7 @@ const RecordForm = ({ record, setModalShow }: RecordFormProps) => {
         <DatePicker
           selected={endDate}
           onChange={(selectedDate: Date | null) => setEndDate(selectedDate)}
-          dateFormat="yyyy-MM-dd"
+          dateFormat="dd-MM-yyyy"
         />
       </Form.Group>
 

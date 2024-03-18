@@ -25,7 +25,7 @@ const Button = ({
       disabled={disabled}
       style={{minWidth: '80px', ...style}}
       onClick={onClick}
-      className="mx-2 btn"
+      className="btn"
       variant={variant}
     >
       {children}

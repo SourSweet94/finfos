@@ -37,7 +37,8 @@ const addToCart = async (req, res) => {
         const user = await User.findById(user_id)
 
         if (user.cart.find(item => item.food_id === _id)) {
-            return
+            console.log('already')
+            return res.status(200).json(user)
         }
 
         user.cart.push({ food_id: _id, qty: 1, purchased: false })
