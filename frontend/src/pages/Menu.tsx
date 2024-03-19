@@ -140,7 +140,7 @@ const Menu = () => {
           </Dropdown>
         </Col>
       </Row>
-      <Row style={{ display: "flex", justifyContent: 'space-between', flexWrap: 'wrap' }}>
+      <Row >
         {food?.length !== 0 ? (
           food?.map((food) => {
             return (

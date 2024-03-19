@@ -121,11 +121,11 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
               </MenuItem>
               <MenuItem
                 icon={<Icon iconName="ChatLeftTextFill" />}
-                component={<Link to="/review" />}
-                active={activeMenuItem === "review"}
-                onClick={() => setActiveMenuItem("review")}
+                component={<Link to="/feedback" />}
+                active={activeMenuItem === "feedback"}
+                onClick={() => setActiveMenuItem("feedback")}
               >
-                Review
+                Feedback
               </MenuItem>
             </>
           )}

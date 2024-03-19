@@ -20,7 +20,7 @@ const Manage = () => {
   };
 
   return (
-    <Container>
+    <>
       {screenType === "Browse" && (
         <RecordTable
           showActionModal={showActionModal}
@@ -60,7 +60,7 @@ const Manage = () => {
           </Button>
         </div>
       </div>
-    </Container>
+    </>
   );
 };
 

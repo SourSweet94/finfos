@@ -11,6 +11,7 @@ import Manage from "./pages/admin/Manage";
 import Cart from "./pages/Cart";
 import Order from "./pages/Order";
 import UserOrder from "./components/UserOrderTable";
+import Feedback from "./pages/Feedback";
 
 function App() {
   const {
@@ -24,7 +25,10 @@ function App() {
           <Route
             index
             element={
-              <Navigate to={userType === "admin" ? "/dashboard" : "/menu"} replace/>
+              <Navigate
+                to={userType === "admin" ? "/dashboard" : "/menu"}
+                replace
+              />
             }
           />
           <Route path="/dashboard" element={<div>Dashboard</div>} />
@@ -34,7 +38,7 @@ function App() {
           <Route path="/menu" element={<Menu />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/order" element={<Order />} />
-          <Route path="/review" element={<div>review</div>} />
+          <Route path="/feedback" element={<Feedback />} />
         </Route>
         <Route
           path="/login"

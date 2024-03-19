@@ -17,6 +17,7 @@ const Table = ({ headers, data, customCol }: TableProps) => {
       <BSTable striped bordered hover>
         <thead>
           <tr>
+            <th>No</th>
             {headers.map((header) => (
               <th key={header}>{header}</th>
             ))}
@@ -30,6 +31,7 @@ const Table = ({ headers, data, customCol }: TableProps) => {
           {data &&
             data.map((row, rowIndex) => (
               <tr key={rowIndex}>
+                <td>{rowIndex + 1}</td>
                 {headers.map((header, colIndex) => (
                   <td key={colIndex}>
                     {row[header] === row.image ? (

@@ -1,5 +1,6 @@
 const Food = require('../models/foodModel')
 const Record = require('../models/recordModel')
+const Feedback = require('../models/feedbackModel')
 const mongoose = require('mongoose')
 
 const getAllFood = async (req, res) => {
@@ -34,6 +35,7 @@ const createFood = async (req, res) => {
         }
         record.food_id.push(food._id)
         await record.save()
+        await Feedback.create({ food_id: food._id })
         res.status(200).json(food)
     } catch (error) {
         res.status(400).json({ error: error.message })

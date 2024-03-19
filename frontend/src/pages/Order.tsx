@@ -21,7 +21,6 @@ const Order = () => {
       });
 
       const json = await response.json();
-      console.log(json);
       setOrder(json);
       setLoading(false);
     };
@@ -31,7 +30,7 @@ const Order = () => {
   }, []);
 
   return (
-    <div>
+    <Container className="border py-3">
       {order.length !== 0 ? (
         order.map((order: any) => (
           <Container key={order._id}>
@@ -40,7 +39,7 @@ const Order = () => {
                 background: "#ededed",
                 borderRadius: "10px",
                 padding: "0px 10px",
-                margin: "10px 0px",
+                // margin: "10px 0px",
               }}
             >
               Order #{order._id}
@@ -72,7 +71,7 @@ const Order = () => {
       ) : (
         <div>Order is empty</div>
       )}
-    </div>
+    </Container>
   );
 };
 
