@@ -3,6 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import { AppContext } from "../context/AppContext";
 import { Col, Container, Form, Row } from "react-bootstrap";
 import Button from "../components/Button";
+import Icon from "../components/Icon";
 
 const Feedback = () => {
   const {
@@ -13,7 +14,9 @@ const Feedback = () => {
   const [order, setOrder] = useState([]);
 
   const [comments, setComments] = useState<{ [key: string]: string }>({});
+  const [commented, setCommented] = useState<string[]>([]);
   const [error, setError] = useState<{ [key: string]: string }>({});
+  const [submit, setSubmit] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -25,43 +28,50 @@ const Feedback = () => {
       });
 
       const json = await response.json();
-      console.log(json);
-      setOrder(json);
+      if(response.ok){
+        setOrder(json);
+      }
+      
       setLoading(false);
     };
 
-    const fetchFeedback = async () => {
+    if (user) {
+      fetchOrder();
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchWrittenFeedback = async () => {
       const response = await fetch("http://localhost:4000/api/feedback", {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },
       });
       const json = await response.json();
-      console.log(json);
-      const getFoodID = (json: any, user_id: any) => {
-        for (const feedback of json) {
-          for (const feedbackItem of feedback.feedback) {
-            if (feedbackItem.user_id === user_id) {
-              return feedback.food_id;
-            }
-          }
-        }
-        return null; // If no matching user_id found in feedback objects
-      };
-      const foodID = getFoodID(json, user.user_id);
-      console.log(foodID)
+
+      console.log(submit)
+      if (response.ok) {
+        const filteredJson = json
+          .filter((feedback: any) =>
+            feedback.feedback.some((item: any) => item.user_id === user.user_id)
+          )
+          .map((feedback: any) => feedback.food_id);
+        console.log("rerender");
+        setCommented(filteredJson);
+      }
     };
+
     if (user) {
-      fetchOrder();
-      fetchFeedback();
+      fetchWrittenFeedback();
     }
-  }, []);
+  }, [submit]);
 
   const handleSubmit = async (
     e: FormEvent<HTMLFormElement>,
     food_id: string
   ) => {
     e.preventDefault();
+    setSubmit((prev) => !prev);
     if (!comments[food_id] || !comments[food_id].replace(/\s/g, "").length) {
       setError({ [food_id]: "Comment cannot be blank" });
       return;
@@ -77,7 +87,7 @@ const Feedback = () => {
         body: JSON.stringify({ comment: comments[food_id] }),
       }
     );
-
+    console.log("submitted");
     // setComments({})
   };
 
@@ -119,10 +129,34 @@ const Feedback = () => {
                               [item.food_id]: e.target.value,
                             }));
                           }}
+                          disabled={commented.includes(item.food_id)}
                         />
-                        <Button type="submit" onClick={() => {}}>
-                          Submit
-                        </Button>
+                        {commented.find(
+                          (food_id: string) => food_id === item.food_id
+                        ) ? (
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              width: "fit-content",
+                            }}
+                          >
+                            <span
+                              style={{ textWrap: "nowrap", padding: "0 10px" }}
+                            >
+                              Thanks for your feedback
+                            </span>
+                            <Icon
+                              iconName="CheckLg"
+                              color="green"
+                              size="30px"
+                            />
+                          </div>
+                        ) : (
+                          <Button type="submit" onClick={() => {}}>
+                            Submit
+                          </Button>
+                        )}
                       </div>
                       {error && (
                         <div style={{ height: "20px" }}>

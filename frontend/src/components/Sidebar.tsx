@@ -48,7 +48,7 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
         breakPoint="md"
         transitionDuration={0}
         width="250px"
-        style={{ height: "100vh", background: "lightgray" }}
+        style={{ height: "100%", background: "lightgray" }}
       >
         
         <Menu

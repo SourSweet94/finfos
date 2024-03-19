@@ -19,7 +19,15 @@ const updateFeedback = async (req, res) => {
   res.status(200).json({ message: 'Feedback updated successfully', feedback });
 }
 
+const deleteAllFeedback = async (req, res) => {
+
+  const feedback = await Feedback.deleteMany()
+
+  res.status(200).json(feedback);
+}
+
 module.exports = {
   getAllFeedback,
-  updateFeedback
+  updateFeedback,
+  deleteAllFeedback
 }
