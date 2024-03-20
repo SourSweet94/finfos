@@ -1,9 +1,9 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Route, Routes, Navigate, useLocation } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import Menu from "./pages/Menu";
 import Manage from "./pages/admin/Manage";

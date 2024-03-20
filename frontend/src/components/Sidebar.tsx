@@ -14,8 +14,14 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
     state: { user, userType },
   } = useContext(AuthContext);
 
+  const lastLocation = localStorage.getItem("lastLocation");
+
   const [activeMenuItem, setActiveMenuItem] = useState<string>(
-    userType === "admin" ? "dashboard" : "menu"
+    lastLocation
+      ? lastLocation.slice(1)
+      : userType === "admin"
+      ? "dashboard"
+      : "menu"
   );
 
   // const [cartItemCount, setCartItemCount] = useState<number>(0);
@@ -50,7 +56,6 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
         width="250px"
         style={{ height: "100%", background: "lightgray" }}
       >
-        
         <Menu
           menuItemStyles={{
             button: ({ level, active }) => {
