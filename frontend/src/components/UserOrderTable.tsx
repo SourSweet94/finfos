@@ -64,7 +64,7 @@ const UserOrderTable = () => {
     }
   }, []);
 
-  const headers = ["email", "item", "amount"];
+  const headers = ["Email", "Item", "Amount"];
 
   // const customCol = {
   //   Action: (row: any) => (

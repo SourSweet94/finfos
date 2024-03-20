@@ -27,6 +27,9 @@ const OrderSchema = new mongoose.Schema({
       food_date: {
         type: Date,
         require: true
+      },
+      food_image: {
+        type: String,
       }
     }
   ],

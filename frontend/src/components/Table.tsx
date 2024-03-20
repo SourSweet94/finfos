@@ -12,12 +12,18 @@ interface TableProps {
 const Table = ({ headers, data, customCol }: TableProps) => {
   const [showActionModal, setShowActionModal] = useState(false);
 
+  function toCamelCase(value: string) { 
+    return value.toLowerCase().replace(/\s+(.)/g, function(match, group1) {
+        return group1.toUpperCase();
+    });
+}
+
   return (
     <>
       <BSTable striped bordered hover>
         <thead>
           <tr>
-            <th>No</th>
+            <th>NO</th>
             {headers.map((header) => (
               <th key={header}>{header}</th>
             ))}
@@ -34,7 +40,7 @@ const Table = ({ headers, data, customCol }: TableProps) => {
                 <td>{rowIndex + 1}</td>
                 {headers.map((header, colIndex) => (
                   <td key={colIndex}>
-                    {row[header] === row.image ? (
+                    {row[toCamelCase(header)] === row.image ? (
                       row.image ? (
                         <img
                           src={`../../public/uploads/${row.image}`}
@@ -45,7 +51,7 @@ const Table = ({ headers, data, customCol }: TableProps) => {
                         <span>No image</span>
                       )
                     ) : (
-                      row[header]
+                      row[toCamelCase(header)]
                     )}
                   </td>
                 ))}

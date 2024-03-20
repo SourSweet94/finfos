@@ -29,11 +29,10 @@ const createRecord = async (req, res) => {
             return res.status(400).json({ error: "Start date cannot be greater than end date" });
 
         }
-        const user_id = req.user._id
         const record = await Record.create({
             startDate,
             endDate,
-            user_id
+            user_id: req.user._id
         })
         return res.status(200).json(record)
     } catch (error) {

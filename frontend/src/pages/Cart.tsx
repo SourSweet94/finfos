@@ -24,7 +24,7 @@ const Cart = () => {
   const [amount, setAmount] = useState<number>(0);
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
   const [cartItem, setCartItem] = useState<
-    { _id: string; title: string; price: number, date: Date }[]
+    { _id: string; title: string; price: number; date: Date; image: string }[]
   >([]);
 
   const handleDelete = async ({ _id, price }: FoodProps) => {
@@ -47,7 +47,6 @@ const Cart = () => {
       return;
     }
     if (cartItem.length === 0) {
-      console.log("Cart is empty");
       setShowInfoModal(false);
       return;
     }
@@ -93,11 +92,12 @@ const Cart = () => {
         cartData.some((cartItem: any) => cartItem.food_id === food._id)
       );
       setCartItem(
-        filteredFood.map(({ _id, title, price, date }: FoodProps) => ({
+        filteredFood.map(({ _id, title, price, date, image }: FoodProps) => ({
           _id,
           title,
           price,
-          date
+          date,
+          image,
         }))
       );
       dispatch({ type: "SET_FOOD", payload: filteredFood });
@@ -111,10 +111,12 @@ const Cart = () => {
     }
   }, []);
 
+  console.log(cartItem);
+
   return (
     <div className="cart-container">
       {food?.length !== 0 ? (
-        <Container className="border pb-3">
+        <Container className="border pb-3" style={{ marginBottom: "10%" }}>
           <Row className="cart-header py-3 mx-3">
             <Col>Image</Col>
             <Col>Title</Col>
@@ -134,19 +136,22 @@ const Cart = () => {
       ) : (
         <div>Cart is empty</div>
       )}
-      <div className="cart-amount ">
-        {/* <Row> */}
-        <div>Amount: {amount}</div>
+      <Container className="cart-amount ">
         <div>
-          <Button
-            disabled={amount === 0}
-            onClick={() => setShowInfoModal(true)}
-          >
-            Order Now
-          </Button>
+          Total ({cartItem.length} {cartItem.length == 1 ? "item" : "items"})
         </div>
-        {/* </Row> */}
-      </div>
+        <div>
+          <span className="amount">Amount: RM {amount}</span>
+          <span>
+            <Button
+              disabled={amount === 0}
+              onClick={() => setShowInfoModal(true)}
+            >
+              Order Now
+            </Button>
+          </span>
+        </div>
+      </Container>
 
       <InfoModal
         show={showInfoModal}

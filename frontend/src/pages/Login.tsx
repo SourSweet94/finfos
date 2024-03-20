@@ -3,7 +3,6 @@ import { Container, Form, NavLink } from "react-bootstrap";
 import useLogin from "../hooks/useLogin";
 import Button from "../components/Button";
 import "../styles/login.css";
-import { Link } from "react-router-dom";
 
 const Login = () => {
   // const { dispatch } = useContext(AuthContext);
@@ -60,7 +59,6 @@ const Login = () => {
                 Log in
               </Button>
               <Button
-                type="submit"
                 disabled={isLoading}
                 onClick={() => {}}
                 style={{ background: "white", color: "grey" }}

@@ -4,7 +4,8 @@ const router = express.Router()
 const {
   getOrder,
   getSingleUserOrder,
-  createOrder
+  createOrder,
+  deleteAllOrder
 
 } = require('../controllers/orderController')
 
@@ -18,6 +19,7 @@ router.get('/user', getSingleUserOrder)
 
 router.post('/', createOrder)
 
-
+// for testing only
+router.delete('/', deleteAllOrder)
 
 module.exports = router

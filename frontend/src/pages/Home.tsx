@@ -1,6 +1,6 @@
 import { Container } from "react-bootstrap";
-import { Outlet } from "react-router-dom";
-import { useContext, useState } from "react";
+import { Outlet, useLocation } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import Loading from "../components/Loading";
 import Breadcrumb from "../components/Breadcrumb";
@@ -17,15 +17,19 @@ const Home = () => {
     setCollapsed(!collapsed);
   };
 
+  const location = useLocation();
+
+  useEffect(() => {
+    localStorage.setItem("lastLocation", location.pathname);
+  }, [location.pathname]);
+
   return (
     <>
-      <NavBar handleToggleSidebar={handleToggleSidebar}/>
+      <NavBar handleToggleSidebar={handleToggleSidebar} />
 
       <div className="home-container">
         <div className={"sidebar"}>
-          <Sidebar
-            collapsed={collapsed}
-          />
+          <Sidebar collapsed={collapsed} />
         </div>
 
         <div className={"main-content"}>

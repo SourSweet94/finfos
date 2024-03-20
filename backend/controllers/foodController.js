@@ -27,8 +27,7 @@ const createFood = async (req, res) => {
     const { record_id } = req.params
     const image = req.file?.originalname
     try {
-        const user_id = req.user._id
-        const food = await Food.create({ date, title, price, user_id, image })
+        const food = await Food.create({ date, title, price, user_id: req.user._id, image })
         const record = await Record.findById(record_id)
         if (!record) {
             return res.status(404).json({ error: 'Record not found' });

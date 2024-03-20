@@ -81,15 +81,23 @@ const FoodTable = ({ showActionModal, setShowActionModal }: FoodTableProps) => {
     setSelectedFood(foodToEdit);
   };
 
-  const headers = ["image", "date", "title", "price"];
+  const headers = ["Image", "Date", "Title", "Price"];
 
   const customCol = {
     Action: (row: any) => (
       <>
-        <Button onClick={() => handleEdit(row._id)} variant="warning">
+        <Button
+          style={{ margin: "0 10px 10px" }}
+          onClick={() => handleEdit(row._id)}
+          variant="warning"
+        >
           Edit
         </Button>
-        <Button onClick={() => handleDelete(row._id)} variant="danger">
+        <Button
+          style={{ margin: "0 10px 10px" }}
+          onClick={() => handleDelete(row._id)}
+          variant="danger"
+        >
           Delete
         </Button>
       </>

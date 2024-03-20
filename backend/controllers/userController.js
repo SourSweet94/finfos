@@ -13,9 +13,9 @@ const userLogin = async (req, res) => {
         const user = await User.login(email, password)
         const token = createToken(user._id)
         const user_id = user._id
-        res.status(200).json({ email, token, user_id })
+        return res.status(200).json({ email, token, user_id })
     } catch (error) {
-        res.status(400).json({ error: error.message })
+        return res.status(400).json({ error: error.message })
     }
 }
 
@@ -33,8 +33,7 @@ const userSignUp = async (req, res) => {
 const addToCart = async (req, res) => {
     const { _id } = req.body // food_id
     try {
-        const user_id = req.user._id
-        const user = await User.findById(user_id)
+        const user = await User.findById(req.user._id)
 
         if (user.cart.find(item => item.food_id === _id)) {
             console.log('already')

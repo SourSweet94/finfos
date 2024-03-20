@@ -17,17 +17,14 @@ const useLogin = () => {
       body: JSON.stringify({ email, password }),
     });
     const json = await response.json();
-
     if (!response.ok) {
       setIsLoading(false);
       setError(json.error);
-      console.log("json err: ", json.error);
     }
     if (response.ok) {
-      // save the user to local storage
       localStorage.setItem("user", JSON.stringify(json));
+      localStorage.setItem("userType", JSON.stringify(email === "admin@example.com" ? "admin" : "staff",));
 
-      // update the auth context
       dispatch({
         type: "LOGIN",
         payload: {
@@ -36,7 +33,6 @@ const useLogin = () => {
         },
       });
 
-      // update loading state
       setIsLoading(false);
     }
   };

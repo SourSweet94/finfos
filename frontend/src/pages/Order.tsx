@@ -30,7 +30,7 @@ const Order = () => {
   }, []);
 
   return (
-    <Container className="border py-3">
+    <Container className="border py-3 mb-3">
       {order.length !== 0 ? (
         order.map((order: any) => (
           <Container key={order._id}>
@@ -39,7 +39,6 @@ const Order = () => {
                 background: "#ededed",
                 borderRadius: "10px",
                 padding: "0px 10px",
-                // margin: "10px 0px",
               }}
             >
               Order #{order._id}

@@ -9,7 +9,6 @@ const getOrder = async (req, res) => {
 }
 
 const getSingleUserOrder = async (req, res) => {
-  // const { id } = req.params
   const order = await Order.find({ buyer_id: req.user._id })
   if (!order) {
     return res.status(400).json({ err: 'not found' })
@@ -27,27 +26,28 @@ const createOrder = async (req, res) => {
       food_id: item._id,
       food_title: item.title,
       food_price: item.price,
-      food_date: item.date
+      food_date: item.date,
+      food_image: item.image
     }));
     const order = await Order.create({
       buyer_id: req.user._id, buyer_email: user.email, items, amount
     })
-    // const record = await Record.findById(record_id)
-    // if (!record) {
-    //     return res.status(404).json({ error: 'Record not found' });
-    // }
-    // record.food_id.push(food._id)
-    // await record.save()
-    console.log(order)
-
     res.status(200).json(order)
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
 }
 
+const deleteAllOrder = async (req, res) => {
+
+  const order = await Order.deleteMany()
+
+  res.status(200).json(order);
+}
+
 module.exports = {
   getOrder,
   getSingleUserOrder,
-  createOrder
+  createOrder,
+  deleteAllOrder
 }

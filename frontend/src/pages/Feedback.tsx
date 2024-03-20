@@ -1,9 +1,20 @@
 import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { AppContext } from "../context/AppContext";
-import { Col, Container, Form, Row } from "react-bootstrap";
+import { Col, Container, Form, Image, Row } from "react-bootstrap";
 import Button from "../components/Button";
 import Icon from "../components/Icon";
+
+interface FeedbackComment {
+  _id: string;
+  user_id: string;
+  comment: string;
+}
+
+interface FeedbackProps {
+  food_id: string;
+  feedback: FeedbackComment[];
+}
 
 const Feedback = () => {
   const {
@@ -16,62 +27,58 @@ const Feedback = () => {
   const [comments, setComments] = useState<{ [key: string]: string }>({});
   const [commented, setCommented] = useState<string[]>([]);
   const [error, setError] = useState<{ [key: string]: string }>({});
-  const [submit, setSubmit] = useState<boolean>(false);
+
+  const fetchOrder = async () => {
+    setLoading(true);
+    const response = await fetch("http://localhost:4000/api/order/user", {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+
+    const json = await response.json();
+    if (response.ok) {
+      setOrder(json);
+    }
+    setLoading(false);
+  };
+
+  const fetchWrittenFeedback = async () => {
+    // setLoading(true);
+    const response = await fetch("http://localhost:4000/api/feedback", {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    const json = await response.json();
+    console.log(json);
+    if (response.ok) {
+      const filteredJson = json
+        .filter((feedback: FeedbackProps) =>
+          feedback.feedback.some(
+            (item: FeedbackComment) => item.user_id === user.user_id
+          )
+        )
+        .map((feedback: FeedbackProps) => feedback.food_id);
+      console.log("rerender");
+      setCommented(filteredJson);
+      console.log(commented);
+    }
+    // setLoading(false);
+  };
 
   useEffect(() => {
-    const fetchOrder = async () => {
-      setLoading(true);
-      const response = await fetch("http://localhost:4000/api/order/user", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-
-      const json = await response.json();
-      if(response.ok){
-        setOrder(json);
-      }
-      
-      setLoading(false);
-    };
-
     if (user) {
       fetchOrder();
-    }
-  }, []);
-
-  useEffect(() => {
-    const fetchWrittenFeedback = async () => {
-      const response = await fetch("http://localhost:4000/api/feedback", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const json = await response.json();
-
-      console.log(submit)
-      if (response.ok) {
-        const filteredJson = json
-          .filter((feedback: any) =>
-            feedback.feedback.some((item: any) => item.user_id === user.user_id)
-          )
-          .map((feedback: any) => feedback.food_id);
-        console.log("rerender");
-        setCommented(filteredJson);
-      }
-    };
-
-    if (user) {
       fetchWrittenFeedback();
     }
-  }, [submit]);
+  }, []);
 
   const handleSubmit = async (
     e: FormEvent<HTMLFormElement>,
     food_id: string
   ) => {
     e.preventDefault();
-    setSubmit((prev) => !prev);
     if (!comments[food_id] || !comments[food_id].replace(/\s/g, "").length) {
       setError({ [food_id]: "Comment cannot be blank" });
       return;
@@ -87,12 +94,12 @@ const Feedback = () => {
         body: JSON.stringify({ comment: comments[food_id] }),
       }
     );
-    console.log("submitted");
-    // setComments({})
+    fetchWrittenFeedback();
   };
+  console.log(commented);
 
   return (
-    <Container className="border py-3">
+    <Container className="border py-3 mb-3">
       {order.length !== 0 ? (
         order.map((order: any) => (
           <Container key={order._id}>
@@ -114,6 +121,16 @@ const Feedback = () => {
                         {new Date(item.food_date).toLocaleDateString("en-GB")}
                       </Col>
                       <Col>{item.food_title}</Col>
+                      <Col>
+                        {item.food_image ? (
+                          <Image
+                            src={`../../public/uploads/${item.food_image}`}
+                            style={{ width: "100%" }}
+                          />
+                        ) : (
+                          <span>No image</span>
+                        )}
+                      </Col>
                     </Row>
                     <form onSubmit={(e) => handleSubmit(e, item.food_id)}>
                       <Form.Label>Comment</Form.Label>
@@ -122,7 +139,7 @@ const Feedback = () => {
                           style={{ marginRight: "10px" }}
                           type="text"
                           placeholder="..."
-                          // value={comments[item._id] || ""}
+                          // value={commented.find((comment: string)=>comment === )}
                           onChange={(e: ChangeEvent<HTMLInputElement>) => {
                             setComments((prevComments) => ({
                               ...prevComments,
@@ -172,7 +189,7 @@ const Feedback = () => {
           </Container>
         ))
       ) : (
-        <div>Order is empty</div>
+        <div>You can give feedback after ordering 🤭</div>
       )}
     </Container>
   );

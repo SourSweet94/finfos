@@ -1,10 +1,9 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import NavBar from "./components/Navbar";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "./context/AuthContext";
 import Menu from "./pages/Menu";
 import Manage from "./pages/admin/Manage";
@@ -17,6 +16,9 @@ function App() {
   const {
     state: { user, userType },
   } = useContext(AuthContext);
+
+  const lastLocation = localStorage.getItem("lastLocation");
+
   return (
     <>
       {/* <NavBar /> */}
@@ -26,7 +28,10 @@ function App() {
             index
             element={
               <Navigate
-                to={userType === "admin" ? "/dashboard" : "/menu"}
+                to={
+                  lastLocation ||
+                  (userType === "admin" ? "/dashboard" : "/menu")
+                }
                 replace
               />
             }

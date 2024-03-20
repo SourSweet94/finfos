@@ -106,22 +106,35 @@ const RecordTable = ({
     setSelectedRecord(recordToEdit);
   };
 
-  const headers = ["startDate", "endDate"];
+  const headers = ["Start Date", "End Date"];
+
+  const renderButtons = (rowId: string) => {
+    const actions = [
+      { label: "View", onClick: () => handleView(rowId) },
+      { label: "Edit", variant: "warning", onClick: () => handleEdit(rowId) },
+      {
+        label: "Delete",
+        variant: "danger",
+        onClick: () => handleDelete(rowId),
+      },
+    ];
+
+    return actions.map(({ label, variant, onClick }) => (
+      <Button
+        key={`${label}-${rowId}`}
+        onClick={onClick}
+        variant={variant}
+        style={{ margin: "0 10px 10px" }}
+      >
+        {label}
+      </Button>
+    ));
+  };
 
   const customCol = {
-    Action: (row: any) => (
-      <>
-        <Button onClick={() => handleView(row._id)}>View</Button>
-        <Button onClick={() => handleEdit(row._id)} variant="warning">
-          Edit
-        </Button>
-        <Button onClick={() => handleDelete(row._id)} variant="danger">
-          Delete
-        </Button>
-      </>
-    ),
+    Action: (row: any) => renderButtons(row._id),
   };
-console.log(selectedRecord)
+
   return (
     <>
       {records?.length !== 0 ? (
