@@ -5,13 +5,13 @@ import { Col, Container, Form, Image, Row } from "react-bootstrap";
 import Button from "../components/Button";
 import Icon from "../components/Icon";
 
-interface FeedbackComment {
+export interface FeedbackComment {
   _id: string;
   user_id: string;
   comment: string;
 }
 
-interface FeedbackProps {
+export interface FeedbackProps {
   food_id: string;
   feedback: FeedbackComment[];
 }
@@ -62,7 +62,6 @@ const Feedback = () => {
         .map((feedback: FeedbackProps) => feedback.food_id);
       console.log("rerender");
       setCommented(filteredJson);
-      console.log(commented);
     }
     // setLoading(false);
   };

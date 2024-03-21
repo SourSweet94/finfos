@@ -6,14 +6,14 @@ const feedbackSchema = new Schema({
 
   food_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'food',
+    ref: 'Food',
     required: true
   },
 
   feedback: [{
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'user',
+      ref: 'User',
       required: true
     },
     comment: {
@@ -24,4 +24,4 @@ const feedbackSchema = new Schema({
 
 }, { timestamps: true })
 
-module.exports = mongoose.model("feedback", feedbackSchema)
+module.exports = mongoose.model("Feedback", feedbackSchema)
