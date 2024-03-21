@@ -11,6 +11,7 @@ import Cart from "./pages/Cart";
 import Order from "./pages/Order";
 import UserOrder from "./components/UserOrderTable";
 import Feedback from "./pages/Feedback";
+import UserFeedback from "./pages/admin/UserFeedback";
 
 function App() {
   const {
@@ -39,6 +40,7 @@ function App() {
           <Route path="/dashboard" element={<div>Dashboard</div>} />
           <Route path="/manage" element={<Manage />} />
           <Route path="/user-order" element={<UserOrder />} />
+          <Route path="/user-feedback" element={<UserFeedback />} />
 
           <Route path="/menu" element={<Menu />} />
           <Route path="/cart" element={<Cart />} />

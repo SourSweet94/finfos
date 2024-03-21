@@ -95,6 +95,14 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
               >
                 User Order
               </MenuItem>
+              <MenuItem
+                icon={<Icon iconName="ChatLeftTextFill" />}
+                component={<Link to="/user-feedback" />}
+                active={activeMenuItem === "user-feedback"}
+                onClick={() => setActiveMenuItem("user-feedback")}
+              >
+                User Feedback
+              </MenuItem>
             </>
           )}
           {userType === "staff" && (

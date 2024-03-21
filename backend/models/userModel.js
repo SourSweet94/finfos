@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema({
         {
             food_id: {
                 type: String,
-                ref: 'food'
+                ref: 'Food'
             }
             // qty: {
             //     type: Number
@@ -30,7 +30,7 @@ const UserSchema = new mongoose.Schema({
         {
             food_id: {
                 type: String,
-                ref: "food"
+                ref: "Food"
             },
             food_title: {
                 type: String,

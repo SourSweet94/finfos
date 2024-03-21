@@ -16,7 +16,7 @@ const recordSchema = new Schema({
     food_id: [
         {
             type: String,
-            ref: 'food',
+            ref: 'Food',
         },
     ],
 
@@ -27,4 +27,4 @@ const recordSchema = new Schema({
 
 }, { timestamps: true });
 
-module.exports = mongoose.model('record', recordSchema);
+module.exports = mongoose.model('Record', recordSchema);
