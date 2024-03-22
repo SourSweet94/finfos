@@ -3,6 +3,7 @@ import { Container, Form, NavLink } from "react-bootstrap";
 import useLogin from "../hooks/useLogin";
 import Button from "../components/Button";
 import "../styles/login.css";
+import Text from "../components/Text";
 
 const Login = () => {
   // const { dispatch } = useContext(AuthContext);
@@ -67,7 +68,7 @@ const Login = () => {
               </Button>
             </div>
 
-            {error && <span className="error">*{error}</span>}
+            {error && <Text className="error">*{error}</Text>}
           </Container>
         </Form>
       </Container>

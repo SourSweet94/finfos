@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Table as BSTable } from "react-bootstrap";
 import ActionModal from "./ActionModal";
 import "../styles/table.css";
+import Text from "./Text";
 
 interface TableProps {
   headers: string[];
@@ -48,7 +49,7 @@ const Table = ({ headers, data, customCol }: TableProps) => {
                           style={{ width: "200px" }}
                         />
                       ) : (
-                        <span>No image</span>
+                        <Text>No image</Text>
                       )
                     ) : (
                       row[toCamelCase(header)]

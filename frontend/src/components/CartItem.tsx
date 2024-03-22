@@ -4,6 +4,7 @@ import Button from "./Button";
 import "../styles/cartItem.css";
 import { FoodContext, FoodProps } from "../context/FoodContext";
 import { AuthContext } from "../context/AuthContext";
+import Text from "./Text";
 
 interface CartItemProps {
   food: FoodProps;
@@ -49,12 +50,15 @@ const CartItem = ({
     <Container className="py-3 border-top">
       <Row>
         <Col className="cart-item-col">
-          {image? <Image
-            className="mx-auto"
-            src={`../../public/uploads/${image}`}
-            width="100px"
-          />: <span>No image</span>}
-          
+          {image ? (
+            <Image
+              className="mx-auto"
+              src={`../../public/uploads/${image}`}
+              width="100px"
+            />
+          ) : (
+            <Text>No image</Text>
+          )}
         </Col>
         <Col className="cart-item-col">{title}</Col>
         <Col className="cart-item-col">RM {price}</Col>
@@ -71,7 +75,9 @@ const CartItem = ({
           </Col> */}
         {/* <Col className="cart-item-col">{totalPrice}</Col> */}
         <Col className="cart-item-col">
-          <Button onClick={onDelete} variant="danger">Delete</Button>
+          <Button onClick={onDelete} variant="danger">
+            Delete
+          </Button>
         </Col>
       </Row>
     </Container>

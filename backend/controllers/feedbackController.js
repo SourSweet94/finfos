@@ -4,19 +4,25 @@ const getAllFeedback = async (req, res) => {
   const feedback = await Feedback.find({}).sort({ createdAt: -1 }).populate({
     path: 'food_id',
     model: 'Food',
-    select: 'title'
+    select: 'title date'
   })
-  .populate({
-    path: 'feedback.user_id',
-    model: 'User',
-    select: 'email'
-  });
+    .populate({
+      path: 'feedback.user_id',
+      model: 'User',
+      select: 'email'
+    });
   const formattedFeedback = feedback.map(item => ({
-    food_id: item.food_id,
-    // food_title: item.food_id.title,
+    food: {
+      _id: item.food_id._id,
+      title: item.food_id.title,
+      date: item.food_id.date
+    },
     feedback: item.feedback.map(fb => ({
-      user_email: fb.user_id.email,
-      comment: fb.comment,
+      user: {
+        _id: fb.user_id._id,
+        email: fb.user_id.email,
+        comment: fb.comment
+      }
     })),
   }));
   res.status(200).json(formattedFeedback)

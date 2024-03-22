@@ -6,6 +6,7 @@ import { ButtonGroup, Col, Container, Dropdown, Row } from "react-bootstrap";
 import { AppContext } from "../context/AppContext";
 import { RecordProps } from "../context/RecordContext";
 import InfoModal from "../components/InfoModal";
+import Text from "../components/Text";
 
 const Menu = () => {
   const {
@@ -140,7 +141,7 @@ const Menu = () => {
           </Dropdown>
         </Col>
       </Row>
-      <Row >
+      <Row>
         {food?.length !== 0 ? (
           food?.map((food) => {
             return (
@@ -169,7 +170,9 @@ const Menu = () => {
           // headerTitle="lalala"
           closeButton={false}
           bsModalProps={{ backdrop: true, animation: false }}
-        ><span>Item has been added in your cart</span></InfoModal>
+        >
+          <Text>Item has been added in your cart</Text>
+        </InfoModal>
       )}
     </Container>
   );

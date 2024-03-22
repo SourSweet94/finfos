@@ -8,6 +8,7 @@ import { FoodProps } from "../context/FoodContext";
 import Button from "../components/Button";
 import InfoModal from "../components/InfoModal";
 import "../styles/cart.css";
+import Text from "../components/Text";
 
 const Cart = () => {
   const {
@@ -141,15 +142,15 @@ const Cart = () => {
           Total ({cartItem.length} {cartItem.length == 1 ? "item" : "items"})
         </div>
         <div>
-          <span className="amount">Amount: RM {amount}</span>
-          <span>
+          <Text className="amount">Amount: RM {amount}</Text>
+          <Text>
             <Button
               disabled={amount === 0}
               onClick={() => setShowInfoModal(true)}
             >
               Order Now
             </Button>
-          </span>
+          </Text>
         </div>
       </Container>
 

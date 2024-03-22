@@ -3,6 +3,10 @@ import { ScreenContext } from "../../context/ScreenContext";
 import { AuthContext } from "../../context/AuthContext";
 import { AppContext } from "../../context/AppContext";
 import { FeedbackComment, FeedbackProps } from "../Feedback";
+import Icon from "../../components/Icon";
+import Text from "../../components/Text";
+import { Container, Tab, Tabs } from "react-bootstrap";
+// import DateDropdown from "../../components/DateDropdown";
 
 const UserFeedback = () => {
   const { setAction } = useContext(ScreenContext);
@@ -26,6 +30,7 @@ const UserFeedback = () => {
     if (response.ok) {
       setFeedback(json);
     }
+    console.log(json);
     setLoading(false);
   };
 
@@ -36,21 +41,34 @@ const UserFeedback = () => {
   }, []);
 
   return (
-    <div>
-      {feedback.map((feedback: FeedbackProps) => (
-        <>
-          <h3>{feedback.food_id}</h3>
-          <p>
+    <Container>
+      {/* <DateDropdown
+        dateInterval={}
+        selectedDateInterval={}
+        handleDateSelect={}
+      /> */}
+      <Tabs id="uncontrolled-tab-example" className="mb-3">
+        {feedback.map((feedback: FeedbackProps) => (
+          <Tab eventKey={feedback.food.title} title={feedback.food.title}>
             {feedback.feedback.map((fb: FeedbackComment) => (
-              <>
-                <strong>{fb.user_id}</strong>
-                <textarea>{fb.comment}</textarea>
-              </>
+              <Container className="my-3" style={{ display: "flex" }}>
+                <div style={{background: 'yellow'}}>
+                  <Icon iconName="PersonCircle" size="30px" />
+                </div>
+                <div style={{ flex: 1, padding: "0 10px", background: 'pink' }}>
+                  <div>
+                    <strong>{fb.user.email}</strong>
+                  </div>
+                  <div>
+                    <Text>{fb.user.comment}</Text>
+                  </div>
+                </div>
+              </Container>
             ))}
-          </p>
-        </>
-      ))}
-    </div>
+          </Tab>
+        ))}
+      </Tabs>
+    </Container>
   );
 };
 

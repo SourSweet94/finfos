@@ -7,6 +7,7 @@ import Button from "./Button";
 import InfoModal from "./InfoModal";
 import Icon from "./Icon";
 import "../styles/navbar.css";
+import Text from "./Text";
 
 interface NavbarProps {
   handleToggleSidebar: () => void;
@@ -48,7 +49,7 @@ const Navbar = ({ handleToggleSidebar }: NavbarProps) => {
         <div className="navbar-right">
           {user ? (
             <Nav>
-              <span className="navbar-user">{user.email}</span>
+              <Text className="navbar-user">{user.email}</Text>
               <Button onClick={() => setShowInfoModal(true)}>Logout</Button>
             </Nav>
           ) : (
@@ -69,7 +70,7 @@ const Navbar = ({ handleToggleSidebar }: NavbarProps) => {
         buttonLbl2="No"
         onClickBtn2={() => setShowInfoModal(false)}
       >
-        <span>Do you want to log out?</span>
+        <Text>Do you want to log out?</Text>
       </InfoModal>
     </>
   );

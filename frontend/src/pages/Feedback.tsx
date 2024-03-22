@@ -4,15 +4,17 @@ import { AppContext } from "../context/AppContext";
 import { Col, Container, Form, Image, Row } from "react-bootstrap";
 import Button from "../components/Button";
 import Icon from "../components/Icon";
+import Text from "../components/Text";
 
 export interface FeedbackComment {
-  _id: string;
-  user_id: string;
-  comment: string;
+  user: { _id: string; email: string; comment: string };
 }
 
 export interface FeedbackProps {
-  food_id: string;
+  food: {
+    _id: string;
+    title: string;
+  };
   feedback: FeedbackComment[];
 }
 
@@ -56,10 +58,10 @@ const Feedback = () => {
       const filteredJson = json
         .filter((feedback: FeedbackProps) =>
           feedback.feedback.some(
-            (item: FeedbackComment) => item.user_id === user.user_id
+            (item: FeedbackComment) => item.user._id === user.user_id
           )
         )
-        .map((feedback: FeedbackProps) => feedback.food_id);
+        .map((feedback: FeedbackProps) => feedback.food._id);
       console.log("rerender");
       setCommented(filteredJson);
     }
@@ -127,7 +129,7 @@ const Feedback = () => {
                             style={{ width: "100%" }}
                           />
                         ) : (
-                          <span>No image</span>
+                          <Text>No image</Text>
                         )}
                       </Col>
                     </Row>
@@ -157,11 +159,11 @@ const Feedback = () => {
                               width: "fit-content",
                             }}
                           >
-                            <span
+                            <Text
                               style={{ textWrap: "nowrap", padding: "0 10px" }}
                             >
                               Thanks for your feedback
-                            </span>
+                            </Text>
                             <Icon
                               iconName="CheckLg"
                               color="green"

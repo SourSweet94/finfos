@@ -3,6 +3,7 @@ import { AppContext } from "../context/AppContext";
 import { AuthContext } from "../context/AuthContext";
 import Table from "./Table";
 import { Container } from "react-bootstrap";
+import Text from "./Text";
 
 interface OrderTableProps {}
 
@@ -46,7 +47,7 @@ const OrderTable = () => {
               }}
             >
               <h2>Order </h2>
-              <span
+              <Text
                 style={{
                   background: "#ededed",
                   borderRadius: "10px",
@@ -54,7 +55,7 @@ const OrderTable = () => {
                 }}
               >
                 #{order._id}
-              </span>
+              </Text>
             </div>
 
             <ul>

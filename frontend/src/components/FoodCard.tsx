@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { FoodProps } from "../context/FoodContext";
 import { AppContext } from "../context/AppContext";
+import Text from "./Text";
 
 interface FoodCardProps {
   food: FoodProps;
@@ -41,7 +42,7 @@ const FoodCard = ({ food, setShowInfoModal }: FoodCardProps) => {
               width="100%"
             />
           ) : (
-            <span>No image</span>
+            <Text>No image</Text>
           )}
         </Container>
         <Card.Title>{title}</Card.Title>
