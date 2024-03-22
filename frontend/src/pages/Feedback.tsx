@@ -14,6 +14,7 @@ export interface FeedbackProps {
   food: {
     _id: string;
     title: string;
+    date: Date;
   };
   feedback: FeedbackComment[];
 }

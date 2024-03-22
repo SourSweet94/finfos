@@ -8,7 +8,7 @@ interface TextProps {
 
 const Text = ({ children, className, style }: TextProps) => {
   return (
-    <span className={className} style={{color: 'red', ...style}}>
+    <span className={className} style={{...style}}>
       {children}
     </span>
   );

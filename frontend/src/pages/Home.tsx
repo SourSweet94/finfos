@@ -3,7 +3,6 @@ import { Outlet, useLocation } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import Loading from "../components/Loading";
-import Breadcrumb from "../components/Breadcrumb";
 import Sidebar from "../components/Sidebar";
 import NavBar from "../components/Navbar";
 import "../styles/home.css";
@@ -33,9 +32,6 @@ const Home = () => {
         </div>
 
         <div className={"main-content"}>
-          <Container>
-            <Breadcrumb />
-          </Container>
           {loading && <Loading />}
 
           <Container style={{ display: loading ? "none" : "" }}>
