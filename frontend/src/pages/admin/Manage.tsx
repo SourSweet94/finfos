@@ -38,11 +38,11 @@ const Manage = () => {
           >
             Back
           </Button>
-          <FoodTable
+          {/* <FoodTable
             showActionModal={showActionModal}
             setShowActionModal={setShowActionModal}
-          />
-          {/* <FoodTable2/> */}
+          /> */}
+          <FoodTable2/>
         </>
       )}
       <div style={{ display: "flex", justifyContent: "right" }}>

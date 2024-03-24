@@ -32,7 +32,7 @@ const UserFeedback = () => {
     });
     const json = await response.json();
 
-    const filterdJson = json.filter((feedback: FeedbackProps) => {
+    const filteredJson = json.filter((feedback: FeedbackProps) => {
       const startDate = selectedDateInterval.startDate
         ? selectedDateInterval.startDate
         : "";
@@ -43,7 +43,7 @@ const UserFeedback = () => {
     });
 
     if (response.ok) {
-      setFeedback(filterdJson);
+      setFeedback(filteredJson);
     }
     setLoading(false);
   };
@@ -64,19 +64,22 @@ const UserFeedback = () => {
         />
       </Container>
 
-      <div >
+      <div>
         <Tabs id="user-feedback-tab" className="my-3">
-          {feedback.map((feedback: FeedbackProps, index) => (
-            <Tab 
+          {feedback.map((feedback: FeedbackProps) => (
+            <Tab
               eventKey={feedback.food.title}
               title={feedback.food.title}
-              style={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto' }}
+              key={feedback.food._id}
+              style={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}
             >
               {feedback.feedback.map((fb: FeedbackComment) => (
-                <Container className="mb-4" style={{ display: "flex" }}>
-                  <div style={{}}>
+                <Container
+                  className="mb-4"
+                  style={{ display: "flex" }}
+                  key={fb.user._id}
+                >
                     <Icon iconName="PersonCircle" size="30px" />
-                  </div>
                   <div style={{ flex: 1, padding: "0 10px" }}>
                     <div>
                       <strong>{fb.user.email}</strong>

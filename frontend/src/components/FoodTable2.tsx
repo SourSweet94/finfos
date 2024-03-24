@@ -35,7 +35,7 @@ const FoodTable2 = () => {
 
   const [showActionModal, setShowActionModal] = useState(false);
 
-  const [selectedFoodDate, setSelectedFoodDate] = useState<FoodProps | null>(null);
+  const [selectedFoodDate, setSelectedFoodDate] = useState<Date | null>(null);
 
   useEffect(() => {
     const fetchDate = async () => {
@@ -84,17 +84,15 @@ const FoodTable2 = () => {
 
   const handleAdd = (date: string) => {
     setShowActionModal(true);
-    setSelectedFoodDate({date: new Date (date), _id: null, title: null, price: null});
-    setAction("N")
+    setSelectedFoodDate(new Date(date));
+    setAction("N");
   };
-
-  console.log(dateArray);
 
   return (
     <div>
       <div>
-        {dateArray.map((date) => (
-          <div>
+        {dateArray.map((date, index) => (
+          <div key={index}>
             {date}
             <Button onClick={() => handleAdd(date)}>Add</Button>
           </div>

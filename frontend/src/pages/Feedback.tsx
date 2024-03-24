@@ -98,7 +98,6 @@ const Feedback = () => {
     );
     fetchWrittenFeedback();
   };
-  console.log(commented);
 
   return (
     <Container className="border py-3 mb-3">
