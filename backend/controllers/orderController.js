@@ -9,7 +9,7 @@ const getOrder = async (req, res) => {
 }
 
 const getSingleUserOrder = async (req, res) => {
-  const order = await Order.find({ buyer_id: req.user._id })
+  const order = await Order.find({ buyer_id: req.user._id }).sort({ createdAt: -1 })
   if (!order) {
     return res.status(400).json({ err: 'not found' })
   }

@@ -7,9 +7,11 @@ interface TableProps {
   headers: string[];
   data: any[] | null;
   customCol?: { [key: string]: (row: any) => React.ReactNode };
+  currentPage?: number;
+  itemsPerPage?: number;
 }
 
-const Table = ({ headers, data, customCol }: TableProps) => {
+const Table = ({ headers, data, customCol, currentPage, itemsPerPage }: TableProps) => {
   const [showActionModal, setShowActionModal] = useState(false);
 
   const toCamelCase = (value: string) => {
@@ -17,6 +19,16 @@ const Table = ({ headers, data, customCol }: TableProps) => {
       return group1.toUpperCase();
     });
   };
+
+  const calculateRowIndex = (index: number) => {
+    if (currentPage && itemsPerPage) {
+      return (currentPage - 1) * itemsPerPage + index + 1;
+    } else {
+      return index + 1;
+    }
+  };
+
+
 
   return (
     <>
@@ -37,7 +49,7 @@ const Table = ({ headers, data, customCol }: TableProps) => {
           {data &&
             data.map((row, rowIndex) => (
               <tr key={rowIndex}>
-                <td>{rowIndex + 1}</td>
+                <td>{calculateRowIndex(rowIndex)}</td>
                 {headers.map((header, colIndex) => (
                   <td key={colIndex}>
                     {row[toCamelCase(header)] === row.image ? (

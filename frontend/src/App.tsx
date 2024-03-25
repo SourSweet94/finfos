@@ -9,9 +9,9 @@ import Menu from "./pages/Menu";
 import Manage from "./pages/admin/Manage";
 import Cart from "./pages/Cart";
 import Order from "./pages/Order";
-import UserOrder from "./components/UserOrderTable";
 import Feedback from "./pages/Feedback";
 import UserFeedback from "./pages/admin/UserFeedback";
+import UserOrder from "./pages/admin/UserOrder";
 
 function App() {
   const {

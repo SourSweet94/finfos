@@ -1,69 +1,60 @@
-import { Dispatch, SetStateAction, useMemo } from "react"
-import { Pagination as BSPagination, Container } from "react-bootstrap"
+import { useEffect } from "react";
+import { Pagination as BSPagination } from "react-bootstrap";
+
 interface PaginationProps {
-  currentPage: number
-  setCurrentPage: Dispatch<SetStateAction<number>>
-  totalPages: number
-  maxPageShown: number
-  className?: string
+  itemsPerPage: number;
+  totalItems: number;
+  currentPage: number;
+  paginate: (number: number) => void;
 }
 
 const Pagination = ({
+  itemsPerPage,
+  totalItems,
   currentPage,
-  setCurrentPage,
-  totalPages,
-  maxPageShown,
-  className,
+  paginate,
 }: PaginationProps) => {
+  const pageNumbers = [];
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  const calculateStartPage = () => {
-    const minStartPage = 1
-    const maxStartPage = Math.max(1, totalPages - maxPageShown + 1)
-    const middleStartPage = Math.max(1, currentPage - Math.floor(maxPageShown / 2))
-
-    return Math.min(maxStartPage, Math.max(minStartPage, middleStartPage))
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
   }
 
-  const startPage = calculateStartPage()
-  const endPage = Math.min(totalPages, Math.min(startPage, currentPage) + maxPageShown - 1)
-  const renderPaginationItem = useMemo(() => {
-    return Array.from({ length: Math.min(maxPageShown, totalPages) }, (_, index) => {
-      const page = startPage + index
-      return (
-        <BSPagination.Item
-          key={page}
-          active={currentPage === page}
-          onClick={() => setCurrentPage(page)}
-        >
-          {page}
-        </BSPagination.Item>
-      )
-    })
-  }, [currentPage, totalPages])
+  const handlePrevClick = () => {
+    if (currentPage > 1) {
+      paginate(currentPage - 1);
+    }
+  };
+
+  const handleNextClick = () => {
+    if (currentPage < totalPages) {
+      paginate(currentPage + 1);
+    }
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
 
   return (
-    <Container className={`d-flex align-items-center p-0 ${className}`}>
-      <BSPagination className="m-0">
-        <BSPagination.Prev
-          onClick={() => setCurrentPage((prev) => prev - 1)}
-          disabled={currentPage === 1}
-        />
+    <BSPagination>
+      <BSPagination.Prev onClick={handlePrevClick} disabled={currentPage === 1} />
+      {pageNumbers.map((number) => (
+        <BSPagination.Item
+          key={number}
+          active={number === currentPage}
+          onClick={() => paginate(number)}
+        >
+          {number}
+        </BSPagination.Item>
+      ))}
+      <BSPagination.Next
+        onClick={handleNextClick}
+        disabled={currentPage === totalPages}
+      />
+    </BSPagination>
+  );
+};
 
-        {/* Previous <...> */}
-        {startPage > 1 && totalPages / maxPageShown > 1 && <BSPagination.Ellipsis />}
-
-        {/* Pagination item */}
-        {renderPaginationItem}
-
-        {/* Next <...> */}
-        {endPage < totalPages && <BSPagination.Ellipsis />}
-
-        <BSPagination.Next
-          onClick={() => setCurrentPage((prev) => prev + 1)}
-          disabled={currentPage === totalPages}
-        />
-      </BSPagination>
-    </Container>
-  )
-}
-export default Pagination
+export default Pagination;

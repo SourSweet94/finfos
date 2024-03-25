@@ -7,8 +7,8 @@ import { Col, Container, Row } from "react-bootstrap";
 import { FoodProps } from "../context/FoodContext";
 import Button from "../components/Button";
 import InfoModal from "../components/InfoModal";
-import "../styles/cart.css";
 import Text from "../components/Text";
+import "../styles/cart.css";
 
 const Cart = () => {
   const {
