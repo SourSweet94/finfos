@@ -1,23 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ScreenContext } from "../context/ScreenContext";
-import { FoodContext, FoodProps } from "../context/FoodContext";
+import { FoodContext } from "../context/FoodContext";
 import { ItemContext } from "../context/ItemContext";
 import { AuthContext } from "../context/AuthContext";
 import { AppContext } from "../context/AppContext";
-import { RecordContext, RecordProps } from "../context/RecordContext";
+import { RecordProps } from "../context/RecordContext";
 import Button from "./Button";
 import ActionModal from "./ActionModal";
 
 const FoodTable2 = () => {
   const { setAction } = useContext(ScreenContext);
   const {
-    state: { food },
+    // state: { food },
     dispatch,
   } = useContext(FoodContext);
-  const {
-    state: { records },
-    dispatch: dispatchRecords,
-  } = useContext(RecordContext);
+  // const {
+  //   state: { records },
+  //   dispatch: dispatchRecords,
+  // } = useContext(RecordContext);
   const { food_id, record_id } = useContext(ItemContext);
   const {
     state: { user },

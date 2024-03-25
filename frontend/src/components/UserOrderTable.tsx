@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import { AuthContext } from "../context/AuthContext";
-import Button from "./Button";
 import Table from "./Table";
 import { Col, Row } from "react-bootstrap";
 

@@ -3,7 +3,7 @@ import Modal from "./Modal";
 import FoodForm from "./FoodForm";
 import { ScreenContext } from "../context/ScreenContext";
 import RecordForm from "./RecordForm";
-import FoodForm2 from "./FoodForm2";
+// import FoodForm2 from "./FoodForm2";
 
 interface ActionModalProps {
   data?: any;
@@ -43,11 +43,11 @@ const ActionModal = ({ data, show, setShow }: ActionModalProps) => {
     >
       <>
         {screenType === "Action" && (
-          // <FoodForm
-          //   foodDetails={data}
-          //   setModalShow={handleCloseModal}
-          // />
-          <FoodForm2 date={data}/>
+          <FoodForm
+            foodDetails={data}
+            setModalShow={handleCloseModal}
+          />
+          // <FoodForm2 date={data}/>
         )}
         {screenType === 'Browse' && (
           <RecordForm record={data} setModalShow={handleCloseModal} />

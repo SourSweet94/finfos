@@ -11,11 +11,8 @@ import { FoodContext } from "../context/FoodContext";
 import { AuthContext } from "../context/AuthContext";
 import { FoodProps } from "../context/FoodContext";
 import { ScreenContext } from "../context/ScreenContext";
-import { RecordContext } from "../context/RecordContext";
 import { ItemContext } from "../context/ItemContext";
 import Button from "./Button";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 interface FoodFormProps {
   date: any;

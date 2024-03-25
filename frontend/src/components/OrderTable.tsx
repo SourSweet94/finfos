@@ -5,8 +5,6 @@ import Table from "./Table";
 import { Container } from "react-bootstrap";
 import Text from "./Text";
 
-interface OrderTableProps {}
-
 const OrderTable = () => {
   const {
     state: { user },

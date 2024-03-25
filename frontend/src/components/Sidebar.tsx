@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 import { Sidebar as ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
@@ -11,7 +11,7 @@ interface SidebarProps {
 
 const Sidebar = ({ collapsed }: SidebarProps) => {
   const {
-    state: { user, userType },
+    state: { userType },
   } = useContext(AuthContext);
 
   const lastLocation = localStorage.getItem("lastLocation");

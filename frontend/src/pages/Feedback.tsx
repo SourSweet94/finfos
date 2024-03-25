@@ -85,17 +85,14 @@ const Feedback = () => {
       setError({ [food_id]: "Comment cannot be blank" });
       return;
     }
-    const response = await fetch(
-      `http://localhost:4000/api/feedback/${food_id}`,
-      {
-        method: "PATCH",
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ comment: comments[food_id] }),
-      }
-    );
+    await fetch(`http://localhost:4000/api/feedback/${food_id}`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ comment: comments[food_id] }),
+    });
     fetchWrittenFeedback();
   };
 

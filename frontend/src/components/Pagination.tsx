@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useContext, useMemo } from "react"
+import { Dispatch, SetStateAction, useMemo } from "react"
 import { Pagination as BSPagination, Container } from "react-bootstrap"
 interface PaginationProps {
   currentPage: number

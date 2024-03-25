@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Table as BSTable } from "react-bootstrap";
 import ActionModal from "./ActionModal";
-import "../styles/table.css";
 import Text from "./Text";
 
 interface TableProps {
@@ -13,11 +12,11 @@ interface TableProps {
 const Table = ({ headers, data, customCol }: TableProps) => {
   const [showActionModal, setShowActionModal] = useState(false);
 
-  function toCamelCase(value: string) { 
-    return value.toLowerCase().replace(/\s+(.)/g, function(match, group1) {
-        return group1.toUpperCase();
+  const toCamelCase = (value: string) => {
+    return value.toLowerCase().replace(/\s+(.)/g, (_, group1) => {
+      return group1.toUpperCase();
     });
-}
+  };
 
   return (
     <>

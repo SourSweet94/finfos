@@ -4,10 +4,9 @@ import { ItemContext } from "../../context/ItemContext";
 import FoodTable from "../../components/FoodTable";
 import RecordTable from "../../components/RecordTable";
 import Button from "../../components/Button";
-import { Container } from "react-bootstrap";
 import Icon from "../../components/Icon";
-import Pagination from "../../components/Pagination";
-import FoodTable2 from "../../components/FoodTable2";
+// import Pagination from "../../components/Pagination";
+// import FoodTable2 from "../../components/FoodTable2";
 
 const Manage = () => {
   const { screenType, setScreenType, setAction } = useContext(ScreenContext);
@@ -35,14 +34,15 @@ const Manage = () => {
               setScreenType("Browse");
               setFoodID([]);
             }}
+            style={{minWidth: '0px', marginBottom: '5px'}}
           >
-            Back
+            <Icon iconName="ArrowLeft"/>
           </Button>
-          {/* <FoodTable
+          <FoodTable
             showActionModal={showActionModal}
             setShowActionModal={setShowActionModal}
-          /> */}
-          <FoodTable2/>
+          />
+          {/* <FoodTable2/> */}
         </>
       )}
       <div style={{ display: "flex", justifyContent: "right" }}>

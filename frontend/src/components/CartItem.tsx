@@ -1,10 +1,8 @@
-import { useContext, useState } from "react";
-import { Card, Col, Container, Image, InputGroup, Row } from "react-bootstrap";
+import { Col, Container, Image, Row } from "react-bootstrap";
 import Button from "./Button";
-import "../styles/cartItem.css";
-import { FoodContext, FoodProps } from "../context/FoodContext";
-import { AuthContext } from "../context/AuthContext";
+import { FoodProps } from "../context/FoodContext";
 import Text from "./Text";
+import "../styles/cartItem.css";
 
 interface CartItemProps {
   food: FoodProps;
@@ -12,24 +10,9 @@ interface CartItemProps {
 }
 
 const CartItem = ({
-  food: { title, price, image, _id },
+  food: { title, price, image },
   onDelete,
 }: CartItemProps) => {
-  const stylesheet = {
-    btn: {
-      width: "30px",
-      display: "flex",
-      justifyContent: "center",
-    },
-  };
-
-  const {
-    state: { user },
-  } = useContext(AuthContext);
-  const {
-    state: { food },
-    dispatch,
-  } = useContext(FoodContext);
 
   // const [qty, setQty] = useState<number>(1);
   // const [totalPrice, setTotalPrice] = useState<number>(price);

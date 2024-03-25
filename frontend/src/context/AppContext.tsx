@@ -5,7 +5,6 @@ import {
   createContext,
   useState,
 } from "react";
-import Loading from "../components/Loading";
 
 interface AppContextProps {
   children: ReactNode;
@@ -31,7 +30,6 @@ const AppContextProvider = ({ children }: AppContextProps) => {
         setLoading,
       }}
     >
-      {/* {loading && <Loading />} */}
       {children}
     </AppContext.Provider>
   );
