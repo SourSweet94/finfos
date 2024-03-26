@@ -81,10 +81,18 @@ const updateFood = async (req, res) => {
     res.status(200).json(food)
 }
 
+// testing
+const deleteAllFood = async (req, res) => {
+    const food = await Food.deleteMany()
+    const feedback = await Feedback.deleteMany()
+    res.status(200).json({food, feedback})
+}
+
 module.exports = {
     getAllFood,
     getSingleFood,
     createFood,
     deleteFood,
-    updateFood
+    updateFood,
+    deleteAllFood
 }

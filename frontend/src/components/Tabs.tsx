@@ -1,18 +1,24 @@
-import { Tabs as BSTabs, Tab } from "react-bootstrap";
+// TabsComponent.tsx
 
-interface TabsProps {
-  tabsData : any[];
+import React from "react";
+import { Tab, Tabs as BSTabs } from "react-bootstrap";
+
+interface TabData {
+  title: string;
+  content: React.ReactNode;
 }
 
-const Tabs = ({ tabsData  }: TabsProps) => {
+interface TabsProps {
+  tabsData: TabData[];
+  activeKey: string;
+  onSelectTab?: (key: string) => void;
+}
+
+const Tabs = ({ tabsData, activeKey, onSelectTab }: TabsProps) => {
   return (
-    <BSTabs
-      defaultActiveKey="profile"
-      id="uncontrolled-tab-example"
-      className="mb-3"
-    >
-      {tabsData .map((tab) => (
-        <Tab eventKey="home" title={tab.title}>
+    <BSTabs id="tabs-component" activeKey={activeKey} >
+      {tabsData.map((tab) => (
+        <Tab key={tab.title} eventKey={tab.title} title={tab.title}>
           {tab.content}
         </Tab>
       ))}

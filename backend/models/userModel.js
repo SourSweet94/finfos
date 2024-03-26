@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema({
     cart: [
         {
             food_id: {
-                type: String,
+                type: mongoose.Schema.Types.ObjectId,
                 ref: 'Food'
             }
             // qty: {

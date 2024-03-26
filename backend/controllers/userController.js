@@ -7,7 +7,7 @@ const createToken = (_id) => {
     )
 }
 
-const userLogin = async (req, res) => {
+const login = async (req, res) => {
     const { email, password } = req.body
     try {
         const user = await User.login(email, password)
@@ -19,7 +19,7 @@ const userLogin = async (req, res) => {
     }
 }
 
-const userSignUp = async (req, res) => {
+const signUp = async (req, res) => {
     const { email, password } = req.body
     try {
         const user = await User.signup(email, password)
@@ -116,8 +116,8 @@ const addOrder = async (req, res) => {
 }
 
 module.exports = {
-    userLogin,
-    userSignUp,
+    login,
+    signUp,
     addToCart,
     getCartItem,
     deleteSingleCartItem,

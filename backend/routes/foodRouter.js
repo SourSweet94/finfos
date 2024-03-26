@@ -7,8 +7,8 @@ const {
     getSingleFood,
     createFood,
     deleteFood,
-    updateFood
-    
+    updateFood,
+    deleteAllFood
 } = require('../controllers/foodController')
 const requireAuth = require('../middlewares/requireAuth')
 
@@ -23,5 +23,8 @@ router.post('/:record_id', upload.single('image'), createFood)
 router.delete('/:record_id/:id', deleteFood)
 
 router.patch('/:record_id/:id', upload.single('image'), updateFood)
+
+//testing
+router.delete('/', deleteAllFood)
 
 module.exports = router

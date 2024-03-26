@@ -2,10 +2,10 @@ const express = require('express')
 const router = express.Router()
 
 const {
-  getOrder,
+  getAllOrders,
   getSingleUserOrder,
   createOrder,
-  deleteAllOrder
+  deleteAllOrders
 
 } = require('../controllers/orderController')
 
@@ -13,13 +13,13 @@ const requireAuth = require('../middlewares/requireAuth')
 
 router.use(requireAuth)
 
-router.get('/', getOrder)
+router.get('/', getAllOrders)
 
 router.get('/user', getSingleUserOrder)
 
 router.post('/', createOrder)
 
 // for testing only
-router.delete('/', deleteAllOrder)
+router.delete('/', deleteAllOrders)
 
 module.exports = router

@@ -15,7 +15,7 @@ const recordSchema = new Schema({
 
     food_id: [
         {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'Food',
         },
     ],

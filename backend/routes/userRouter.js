@@ -2,8 +2,8 @@ const express = require('express')
 const router = express.Router()
 
 const {
-  userLogin,
-  userSignUp,
+  login,
+  signUp,
   addToCart,
   getCartItem,
   deleteSingleCartItem,
@@ -13,9 +13,9 @@ const {
 } = require('../controllers/userController')
 const requireAuth = require('../middlewares/requireAuth');
 
-router.post('/login', userLogin)
+router.post('/login', login)
 
-router.post('/sign-up', userSignUp)
+router.post('/sign-up', signUp)
 
 router.use(requireAuth);
 

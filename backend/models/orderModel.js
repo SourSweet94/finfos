@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const OrderSchema = new mongoose.Schema({
 
   buyer_id: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     require: true
   },
   buyer_email: {
@@ -13,7 +13,8 @@ const OrderSchema = new mongoose.Schema({
   items: [
     {
       food_id: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Food',
         require: true
       },
       food_title: {

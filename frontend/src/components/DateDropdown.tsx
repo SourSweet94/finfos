@@ -35,6 +35,12 @@ const DateDropdown = ({
   >([]);
 
   const handleDateSelect = (startDate: Date, endDate: Date) => {
+    if (
+      startDate === selectedDateInterval.startDate &&
+      endDate === selectedDateInterval.endDate
+    ) {
+      return
+    }
     setSelectedDateInterval({
       startDate,
       endDate,
@@ -73,7 +79,7 @@ const DateDropdown = ({
       <Dropdown.Toggle
         variant="success"
         id="dropdown-basic"
-        style={{ background: "#265073"}}
+        style={{ background: "#265073" }}
       >
         {selectedDateInterval.startDate && selectedDateInterval.endDate
           ? `${new Date(
@@ -83,7 +89,7 @@ const DateDropdown = ({
             ).toLocaleDateString()}`
           : "No data"}
       </Dropdown.Toggle>
-      <Dropdown.Menu style={{overflowY: 'auto', maxHeight: '400px'}}>
+      <Dropdown.Menu style={{ overflowY: "auto", maxHeight: "400px" }}>
         {dateInterval.map((date: any) => (
           <Dropdown.Item
             key={date.startDate}

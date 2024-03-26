@@ -71,48 +71,47 @@ const Cart = () => {
     setShowInfoModal(false);
   };
 
+  const fetchCart = async () => {
+    setLoading(true);
+    const responseCart = await fetch("http://localhost:4000/api/user/cart", {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+
+    const cartData = await responseCart.json();
+
+    const responseFood = await fetch("http://localhost:4000/api/food", {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+
+    const foodData = await responseFood.json();
+    const filteredFood = foodData.filter((food: any) =>
+      cartData.some((cartItem: any) => cartItem.food_id === food._id)
+    );
+    setCartItem(
+      filteredFood.map(({ _id, title, price, date, image }: FoodProps) => ({
+        _id,
+        title,
+        price,
+        date,
+        image,
+      }))
+    );
+    dispatch({ type: "SET_FOOD", payload: filteredFood });
+    setAmount(
+      filteredFood.reduce((total: number, item: any) => total + item.price, 0)
+    );
+    setLoading(false);
+  };
+  
   useEffect(() => {
-    const fetchCart = async () => {
-      setLoading(true);
-      const responseCart = await fetch("http://localhost:4000/api/user/cart", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-
-      const cartData = await responseCart.json();
-
-      const responseFood = await fetch("http://localhost:4000/api/food", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-
-      const foodData = await responseFood.json();
-      const filteredFood = foodData.filter((food: any) =>
-        cartData.some((cartItem: any) => cartItem.food_id === food._id)
-      );
-      setCartItem(
-        filteredFood.map(({ _id, title, price, date, image }: FoodProps) => ({
-          _id,
-          title,
-          price,
-          date,
-          image,
-        }))
-      );
-      dispatch({ type: "SET_FOOD", payload: filteredFood });
-      setAmount(
-        filteredFood.reduce((total: number, item: any) => total + item.price, 0)
-      );
-      setLoading(false);
-    };
     if (user) {
       fetchCart();
     }
   }, []);
-
-  console.log(cartItem);
 
   return (
     <div className="cart-container">

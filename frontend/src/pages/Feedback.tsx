@@ -62,7 +62,6 @@ const Feedback = () => {
           )
         )
         .map((feedback: FeedbackProps) => feedback.food._id);
-      console.log("rerender");
       setCommented(filteredJson);
     }
     // setLoading(false);
@@ -186,7 +185,7 @@ const Feedback = () => {
           </Container>
         ))
       ) : (
-        <div>You can give feedback after ordering 🤭</div>
+        <Text>You can give feedback after ordering 🤭</Text>
       )}
     </Container>
   );

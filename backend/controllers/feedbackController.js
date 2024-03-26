@@ -44,7 +44,18 @@ const updateFeedback = async (req, res) => {
 
 const deleteAllFeedback = async (req, res) => {
 
-  const feedback = await Feedback.deleteMany()
+  try {
+    const result = await Feedback.updateMany({}, { $set: { feedback: [] } });
+
+    // Check if any documents were updated
+    if (result.nModified > 0) {
+      res.status(200).json({ message: 'All feedback cleared successfully.' });
+    } else {
+      res.status(404).json({ message: 'No feedback found to clear.' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
 
   res.status(200).json(feedback);
 }

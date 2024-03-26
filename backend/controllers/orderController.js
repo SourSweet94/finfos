@@ -1,7 +1,7 @@
 const Order = require('../models/orderModel')
 const User = require('../models/userModel')
 
-const getOrder = async (req, res) => {
+const getAllOrders = async (req, res) => {
   const user_id = req.user._id
   // const food = await Food.find({ user_id }).sort({ createdAt: -1 })
   const order = await Order.find({}).sort({ createdAt: -1 })
@@ -38,7 +38,8 @@ const createOrder = async (req, res) => {
   }
 }
 
-const deleteAllOrder = async (req, res) => {
+// test
+const deleteAllOrders = async (req, res) => {
 
   const order = await Order.deleteMany()
 
@@ -46,8 +47,8 @@ const deleteAllOrder = async (req, res) => {
 }
 
 module.exports = {
-  getOrder,
+  getAllOrders,
   getSingleUserOrder,
   createOrder,
-  deleteAllOrder
+  deleteAllOrders
 }
