@@ -54,13 +54,18 @@ const Feedback = () => {
       },
     });
     const json = await response.json();
+    console.log(json);
     if (response.ok) {
       const filteredJson = json
-        .filter((feedback: FeedbackProps) =>
-          feedback.feedback.some(
+        .filter((feedback: FeedbackProps) => {
+          // check if the food has been deleted after giving feedback
+          if(feedback===null){
+            return null
+          }
+          return feedback.feedback.some(
             (item: FeedbackComment) => item.user._id === user.user_id
-          )
-        )
+          );
+        })
         .map((feedback: FeedbackProps) => feedback.food._id);
       setCommented(filteredJson);
     }

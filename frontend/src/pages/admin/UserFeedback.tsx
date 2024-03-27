@@ -2,11 +2,11 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { AppContext } from "../../context/AppContext";
 import { FeedbackComment, FeedbackProps } from "../Feedback";
-import { Container, Tab, Tabs } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import DateDropdown from "../../components/DateDropdown";
 import Icon from "../../components/Icon";
 import Text from "../../components/Text";
-// import TabsComponent from "../../components/Tabs";
+import Tabs from "../../components/Tabs";
 
 const UserFeedback = () => {
   const {
@@ -24,7 +24,7 @@ const UserFeedback = () => {
     endDate: null,
   });
 
-  const [activeKey, setActiveKey] = useState<string | null>(null);
+  const [defaultActiveKey, setDefaultActiveKey] = useState<string>("");
 
   const fetchFood = async () => {
     setLoading(true);
@@ -34,8 +34,12 @@ const UserFeedback = () => {
       },
     });
     const json = await response.json();
-
+    console.log(json)
     const filteredJson = json.filter((feedback: FeedbackProps) => {
+      // check if the food has been deleted after giving feedback
+      if(feedback === null){
+        return null
+      }
       const startDate = selectedDateInterval.startDate
         ? selectedDateInterval.startDate
         : "";
@@ -47,10 +51,8 @@ const UserFeedback = () => {
 
     if (response.ok) {
       setFeedback(filteredJson);
-      console.log(filteredJson);
       if (filteredJson.length > 0) {
-        setActiveKey(filteredJson[0].food.title);
-        console.log("run");
+        setDefaultActiveKey(filteredJson[0].food.title);
       }
     }
     setLoading(false);
@@ -73,40 +75,23 @@ const UserFeedback = () => {
       </Container>
 
       {feedback.length > 0 ? (
-        <div>
-          <Tabs
-            id="user-feedback-tab"
-            className="mt-3"
-            onSelect={(key: string | null) => setActiveKey(key || "")}
-            style={{
-              backgroundColor: "#265073",
-              borderRadius: "5px",
-            }}
-          >
-            {feedback.map((feedback: FeedbackProps) => (
-              <Tab
-                eventKey={feedback.food.title}
-                title={feedback.food.title}
-                key={feedback.food._id}
-                style={{
-                  maxHeight: "calc(100vh - 190px)",
-                  overflowY: "auto",
-                  border: "1px solid #ccc",
-                  borderRadius: "5px",
-                  paddingTop: "10px",
-                }}
-              >
-                {feedback.feedback.length > 0 ? (
-                  feedback.feedback.map((fb: FeedbackComment) => (
+        <Tabs
+          tabs={feedback.map((feedbackItem: FeedbackProps) => ({
+            _id: feedbackItem.food._id,
+            title: feedbackItem.food.title,
+            content: (
+              <>
+                {feedbackItem.feedback.length > 0 ? (
+                  feedbackItem.feedback.map((fb: FeedbackComment) => (
                     <Container
                       className="mb-4"
-                      style={{ display: "flex" }}
+                      style={{ display: "flex", paddingTop: '10px' }}
                       key={fb.user._id}
                     >
                       <Icon iconName="PersonCircle" size="30px" />
                       <div style={{ flex: 1, padding: "0 10px" }}>
                         <div>
-                          <strong>{fb.user.email}</strong>
+                          <Text as="strong">{fb.user.email}</Text>
                         </div>
                         <div>
                           <Text>{fb.user.comment}</Text>
@@ -115,15 +100,17 @@ const UserFeedback = () => {
                     </Container>
                   ))
                 ) : (
-                  <Text>No feedback</Text>
+                  <Container style={{display: 'flex', justifyContent: 'center'}}>
+                    <Text style={{}}>No feedback</Text>
+                  </Container>
                 )}
-              </Tab>
-            ))}
-
-          </Tabs>
-        </div>
+              </>
+            ),
+          }))}
+          defaultActiveKey={defaultActiveKey}
+        />
       ) : (
-        <Text>No feedback</Text>
+        <Text>No food</Text>
       )}
     </Container>
   );

@@ -2,6 +2,8 @@ const Food = require('../models/foodModel')
 const Record = require('../models/recordModel')
 const Feedback = require('../models/feedbackModel')
 const mongoose = require('mongoose')
+const fs = require('fs');
+const path = require('path');
 
 const getAllFood = async (req, res) => {
     // const user_id = req.user._id
@@ -52,10 +54,17 @@ const deleteFood = async (req, res) => {
     if (!record) {
         return res.status(404).json({ error: 'Record not found' });
     }
+
     record.food_id.splice(record.food_id.indexOf(id), 1)
     await record.save()
 
     const food = await Food.findOneAndDelete({ _id: id })
+
+    const imagePath = path.join(__dirname, '../../frontend/public/uploads', food.image);
+    if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+    }
+
     if (!food) {
         return res.status(400).json({ err: 'not found' })
     }
@@ -85,7 +94,7 @@ const updateFood = async (req, res) => {
 const deleteAllFood = async (req, res) => {
     const food = await Food.deleteMany()
     const feedback = await Feedback.deleteMany()
-    res.status(200).json({food, feedback})
+    res.status(200).json({ food, feedback })
 }
 
 module.exports = {

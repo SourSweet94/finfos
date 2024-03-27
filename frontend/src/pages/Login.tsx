@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Container, Form, NavLink } from "react-bootstrap";
 import useLogin from "../hooks/useLogin";
 import Button from "../components/Button";
-import "../styles/login.css";
 import Text from "../components/Text";
+import "../styles/login.css";
 
 const Login = () => {
   // const { dispatch } = useContext(AuthContext);
@@ -64,7 +64,9 @@ const Login = () => {
                 onClick={() => {}}
                 style={{ background: "white", color: "grey" }}
               >
-                <NavLink href="/sign-up">Sign up</NavLink>
+                <NavLink href="/sign-up">
+                  Sign up
+                </NavLink>
               </Button>
             </div>
 

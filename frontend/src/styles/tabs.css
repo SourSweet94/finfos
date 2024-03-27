@@ -1,0 +1,30 @@
+.tabs {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.tab {
+  max-height: calc(100vh - 190px);
+  overflow-Y: auto;
+  border: 1px solid #ccc;
+}
+
+.nav-tabs {
+  --bs-nav-tabs-border-radius: 5px
+}
+
+.tabs .nav-link{
+  border: 1px solid #ccc;
+  color: black;
+}
+
+.tabs .nav-link.active {
+  background-color: #265073;
+  color: white;
+  border-bottom: none;
+
+}
+
+.tabs .nav-link:hover {
+  background-color: #529cd9
+}

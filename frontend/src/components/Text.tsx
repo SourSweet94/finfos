@@ -3,14 +3,20 @@ import { ReactNode } from "react";
 interface TextProps {
   children: ReactNode;
   className?: string;
+  as?: keyof JSX.IntrinsicElements;
   style?: {};
 }
 
-const Text = ({ children, className, style }: TextProps) => {
+const Text = ({
+  children,
+  className,
+  as: Component = "span",
+  style,
+}: TextProps) => {
   return (
-    <span className={className} style={{...style}}>
+    <Component className={className} style={{ ...style }}>
       {children}
-    </span>
+    </Component>
   );
 };
 

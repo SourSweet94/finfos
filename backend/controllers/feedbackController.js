@@ -11,20 +11,25 @@ const getAllFeedback = async (req, res) => {
       model: 'User',
       select: 'email'
     });
-  const formattedFeedback = feedback.map(item => ({
-    food: {
-      _id: item.food_id._id,
-      title: item.food_id.title,
-      date: item.food_id.date
-    },
-    feedback: item.feedback.map(fb => ({
-      user: {
-        _id: fb.user_id._id,
-        email: fb.user_id.email,
-        comment: fb.comment
-      }
-    })),
-  }));
+  const formattedFeedback = feedback.map(item => {
+    if(item.food_id === null){
+      return null
+    }
+    return {
+      food: {
+        _id: item.food_id._id,
+        title: item.food_id.title,
+        date: item.food_id.date
+      },
+      feedback: item.feedback.map(fb => ({
+        user: {
+          _id: fb.user_id._id,
+          email: fb.user_id.email,
+          comment: fb.comment
+        }
+      })),
+    }
+  });
   res.status(200).json(formattedFeedback)
 
 }
@@ -48,7 +53,7 @@ const deleteAllFeedback = async (req, res) => {
     const result = await Feedback.updateMany({}, { $set: { feedback: [] } });
 
     // Check if any documents were updated
-    if (result.nModified > 0) {
+    if (result.modifiedCount > 0) {
       res.status(200).json({ message: 'All feedback cleared successfully.' });
     } else {
       res.status(404).json({ message: 'No feedback found to clear.' });
@@ -56,8 +61,6 @@ const deleteAllFeedback = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
   }
-
-  res.status(200).json(feedback);
 }
 
 module.exports = {
