@@ -26,11 +26,10 @@ const Login = () => {
   };
 
   return (
-    <>
       <Container className="Auth-form-container">
         <Form className="Auth-form" onSubmit={handleSubmit}>
           <Container className="Auth-form-content">
-            <h1 className="Auth-form-title">Sign in</h1>
+            <h1 className="Auth-form-title">Login</h1>
             <Form.Group controlId="formEmail" className="form-group mt-3">
               <Form.Label>Email address</Form.Label>
               <Form.Control
@@ -61,7 +60,6 @@ const Login = () => {
               </Button>
               <Button
                 disabled={isLoading}
-                onClick={() => {}}
                 style={{ background: "white", color: "grey" }}
               >
                 <NavLink href="/sign-up">
@@ -74,7 +72,6 @@ const Login = () => {
           </Container>
         </Form>
       </Container>
-    </>
   );
 };
 

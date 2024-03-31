@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { useContext, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 import { Sidebar as ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
@@ -14,37 +14,7 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
     state: { userType },
   } = useContext(AuthContext);
 
-  const lastLocation = localStorage.getItem("lastLocation");
-
-  const [activeMenuItem, setActiveMenuItem] = useState<string>(
-    lastLocation
-      ? lastLocation.slice(1)
-      : userType === "admin"
-      ? "dashboard"
-      : "menu"
-  );
-
-  // const [cartItemCount, setCartItemCount] = useState<number>(0);
-
-  // useEffect(() => {
-  //   const fetchCartItemNumber = async () => {
-  //     // setLoading(true);
-  //     const response = await fetch("http://localhost:4000/api/user/cart", {
-  //       headers: {
-  //         Authorization: `Bearer ${user.token}`,
-  //       },
-  //     });
-  //     const json = await response.json();
-  //     console.log("run");
-  //     if (response.ok) {
-  //       setCartItemCount(json.length);
-  //     }
-  //     // setLoading(false);
-  //   };
-  //   if (user) {
-  //     fetchCartItemNumber();
-  //   }
-  // }, [user]);
+  const location = useLocation()
 
   return (
     <>
@@ -72,34 +42,23 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
           {userType === "admin" && (
             <>
               <MenuItem
-                icon={<Icon iconName="HouseFill" />}
-                component={<Link to="/dashboard" />}
-                active={activeMenuItem === "dashboard"}
-                onClick={() => setActiveMenuItem("dashboard")}
-              >
-                Dashboard
-              </MenuItem>
-              <MenuItem
                 icon={<Icon iconName="PencilSquare" />}
                 component={<Link to="/manage" />}
-                active={activeMenuItem === "manage"}
-                onClick={() => setActiveMenuItem("manage")}
+                active={location.pathname === "/manage"}
               >
                 Manage
               </MenuItem>
               <MenuItem
                 icon={<Icon iconName="Clipboard" />}
                 component={<Link to="/user-order" />}
-                active={activeMenuItem === "user-order"}
-                onClick={() => setActiveMenuItem("user-order")}
+                active={location.pathname === "/user-order"}
               >
                 User Order
               </MenuItem>
               <MenuItem
                 icon={<Icon iconName="ChatLeftTextFill" />}
                 component={<Link to="/user-feedback" />}
-                active={activeMenuItem === "user-feedback"}
-                onClick={() => setActiveMenuItem("user-feedback")}
+                active={location.pathname === "/user-feedback"}
               >
                 User Feedback
               </MenuItem>
@@ -110,16 +69,14 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
               <MenuItem
                 icon={<Icon iconName="HouseFill" />}
                 component={<Link to="/menu" />}
-                active={activeMenuItem === "menu"}
-                onClick={() => setActiveMenuItem("menu")}
+                active={location.pathname === "/menu"}
               >
                 Menu
               </MenuItem>
               <MenuItem
                 icon={<Icon iconName="CartFill" />}
                 component={<Link to="/cart" />}
-                active={activeMenuItem === "cart"}
-                onClick={() => setActiveMenuItem("cart")}
+                active={location.pathname === "/cart"}
                 // suffix={<div>{cartItemCount}</div>}
               >
                 Cart
@@ -127,16 +84,14 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
               <MenuItem
                 icon={<Icon iconName="Receipt" />}
                 component={<Link to="/order" />}
-                active={activeMenuItem === "order"}
-                onClick={() => setActiveMenuItem("order")}
+                active={location.pathname === "/order"}
               >
                 Order
               </MenuItem>
               <MenuItem
                 icon={<Icon iconName="ChatLeftTextFill" />}
                 component={<Link to="/feedback" />}
-                active={activeMenuItem === "feedback"}
-                onClick={() => setActiveMenuItem("feedback")}
+                active={location.pathname === "/feedback"}
               >
                 Feedback
               </MenuItem>

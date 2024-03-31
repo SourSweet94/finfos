@@ -1,39 +1,36 @@
-import { useContext, useState } from 'react'
-import { AuthContext } from '../context/AuthContext'
+import { useState } from "react";
 
 const useSignup = () => {
-  const [error, setError] = useState(null)
-  const [isLoading, setIsLoading] = useState<undefined | boolean>(undefined)
-  const { dispatch } = useContext(AuthContext)
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState<undefined | boolean>(undefined);
+  const [signupSuccess, setSignupSuccess] = useState(false)
 
-  const signup = async (email: any, password: any) => {
-    setIsLoading(true)
-    setError(null)
+  const signup = async (email: string, password: string) => {
+    setIsLoading(true);
+    setError(null);
 
-    const response = await fetch('http://localhost:4000/api/user/sign-up', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ email, password })
-    })
-    const json = await response.json()
+    const response = await fetch("http://localhost:4000/api/user/sign-up", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    const json = await response.json();
 
     if (!response.ok) {
-      setIsLoading(false)
-      setError(json.error)
+      setSignupSuccess(false)
+      setIsLoading(false);
+      setError(json.error);
     }
     if (response.ok) {
-      // save the user to local storage
-      localStorage.setItem('user', JSON.stringify(json))
-
-      // update the auth context
-      dispatch({type: 'LOGIN', payload: json})
-
-      // update loading state
-      setIsLoading(false)
+      // localStorage.setItem('user', JSON.stringify(json))
+      // dispatch({type: 'LOGIN', payload: json})
+      setSignupSuccess(true)
+      setIsLoading(false);
     }
-  }
+  };
+  console.log(signupSuccess)
 
-  return { signup, isLoading, error }
-}
+  return { signup, isLoading, error, signupSuccess, setSignupSuccess };
+};
 
-export default useSignup
+export default useSignup;

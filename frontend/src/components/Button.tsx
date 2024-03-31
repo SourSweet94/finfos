@@ -3,7 +3,7 @@ import { Button as BSButton } from "react-bootstrap";
 // import "../styles/button.css";
 
 interface ButtonProps {
-  onClick: () => void;
+  onClick?: () => void;
   type?: "button" | "submit";
   disabled?: boolean;
   children: React.ReactNode;

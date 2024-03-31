@@ -31,13 +31,12 @@ function App() {
               <Navigate
                 to={
                   lastLocation ||
-                  (userType === "admin" ? "/dashboard" : "/menu")
+                  (userType === "admin" ? "/manage" : "/menu")
                 }
                 replace
               />
             }
           />
-          <Route path="/dashboard" element={<div>Dashboard</div>} />
           <Route path="/manage" element={<Manage />} />
           <Route path="/user-order" element={<UserOrder />} />
           <Route path="/user-feedback" element={<UserFeedback />} />

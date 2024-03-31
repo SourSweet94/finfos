@@ -9,7 +9,7 @@ interface InfoModalProps {
   setShow: Dispatch<SetStateAction<boolean>>;
   headerTitle?: string;
   status?: "info" | "success" | "fail" | "warning";
-  buttonLbl?: string;
+  buttonLbl1?: string;
   onClickBtn1?: () => void;
   buttonLbl2?: string;
   onClickBtn2?: () => void;
@@ -23,7 +23,7 @@ const InfoModal = ({
   setShow,
   headerTitle,
   status,
-  buttonLbl,
+  buttonLbl1,
   onClickBtn1,
   buttonLbl2,
   onClickBtn2,
@@ -50,9 +50,9 @@ const InfoModal = ({
 
   const renderFooter = (
     <>
-      {buttonLbl && onClickBtn1 && (
+      {buttonLbl1 && onClickBtn1 && (
         <Button onClick={onClickBtn1} style={{ backgroundColor: "#265073" }}>
-          {buttonLbl}
+          {buttonLbl1}
         </Button>
       )}
       {buttonLbl2 && onClickBtn2 && (
@@ -71,32 +71,31 @@ const InfoModal = ({
       show={show}
       setShow={setShow}
       headerTitle={headerTitle}
-      footer={renderFooter}
+      footer={buttonLbl1 ? renderFooter : undefined}
       closeButton={closeButton}
       bsModalProps={bsModalProps}
     >
       <>
-        <Container>
-          <Row style={{}}>
-            <Col
-              lg={3}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              {renderStatusIcon()}
-            </Col>
-            <Col
-              lg={9}
-              style={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              {children}
-            </Col>
-          </Row>
+        <Container style={{ display: "flex", justifyContent: "center" }}>
+          {/* <Row style={{ flexWrap: "nowrap" }}> */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            {renderStatusIcon()}
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              padding: "0 10px",
+            }}
+          >
+            {children}
+          </div>
+          {/* </Row> */}
         </Container>
       </>
     </Modal>

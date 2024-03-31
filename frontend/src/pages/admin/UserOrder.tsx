@@ -60,7 +60,7 @@ const UserOrder = () => {
         },
       });
 
-      const json = await response.json();
+      const json: OrderType[] = await response.json();
 
       setOrder(json);
       console.log(json);
@@ -82,9 +82,9 @@ const UserOrder = () => {
   //   ),
   // };
 
-  const tableData = currentItems.map((order: OrderType) => ({
+  const tableData = currentItems.map((order) => ({
     email: order.buyer_email,
-    item: order.items.map((item: ItemsType) => (
+    item: order.items.map((item) => (
       <Row key={item._id}>
         <Col>{item.food_title}</Col>
         <Col>RM {item.food_price}</Col>

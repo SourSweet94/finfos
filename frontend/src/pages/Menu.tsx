@@ -35,8 +35,8 @@ const Menu = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      const json = await response.json();
-      const filteredJson = json.filter((food: FoodProps) => {
+      const json: FoodProps[] = await response.json();
+      const filteredJson = json.filter((food) => {
         const startDate = selectedDateInterval.startDate
           ? selectedDateInterval.startDate
           : "";
@@ -109,7 +109,6 @@ const Menu = () => {
           show={showInfoModal}
           setShow={setShowInfoModal}
           status="success"
-          // headerTitle="lalala"
           closeButton={false}
           bsModalProps={{ backdrop: true, animation: false }}
         >

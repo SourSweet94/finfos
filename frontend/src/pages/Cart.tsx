@@ -158,7 +158,7 @@ const Cart = () => {
         setShow={setShowInfoModal}
         status="info"
         headerTitle="Place Order"
-        buttonLbl="Yes"
+        buttonLbl1="Yes"
         onClickBtn1={handleOrder}
         buttonLbl2="No"
         onClickBtn2={() => setShowInfoModal(false)}

@@ -1,4 +1,4 @@
-import { Container, Nav, Navbar as BSNavbar } from "react-bootstrap";
+import { Container, Nav, Navbar as BSNavbar, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import useLogout from "../hooks/useLogout";
 import { useContext, useState } from "react";
@@ -6,8 +6,8 @@ import { AuthContext } from "../context/AuthContext";
 import Button from "./Button";
 import InfoModal from "./InfoModal";
 import Icon from "./Icon";
-import "../styles/navbar.css";
 import Text from "./Text";
+import "../styles/navbar.css";
 
 interface NavbarProps {
   handleToggleSidebar: () => void;
@@ -16,18 +16,14 @@ interface NavbarProps {
 const Navbar = ({ handleToggleSidebar }: NavbarProps) => {
   const { logout } = useLogout();
   const {
-    state: { user },
+    state: { user, userType },
   } = useContext(AuthContext);
 
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
 
   return (
     <>
-      <BSNavbar
-        className="navbar"
-        bg="dark"
-        data-bs-theme="dark"
-      >
+      <BSNavbar className="navbar" bg="dark" data-bs-theme="dark">
         <div className="navbar-left">
           <Container
             className="d-none d-md-block"
@@ -41,8 +37,10 @@ const Navbar = ({ handleToggleSidebar }: NavbarProps) => {
             </Button>
           </Container>
           <Container>
-            <Link to="/">
-              <BSNavbar.Brand>Home</BSNavbar.Brand>
+            <Link to={userType === "admin" ? "/manage" : "/menu"}>
+              <BSNavbar.Brand>
+                <Image src={"../../public/lemon.png"} width={"40"} />
+              </BSNavbar.Brand>
             </Link>
           </Container>
         </div>
@@ -63,9 +61,9 @@ const Navbar = ({ handleToggleSidebar }: NavbarProps) => {
       <InfoModal
         show={showInfoModal}
         setShow={setShowInfoModal}
-        // status="warning"
+        status="warning"
         headerTitle="Logout"
-        buttonLbl="Yes"
+        buttonLbl1="Yes"
         onClickBtn1={logout}
         buttonLbl2="No"
         onClickBtn2={() => setShowInfoModal(false)}
