@@ -1,7 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-
 import { Sidebar as ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import Icon from "./Icon";
 
@@ -67,14 +66,14 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
           {userType === "staff" && (
             <>
               <MenuItem
-                icon={<Icon iconName="HouseFill" />}
+                icon={<Icon iconName="House" />}
                 component={<Link to="/menu" />}
                 active={location.pathname === "/menu"}
               >
                 Menu
               </MenuItem>
               <MenuItem
-                icon={<Icon iconName="CartFill" />}
+                icon={<Icon iconName="Cart" />}
                 component={<Link to="/cart" />}
                 active={location.pathname === "/cart"}
                 // suffix={<div>{cartItemCount}</div>}
@@ -89,7 +88,7 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
                 Order
               </MenuItem>
               <MenuItem
-                icon={<Icon iconName="ChatLeftTextFill" />}
+                icon={<Icon iconName="ChatLeftText" />}
                 component={<Link to="/feedback" />}
                 active={location.pathname === "/feedback"}
               >

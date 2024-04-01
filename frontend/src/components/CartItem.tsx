@@ -1,6 +1,6 @@
 import { Col, Container, Image, Row } from "react-bootstrap";
-import Button from "./Button";
 import { FoodProps } from "../context/FoodContext";
+import Button from "./Button";
 import Text from "./Text";
 import "../styles/cartItem.css";
 

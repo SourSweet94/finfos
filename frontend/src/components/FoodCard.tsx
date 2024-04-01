@@ -1,9 +1,9 @@
 import { Card, Container, Image } from "react-bootstrap";
-import Button from "./Button";
 import { Dispatch, SetStateAction, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { FoodProps } from "../context/FoodContext";
 import { AppContext } from "../context/AppContext";
+import Button from "./Button";
 import Text from "./Text";
 
 interface FoodCardProps {

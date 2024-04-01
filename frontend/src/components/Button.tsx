@@ -9,6 +9,7 @@ interface ButtonProps {
   children: React.ReactNode;
   variant?: string;
   style?: {};
+  className?: string;
 }
 
 const Button = ({
@@ -18,6 +19,7 @@ const Button = ({
   children,
   variant = "secondary",
   style,
+  className,
 }: ButtonProps) => {
   return (
     <BSButton
@@ -25,7 +27,7 @@ const Button = ({
       disabled={disabled}
       style={{minWidth: '80px', ...style}}
       onClick={onClick}
-      className="btn"
+      className={`btn ${className}`}
       variant={variant}
     >
       {children}

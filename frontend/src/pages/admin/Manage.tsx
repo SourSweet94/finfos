@@ -55,7 +55,7 @@ const Manage = () => {
             justifyContent: "center",
           }}
         >
-          <Button onClick={handleAddClick} style={{}}>
+          <Button onClick={handleAddClick} style={{minWidth: '0px'}}>
             <Icon iconName="PlusLg" />
           </Button>
         </div>

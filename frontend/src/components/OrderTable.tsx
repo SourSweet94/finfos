@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import { AuthContext } from "../context/AuthContext";
-import Table from "./Table";
 import { Container } from "react-bootstrap";
+import Table from "./Table";
 import Text from "./Text";
 
 const OrderTable = () => {

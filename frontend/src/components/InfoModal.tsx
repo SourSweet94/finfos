@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
+import { Container, ModalProps } from "react-bootstrap";
 import Modal from "./Modal";
-import { Col, Container, ModalProps, Row } from "react-bootstrap";
 import Icon from "./Icon";
 import Button from "./Button";
 
@@ -8,7 +8,7 @@ interface InfoModalProps {
   show: boolean;
   setShow: Dispatch<SetStateAction<boolean>>;
   headerTitle?: string;
-  status?: "info" | "success" | "fail" | "warning";
+  status?: "info" | "success" | "warning";
   buttonLbl1?: string;
   onClickBtn1?: () => void;
   buttonLbl2?: string;
@@ -38,20 +38,22 @@ const InfoModal = ({
 
     switch (status) {
       case "info":
-        return icon("InfoCircleFill", "#a4c6de");
+        return icon("InfoCircle", "#a4c6de");
       case "success":
-        return icon("CheckCircleFill", "green");
-      case "fail":
-        return icon("ExclamationCircle", "red");
+        return icon("CheckCircle", "green");
       case "warning":
-        return icon("Icon0CircleFill", "red");
+        return icon("ExclamationCircle", "red");
     }
   };
 
   const renderFooter = (
     <>
       {buttonLbl1 && onClickBtn1 && (
-        <Button onClick={onClickBtn1} style={{ backgroundColor: "#265073" }}>
+        <Button
+          onClick={onClickBtn1}
+          style={{ backgroundColor: "#265073" }}
+          className="mx-4"
+        >
           {buttonLbl1}
         </Button>
       )}
@@ -59,6 +61,7 @@ const InfoModal = ({
         <Button
           onClick={onClickBtn2}
           style={{ backgroundColor: "white", color: "black" }}
+          className="mx-4"
         >
           {buttonLbl2}
         </Button>
@@ -75,9 +78,7 @@ const InfoModal = ({
       closeButton={closeButton}
       bsModalProps={bsModalProps}
     >
-      <>
         <Container style={{ display: "flex", justifyContent: "center" }}>
-          {/* <Row style={{ flexWrap: "nowrap" }}> */}
           <div
             style={{
               display: "flex",
@@ -95,9 +96,7 @@ const InfoModal = ({
           >
             {children}
           </div>
-          {/* </Row> */}
         </Container>
-      </>
     </Modal>
   );
 };
