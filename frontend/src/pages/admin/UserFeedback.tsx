@@ -34,7 +34,6 @@ const UserFeedback = () => {
       },
     });
     const json = await response.json();
-    console.log(json)
     const filteredJson = json.filter((feedback: FeedbackProps) => {
       // check if the food has been deleted after giving feedback
       if(feedback === null){

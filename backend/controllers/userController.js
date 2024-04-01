@@ -36,7 +36,6 @@ const addToCart = async (req, res) => {
         const user = await User.findById(req.user._id)
 
         if (user.cart.find(item => item.food_id === _id)) {
-            console.log('already')
             return res.status(200).json(user)
         }
 

@@ -63,7 +63,6 @@ const RecordForm = ({ record, setModalShow }: RecordFormProps) => {
     if (response.ok) {
       setStartDate(null)
       setEndDate(null)
-      console.log(action)
       if (action === "N") {
         dispatch({ type: "CREATE_RECORD", payload: json });
       } else if (action === "E") {

@@ -63,7 +63,6 @@ const UserOrder = () => {
       const json: OrderType[] = await response.json();
 
       setOrder(json);
-      console.log(json);
 
       setLoading(false);
     };

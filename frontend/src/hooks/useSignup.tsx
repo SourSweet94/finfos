@@ -28,7 +28,6 @@ const useSignup = () => {
       setIsLoading(false);
     }
   };
-  console.log(signupSuccess)
 
   return { signup, isLoading, error, signupSuccess, setSignupSuccess };
 };

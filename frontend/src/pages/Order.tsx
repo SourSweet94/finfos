@@ -47,7 +47,6 @@ const Order = () => {
       });
 
       const json = await response.json();
-      console.log(json);
       setOrder(json);
       setLoading(false);
     };

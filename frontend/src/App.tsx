@@ -1,10 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import { useContext } from "react";
-import { AuthContext } from "./context/AuthContext";
 import Menu from "./pages/Menu";
 import Manage from "./pages/admin/Manage";
 import Cart from "./pages/Cart";
@@ -21,8 +21,6 @@ function App() {
   const lastLocation = localStorage.getItem("lastLocation");
 
   return (
-    <>
-      {/* <NavBar /> */}
       <Routes>
         <Route path="/" element={user ? <Home /> : <Navigate to="/login" />}>
           <Route
@@ -55,7 +53,6 @@ function App() {
           element={!user ? <Signup /> : <Navigate to="/" />}
         />
       </Routes>
-    </>
   );
 }
 

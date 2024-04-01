@@ -48,7 +48,6 @@ const Menu = () => {
       // REMEMBER TO CHANGE TO filteredJson
       if (response.ok) {
         dispatch({ type: "SET_FOOD", payload: filteredJson });
-        console.log(food);
       }
       setLoading(false);
     };

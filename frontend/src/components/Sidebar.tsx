@@ -55,7 +55,7 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
                 User Order
               </MenuItem>
               <MenuItem
-                icon={<Icon iconName="ChatLeftTextFill" />}
+                icon={<Icon iconName="ChatLeftText" />}
                 component={<Link to="/user-feedback" />}
                 active={location.pathname === "/user-feedback"}
               >
