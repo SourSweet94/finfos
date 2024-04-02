@@ -124,7 +124,7 @@ const Feedback = () => {
                       <Col>
                         {item.food_image ? (
                           <Image
-                            src={`../../public/uploads/${item.food_image}`}
+                            src={`/uploads/${item.food_image}`}
                             style={{ width: "100%" }}
                           />
                         ) : (

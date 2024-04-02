@@ -39,7 +39,7 @@ const Navbar = ({ handleToggleSidebar }: NavbarProps) => {
           <Container>
             <Link to={userType === "admin" ? "/manage" : "/menu"}>
               <BSNavbar.Brand>
-                <Image src={"../../public/lemon.png"} width={"40"} />
+                <Image src={"lemon.png"} width={"40"} />
               </BSNavbar.Brand>
             </Link>
           </Container>

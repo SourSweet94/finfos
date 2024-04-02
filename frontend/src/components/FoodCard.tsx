@@ -38,7 +38,7 @@ const FoodCard = ({ food, setShowInfoModal }: FoodCardProps) => {
           {image ? (
             <Image
               className="mx-auto"
-              src={`../../public/uploads/${image}`}
+              src={`/uploads/${image}`}
               width="100%"
             />
           ) : (

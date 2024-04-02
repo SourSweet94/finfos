@@ -27,7 +27,7 @@ const getSingleFood = async (req, res) => {
 const createFood = async (req, res) => {
     const { date, title, price } = req.body
     const { record_id } = req.params
-    const image = req.file?.originalname
+    const image = req.file?.filename
     try {
         const food = await Food.create({ date, title, price, user_id: req.user._id, image })
         const record = await Record.findById(record_id)
@@ -60,7 +60,7 @@ const deleteFood = async (req, res) => {
 
     const food = await Food.findOneAndDelete({ _id: id })
 
-    const imagePath = path.join(__dirname, '../../frontend/public/uploads', food.image);
+    const imagePath = path.join(__dirname, `../../frontend/public/uploads/${food.image}`);
     if (fs.existsSync(imagePath)) {
         fs.unlinkSync(imagePath);
     }
@@ -73,7 +73,7 @@ const deleteFood = async (req, res) => {
 
 const updateFood = async (req, res) => {
     const { id } = req.params
-    let image = req.file?.originalname
+    let image = req.file?.filename
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ err: 'invalid id' })
     }
@@ -84,6 +84,13 @@ const updateFood = async (req, res) => {
     const food = await Food.findOneAndUpdate({ _id: id }, {
         ...req.body, image: image
     })
+
+    fs.unlink(path.join(__dirname, `../../frontend/public/uploads/${food.image}`), (err) => {
+        if (err) {
+            console.error('Error deleting old image:', err);
+        }
+    });
+
     if (!food) {
         return res.status(400).json({ err: 'not found' })
     }

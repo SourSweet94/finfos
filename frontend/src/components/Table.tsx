@@ -55,7 +55,7 @@ const Table = ({ headers, data, customCol, currentPage, itemsPerPage }: TablePro
                     {row[toCamelCase(header)] === row.image ? (
                       row.image ? (
                         <img
-                          src={`../../public/uploads/${row.image}`}
+                          src={`/uploads/${row.image}`}
                           alt={row.image}
                           style={{ width: "200px" }}
                         />
