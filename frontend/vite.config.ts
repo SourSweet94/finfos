@@ -6,5 +6,6 @@ export default defineConfig({
   plugins: [react()],
   build: {
     sourcemap: true
-  }
+  },
+  base: "/deploy_react_app_github_pages_vercel"
 })
