@@ -42,6 +42,7 @@ const Navbar = ({ handleToggleSidebar }: NavbarProps) => {
                 <Image src={"lemon.png"} width={"40"} />
               </BSNavbar.Brand>
             </Link>
+            <Text as="strong" style={{color: 'white'}}>Finexus Penang Cafe</Text>
           </Container>
         </div>
         <div className="navbar-right">

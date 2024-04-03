@@ -3,21 +3,24 @@ import { ReactNode } from "react";
 interface TextProps {
   children: ReactNode;
   className?: string;
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof JSX.IntrinsicElements | (keyof JSX.IntrinsicElements)[];
   style?: {};
 }
 
 const Text = ({
   children,
   className,
-  as: Component = "span",
+  as: Components = ["span"],
   style,
 }: TextProps) => {
-  return (
-    <Component className={className} style={{ ...style }}>
-      {children}
-    </Component>
-  );
+  const components = Array.isArray(Components) ? Components : [Components];
+  return components.reduceRight((acc, Component) => {
+    return (
+      <Component className={className} style={style}>
+        {acc}
+      </Component>
+    );
+  }, children);
 };
 
 export default Text;

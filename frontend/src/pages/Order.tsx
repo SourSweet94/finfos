@@ -105,12 +105,16 @@ const Order = () => {
           <div>Order is empty</div>
         )}
       </Container>
-      <Pagination
-        itemsPerPage={itemsPerPage}
-        totalItems={order.length}
-        currentPage={currentPage}
-        paginate={paginate}
-      />
+      {order.length > 0 && (
+        <div style={{ display: "flex", justifyContent: "right" }}>
+          <Pagination
+            itemsPerPage={itemsPerPage}
+            totalItems={order.length}
+            currentPage={currentPage}
+            paginate={paginate}
+          />
+        </div>
+      )}
     </>
   );
 };

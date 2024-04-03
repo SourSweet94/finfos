@@ -20,27 +20,27 @@ app.use('/', (req, res, next) => {
 
 app.use(express.json())
 
-// app.use(cors())
+app.use(cors())
 
-app.use(
-    cors({
-      origin: (origin, callback) => {
-        if (allowedOrigins.includes(origin)) {
-            callback(null, true)
-        //   if (!origin || allowedOrigins.includes(origin)) {
-        //     callback(null, true);
-        //   } else {
-        //     callback(new Error(`${origin} not allowed by cors`));
-        //   }
-        } else {
-          callback(new Error`${origin} not allowed by cors`);
-        }
-      },
-      optionsSuccessStatus: 200,
-      credentials: true,
-      methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-    }),
-  );
+// app.use(
+//     cors({
+//       origin: (origin, callback) => {
+//         if (allowedOrigins.includes(origin)) {
+//             callback(null, true)
+//         //   if (!origin || allowedOrigins.includes(origin)) {
+//         //     callback(null, true);
+//         //   } else {
+//         //     callback(new Error(`${origin} not allowed by cors`));
+//         //   }
+//         } else {
+//           callback(new Error`${origin} not allowed by cors`);
+//         }
+//       },
+//       optionsSuccessStatus: 200,
+//       credentials: true,
+//       methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+//     }),
+//   );
 
 app.use('/api/records', recordRouters)
 

@@ -18,10 +18,16 @@ interface FoodState {
 }
 
 type FoodAction =
-  | { type: "SET_FOOD"; payload: any[] | null }
-  | { type: "CREATE_FOOD"; payload: any }
-  | { type: "DELETE_FOOD"; payload: any }
-  | { type: "UPDATE_FOOD"; payload: any };
+  | { type: "SET_FOOD"; payload: FoodProps[] | null }
+  | { type: "CREATE_FOOD"; payload: FoodProps }
+  | { type: "DELETE_FOOD"; payload: FoodProps }
+  | { type: "UPDATE_FOOD"; payload: FoodProps };
+
+const sortFoodByDate = (foodList: FoodProps[]) => {
+  return foodList.sort((a, b) => {
+    return new Date(a.date).getTime() - new Date(b.date).getTime();
+  });
+};
 
 export const FoodContext = createContext<{
   state: FoodState;
@@ -32,36 +38,45 @@ const foodReducer = (state: any, action: any) => {
   switch (action.type) {
     case "SET_FOOD":
       return {
-        food: action.payload?.map((food: FoodProps) => ({
-          ...food,
-          date: new Date(food.date).toLocaleDateString(),
-        })),
+        food: action.payload
+          ?.map((food: FoodProps) => ({
+            ...food,
+            date: new Date(food.date).toLocaleDateString(),
+          }))
+          .sort(
+            (a: FoodProps, b: FoodProps) =>
+              new Date(a.date).getTime() - new Date(b.date).getTime()
+          ),
       };
     case "CREATE_FOOD":
       return {
-        food: [
+        food: sortFoodByDate([
           {
             ...action.payload,
             date: new Date(action.payload.date).toLocaleDateString(),
           },
-          ...state.food
-        ],
+          ...state.food,
+        ]),
       };
     case "UPDATE_FOOD":
       return {
-        food: state.food.map((food: FoodProps) => {
-          return food._id === action.payload._id
-            ? {
-                ...action.payload,
-                date: new Date(action.payload.date).toLocaleDateString(),
-              }
-            : food;
-        }),
+        food: sortFoodByDate(
+          state.food.map((food: FoodProps) => {
+            return food._id === action.payload._id
+              ? {
+                  ...action.payload,
+                  date: new Date(action.payload.date).toLocaleDateString(),
+                }
+              : food;
+          })
+        ),
       };
     case "DELETE_FOOD":
       return {
         // food: state.food.filter((food: any) => food._id !== action.payload._id),
-        food: state.food.filter((food: FoodProps) => food._id !== action.payload),
+        food: state.food.filter(
+          (food: FoodProps) => food._id !== action.payload
+        ),
       };
     default:
       return state;

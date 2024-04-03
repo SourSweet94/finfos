@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Form, Container } from "react-bootstrap";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import useSignup from "../hooks/useSignup";
 import Button from "../components/Button";
 import InfoModal from "../components/InfoModal";
@@ -65,16 +65,29 @@ const Signup = () => {
                 Sign up
               </Button>
             </div>
-            {error && <div>{error}</div>}
+            <div style={{ display: "flex", justifyContent: "right" }}>
+              <Button
+                disabled={isLoading}
+                style={{ background: "none", color: "black", border: "none" }}
+              >
+                <Link to="/login">
+                  <Text as={"strong"}>Login</Text>
+                </Link>
+              </Button>
+            </div>
+            {error && <Text className="error">*{error}</Text>}
           </Container>
         </Form>
       </Container>
       <InfoModal
         show={showInfoModal}
         setShow={setShowInfoModal}
+        headerTitle="Sign up"
         buttonLbl1="Go to login"
         onClickBtn1={() => setRedirectToHome(true)}
         status="success"
+        closeButton={false}
+        bsModalProps={{ backdrop: "static" }}
       >
         <Text>Sign up successfully!</Text>
       </InfoModal>

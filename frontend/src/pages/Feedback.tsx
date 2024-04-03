@@ -58,8 +58,8 @@ const Feedback = () => {
       const filteredJson = json
         .filter((feedback) => {
           // check if the food has been deleted after giving feedback
-          if(feedback===null){
-            return null
+          if (feedback === null) {
+            return null;
           }
           return feedback.feedback.some(
             (item) => item.user._id === user.user_id
@@ -97,6 +97,7 @@ const Feedback = () => {
     });
     fetchWrittenFeedback();
   };
+  console.log(error);
 
   return (
     <Container className="border py-3 mb-3">
@@ -175,9 +176,11 @@ const Feedback = () => {
                           </Button>
                         )}
                       </div>
-                      {error && (
+                      {error[item.food_id] && (
                         <div style={{ height: "20px" }}>
-                          {error[item.food_id]}
+                          <Text style={{ color: "red" }}>
+                            *{error[item.food_id]}
+                          </Text>
                         </div>
                       )}
                     </form>

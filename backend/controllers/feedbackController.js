@@ -1,7 +1,7 @@
 const Feedback = require('../models/feedbackModel')
 
 const getAllFeedback = async (req, res) => {
-  const feedback = await Feedback.find({}).sort({ createdAt: -1 }).populate({
+  const feedback = await Feedback.find({}).populate({
     path: 'food_id',
     model: 'Food',
     select: 'title date'
@@ -12,7 +12,7 @@ const getAllFeedback = async (req, res) => {
       select: 'email'
     });
   const formattedFeedback = feedback.map(item => {
-    if(item.food_id === null){
+    if (item.food_id === null) {
       return null
     }
     return {
@@ -27,10 +27,10 @@ const getAllFeedback = async (req, res) => {
           email: fb.user_id.email,
           comment: fb.comment
         }
-      })),
+      }))
     }
-  });
-  res.status(200).json(formattedFeedback)
+  }).filter(item => item !== null);
+  res.status(200).json(formattedFeedback.sort((a, b) => (new Date(a.food.date - new Date(b.food.date)))))
 
 }
 
