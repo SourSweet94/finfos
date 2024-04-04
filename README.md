@@ -1,5 +1,3 @@
-# Project Title
-
 ## Description
 A Food Order Web Application
 
