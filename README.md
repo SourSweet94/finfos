@@ -1,7 +1,7 @@
 # Project Title
 
 ## Description
-Brief description of your project.
+A Food Order Web Application
 
 ## Technologies Used
 - MongoDB
