@@ -6,7 +6,6 @@ import RecordTable from "../../components/RecordTable";
 import Button from "../../components/Button";
 import Icon from "../../components/Icon";
 // import Pagination from "../../components/Pagination";
-// import FoodTable2 from "../../components/FoodTable2";
 
 const Manage = () => {
   const { screenType, setScreenType, setAction } = useContext(ScreenContext);
@@ -42,7 +41,6 @@ const Manage = () => {
             showActionModal={showActionModal}
             setShowActionModal={setShowActionModal}
           />
-          {/* <FoodTable2/> */}
         </>
       )}
       <div style={{ display: "flex", justifyContent: "right" }}>

@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { FoodContext, FoodProps } from "../context/FoodContext";
 import { AuthContext } from "../context/AuthContext";
-import FoodCard from "../components/FoodCard";
-import { Col, Container, Row } from "react-bootstrap";
 import { AppContext } from "../context/AppContext";
+import { Col, Container, Row } from "react-bootstrap";
+import { Order } from "./Order";
+import FoodCard from "../components/FoodCard";
 import InfoModal from "../components/InfoModal";
-import Text from "../components/Text";
 import DateDropdown from "../components/DateDropdown";
+import Text from "../components/Text";
 
 const Menu = () => {
   const {
@@ -27,33 +28,51 @@ const Menu = () => {
     endDate: null,
   });
 
-  useEffect(() => {
-    const fetchFood = async () => {
-      setLoading(true);
-      const response = await fetch(`http://localhost:4000/api/food`, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const json: FoodProps[] = await response.json();
-      const filteredJson = json.filter((food) => {
-        const startDate = selectedDateInterval.startDate
-          ? selectedDateInterval.startDate
-          : "";
-        const endDate = selectedDateInterval.endDate
-          ? selectedDateInterval.endDate
-          : "";
-        return food.date >= startDate && food.date <= endDate;
-      });
-      // REMEMBER TO CHANGE TO filteredJson
-      if (response.ok) {
-        dispatch({ type: "SET_FOOD", payload: filteredJson });
-      }
-      setLoading(false);
-    };
+  const [orders, setOrders] = useState<Order[]>([]);
 
+  const fetchFood = async () => {
+    const response = await fetch(`http://localhost:4000/api/food`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    const json: FoodProps[] = await response.json();
+    const filteredJson = json.filter((food) => {
+      const startDate = selectedDateInterval.startDate
+        ? selectedDateInterval.startDate
+        : "";
+      const endDate = selectedDateInterval.endDate
+        ? selectedDateInterval.endDate
+        : "";
+      return food.date >= startDate && food.date <= endDate;
+    });
+    // REMEMBER TO CHANGE TO filteredJson
+    if (response.ok) {
+      dispatch({ type: "SET_FOOD", payload: filteredJson });
+    }
+  };
+
+  const fetchOrder = async () => {
+    setLoading(true);
+    const response = await fetch("http://localhost:4000/api/order/user", {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    const orders: Order[] = await response.json();
+    setOrders(orders);
+    if (response.ok) {
+      // dispatch({ type: "SET_FOOD", payload: filteredJson });
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
     if (user) {
+      setLoading(true);
       fetchFood();
+      fetchOrder();
+      setLoading(false);
     }
   }, [selectedDateInterval]);
 
@@ -96,6 +115,9 @@ const Menu = () => {
                   price: food.price,
                 }}
                 setShowInfoModal={setShowInfoModal}
+                isOrdered={orders.some((order) =>
+                  order.items.some((item) => item.food_id === food._id)
+                )}
               />
             );
           })

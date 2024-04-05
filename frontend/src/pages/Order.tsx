@@ -13,7 +13,7 @@ type Item = {
   food_date: Date;
 };
 
-type Order = {
+export type Order = {
   _id: string;
   amount: number;
   buyer_id: string;
@@ -37,19 +37,20 @@ const Order = () => {
   const currentItems = order.slice(indexOfFirstItem, indexOfLastItem);
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  useEffect(() => {
-    const fetchOrder = async () => {
-      setLoading(true);
-      const response = await fetch("http://localhost:4000/api/order/user", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
+  const fetchOrder = async () => {
+    setLoading(true);
+    const response = await fetch("http://localhost:4000/api/order/user", {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
 
-      const json = await response.json();
-      setOrder(json);
-      setLoading(false);
-    };
+    const json = await response.json();
+    setOrder(json);
+    setLoading(false);
+  };
+
+  useEffect(() => {
     if (user) {
       fetchOrder();
     }

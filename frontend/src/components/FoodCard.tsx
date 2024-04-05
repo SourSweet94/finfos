@@ -9,9 +9,11 @@ import Text from "./Text";
 interface FoodCardProps {
   food: FoodProps;
   setShowInfoModal: Dispatch<SetStateAction<boolean>>;
+  isOrdered: boolean;
+  isExpired?: boolean;
 }
 
-const FoodCard = ({ food, setShowInfoModal }: FoodCardProps) => {
+const FoodCard = ({ food, setShowInfoModal, isOrdered, isExpired }: FoodCardProps) => {
   const { _id, date, title, price, image } = food;
   const {
     state: { user },
@@ -36,11 +38,7 @@ const FoodCard = ({ food, setShowInfoModal }: FoodCardProps) => {
       <Card.Body className="text-center">
         <Container style={{ top: 0, height: "100px", marginBottom: "10px" }}>
           {image ? (
-            <Image
-              className="mx-auto"
-              src={`/uploads/${image}`}
-              width="100%"
-            />
+            <Image className="mx-auto" src={`/uploads/${image}`} width="100%" />
           ) : (
             <Text>No image</Text>
           )}
@@ -51,8 +49,9 @@ const FoodCard = ({ food, setShowInfoModal }: FoodCardProps) => {
         <Button
           style={{ background: "#fccd4c", color: "black", border: "none" }}
           onClick={handleAddToCart}
+          disabled={isOrdered}
         >
-          Add to Cart
+          {isOrdered ? "Ordered" : "Add to Cart"}
         </Button>
       </Card.Body>
     </Card>

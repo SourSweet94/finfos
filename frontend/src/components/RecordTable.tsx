@@ -13,6 +13,7 @@ import { RecordContext, RecordProps } from "../context/RecordContext";
 import ActionModal from "./ActionModal";
 import Button from "./Button";
 import Table from "./Table";
+import InfoModal from "./InfoModal";
 
 interface RecordTableProps {
   showActionModal: boolean;
@@ -35,6 +36,10 @@ const RecordTable = ({
   const { setLoading } = useContext(AppContext);
 
   const [selectedRecord, setSelectedRecord] = useState<RecordProps>();
+  const [deleteRecordId, setDeleteRecordId] = useState<string>("");
+  const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
+
+  const [cliked, setCliked] = useState<"Delete" | "Close" | "">("");
 
   useEffect(() => {
     const fetchRecord = async () => {
@@ -78,6 +83,15 @@ const RecordTable = ({
     setLoading(false);
   };
 
+  const handleEdit = (selectedRecordID: string) => {
+    const recordToEdit = records!.find(
+      (item: RecordProps) => item._id === selectedRecordID
+    );
+    setShowActionModal(true);
+    setAction("E");
+    setSelectedRecord(recordToEdit!);
+  };
+
   const handleDelete = async (record_id: string) => {
     if (!user) {
       return;
@@ -94,16 +108,8 @@ const RecordTable = ({
     const json = await response.json();
     if (response.ok) {
       dispatch({ type: "DELETE_RECORD", payload: json });
+      setDeleteRecordId("");
     }
-  };
-
-  const handleEdit = (selectedRecordID: string) => {
-    const recordToEdit = records!.find(
-      (item: RecordProps) => item._id === selectedRecordID
-    );
-    setShowActionModal(true);
-    setAction("E");
-    setSelectedRecord(recordToEdit);
   };
 
   const headers = ["Start Date", "End Date"];
@@ -115,7 +121,19 @@ const RecordTable = ({
       {
         label: "Delete",
         variant: "danger",
-        onClick: () => handleDelete(rowId),
+        // onClick: () => handleDelete(rowId),
+        onClick: () => {
+          setCliked("Delete");
+          setDeleteRecordId(rowId);
+          setShowInfoModal(true);
+        },
+      },
+      {
+        label: "Close order",
+        onClick: () => {
+          setCliked("Close");
+          setShowInfoModal(true);
+        },
       },
     ];
 
@@ -135,6 +153,10 @@ const RecordTable = ({
     Action: (row: any) => renderButtons(row._id),
   };
 
+  const handleCloseOrder = () => {
+    console.log("close");
+  };
+
   return (
     <>
       {records?.length !== 0 ? (
@@ -148,6 +170,23 @@ const RecordTable = ({
         show={showActionModal}
         setShow={setShowActionModal}
         data={selectedRecord}
+      />
+
+      <InfoModal
+        show={showInfoModal}
+        setShow={setShowInfoModal}
+        headerTitle={cliked === "Delete" ? "Delete" : "Close Order"}
+        buttonLbl1="Yes"
+        onClickBtn1={() => {
+          setShowInfoModal(false);
+          cliked === "Delete"
+            ? handleDelete(deleteRecordId!)
+            : handleCloseOrder;
+        }}
+        buttonLbl2="No"
+        onClickBtn2={() => {
+          setShowInfoModal(false);
+        }}
       />
     </>
   );
