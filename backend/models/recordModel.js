@@ -13,6 +13,11 @@ const recordSchema = new Schema({
         required: true
     },
 
+    status: {
+        type: Boolean,
+        required: true
+    },
+
     food_id: [
         {
             type: mongoose.Schema.Types.ObjectId,

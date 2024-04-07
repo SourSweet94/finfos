@@ -5,9 +5,9 @@ interface RecordContextProps {
 }
 
 export interface RecordProps {
-  // name: string;
   startDate: Date;
   endDate: Date;
+  status: boolean;
   _id: string;
 }
 
@@ -16,10 +16,10 @@ interface RecordState {
 }
 
 type RecordAction =
-  | { type: "SET_RECORD"; payload: any[] | null }
-  | { type: "CREATE_RECORD"; payload: any }
-  | { type: "DELETE_RECORD"; payload: any }
-  | { type: "UPDATE_RECORD"; payload: any };
+  | { type: "SET_RECORD"; payload: RecordProps[] | null }
+  | { type: "CREATE_RECORD"; payload: RecordProps }
+  | { type: "DELETE_RECORD"; payload: RecordProps }
+  | { type: "UPDATE_RECORD"; payload: RecordProps };
 
 export const RecordContext = createContext<{
   state: RecordState;
@@ -27,6 +27,8 @@ export const RecordContext = createContext<{
 }>({ state: { records: null }, dispatch: () => {} });
 
 const recordReducer = (state: any, action: any) => {
+  console.log(state);
+
   switch (action.type) {
     case "SET_RECORD":
       return {
@@ -34,9 +36,10 @@ const recordReducer = (state: any, action: any) => {
           ...record,
           startDate: new Date(record.startDate).toLocaleDateString(),
           endDate: new Date(record.endDate).toLocaleDateString(),
+          status: record.status === true ? "Opened" : "Closed",
         })),
       };
-      // return {records: action.payload}
+    // return {records: action.payload}
     case "CREATE_RECORD":
       return {
         records: [
@@ -44,6 +47,7 @@ const recordReducer = (state: any, action: any) => {
             ...action.payload,
             startDate: new Date(action.payload.startDate).toLocaleDateString(),
             endDate: new Date(action.payload.endDate).toLocaleDateString(),
+            status: "Opened",
           },
           ...state.records,
         ],
@@ -58,6 +62,7 @@ const recordReducer = (state: any, action: any) => {
                   action.payload.startDate
                 ).toLocaleDateString(),
                 endDate: new Date(action.payload.endDate).toLocaleDateString(),
+                status: "Closed"
               }
             : records;
         }),

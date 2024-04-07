@@ -75,6 +75,7 @@ const RecordForm = ({ record, setModalShow }: RecordFormProps) => {
           }
         );
         const updatedJson = await updatedResp.json();
+        console.log(updatedJson)
         dispatch({ type: "UPDATE_RECORD", payload: updatedJson });
       }
       setModalShow!(false);

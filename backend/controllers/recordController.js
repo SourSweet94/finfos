@@ -31,6 +31,7 @@ const createRecord = async (req, res) => {
         const record = await Record.create({
             startDate,
             endDate,
+            status: true,
             user_id: req.user._id
         })
         return res.status(200).json(record)
@@ -57,12 +58,14 @@ const updateRecord = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ err: 'invalid id' })
     }
+    console.log(req.body)
     const record = await Record.findOneAndUpdate({ _id: id }, {
         ...req.body
     })
     if (!record) {
         return res.status(400).json({ err: 'not found' })
     }
+    console.log(record)
     return res.status(200).json(record)
 }
 

@@ -14,6 +14,7 @@ import ActionModal from "./ActionModal";
 import Button from "./Button";
 import Table from "./Table";
 import InfoModal from "./InfoModal";
+import Text from "./Text";
 
 interface RecordTableProps {
   showActionModal: boolean;
@@ -29,17 +30,17 @@ const RecordTable = ({
     state: { records },
     dispatch,
   } = useContext(RecordContext);
-  const { setRecordID, setFoodID } = useContext(ItemContext);
+  const { record_id, setRecordID, setFoodID } = useContext(ItemContext);
   const {
     state: { user },
   } = useContext(AuthContext);
   const { setLoading } = useContext(AppContext);
 
   const [selectedRecord, setSelectedRecord] = useState<RecordProps>();
-  const [deleteRecordId, setDeleteRecordId] = useState<string>("");
+  // const [deleteRecordId, setDeleteRecordId] = useState<string>("");
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
 
-  const [cliked, setCliked] = useState<"Delete" | "Close" | "">("");
+  const [clicked, setClicked] = useState<"Delete" | "Close" | "">("");
 
   useEffect(() => {
     const fetchRecord = async () => {
@@ -49,10 +50,10 @@ const RecordTable = ({
           Authorization: `Bearer ${user.token}`,
         },
       });
-      const json = await response.json();
-      console.log(json);
+      const food = await response.json();
+      console.log(food);
       if (response.ok) {
-        dispatch({ type: "SET_RECORD", payload: json });
+        dispatch({ type: "SET_RECORD", payload: food });
       }
       setLoading(false);
     };
@@ -67,7 +68,7 @@ const RecordTable = ({
     setRecordID(record_id);
 
     const response = await fetch(
-      "http://localhost:4000/api/records/" + record_id,
+      `http://localhost:4000/api/records/${record_id}`,
       {
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -89,7 +90,7 @@ const RecordTable = ({
     );
     setShowActionModal(true);
     setAction("E");
-    setSelectedRecord(recordToEdit!);
+    setSelectedRecord(recordToEdit);
   };
 
   const handleDelete = async (record_id: string) => {
@@ -97,7 +98,7 @@ const RecordTable = ({
       return;
     }
     const response = await fetch(
-      "http://localhost:4000/api/records/" + record_id,
+      `http://localhost:4000/api/records/${record_id}`,
       {
         method: "DELETE",
         headers: {
@@ -108,11 +109,37 @@ const RecordTable = ({
     const json = await response.json();
     if (response.ok) {
       dispatch({ type: "DELETE_RECORD", payload: json });
-      setDeleteRecordId("");
     }
   };
 
-  const headers = ["Start Date", "End Date"];
+  const handleCloseOrder = async (record_id: string) => {
+    const response = await fetch(
+      `http://localhost:4000/api/records/${record_id}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify({ status: false }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    if (response.ok) {
+      // display the latest data
+      const updatedResp = await fetch(
+        `http://localhost:4000/api/records/${record_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      const updatedJson = await updatedResp.json();
+      dispatch({ type: "UPDATE_RECORD" , payload: updatedJson});
+    }
+  };
+
+  const headers = ["Start Date", "End Date", "Status"];
 
   const renderButtons = (rowId: string) => {
     const actions = [
@@ -121,17 +148,17 @@ const RecordTable = ({
       {
         label: "Delete",
         variant: "danger",
-        // onClick: () => handleDelete(rowId),
         onClick: () => {
-          setCliked("Delete");
-          setDeleteRecordId(rowId);
+          setClicked("Delete");
+          setRecordID(rowId);
           setShowInfoModal(true);
         },
       },
       {
         label: "Close order",
         onClick: () => {
-          setCliked("Close");
+          setClicked("Close");
+          setRecordID(rowId);
           setShowInfoModal(true);
         },
       },
@@ -153,10 +180,6 @@ const RecordTable = ({
     Action: (row: any) => renderButtons(row._id),
   };
 
-  const handleCloseOrder = () => {
-    console.log("close");
-  };
-
   return (
     <>
       {records?.length !== 0 ? (
@@ -175,19 +198,25 @@ const RecordTable = ({
       <InfoModal
         show={showInfoModal}
         setShow={setShowInfoModal}
-        headerTitle={cliked === "Delete" ? "Delete" : "Close Order"}
+        headerTitle={clicked === "Delete" ? "Delete" : "Close Order"}
         buttonLbl1="Yes"
         onClickBtn1={() => {
           setShowInfoModal(false);
-          cliked === "Delete"
-            ? handleDelete(deleteRecordId!)
-            : handleCloseOrder;
+          clicked === "Delete"
+            ? handleDelete(record_id!)
+            : handleCloseOrder(record_id!);
         }}
         buttonLbl2="No"
         onClickBtn2={() => {
           setShowInfoModal(false);
         }}
-      />
+        status="warning"
+      >
+        <Text>
+          Confirm
+          {clicked === "Delete" ? " delete" : " close order"}
+        </Text>
+      </InfoModal>
     </>
   );
 };

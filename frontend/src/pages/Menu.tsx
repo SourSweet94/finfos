@@ -53,7 +53,6 @@ const Menu = () => {
   };
 
   const fetchOrder = async () => {
-    setLoading(true);
     const response = await fetch("http://localhost:4000/api/order/user", {
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -64,7 +63,6 @@ const Menu = () => {
     if (response.ok) {
       // dispatch({ type: "SET_FOOD", payload: filteredJson });
     }
-    setLoading(false);
   };
 
   useEffect(() => {
