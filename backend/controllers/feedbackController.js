@@ -12,9 +12,9 @@ const getAllFeedback = async (req, res) => {
       select: 'email'
     });
   const formattedFeedback = feedback.map(item => {
-    if (item.food_id === null) {
-      return null
-    }
+    // if (item.food_id === null) {
+    //   return null
+    // }
     return {
       food: {
         _id: item.food_id._id,
@@ -29,7 +29,8 @@ const getAllFeedback = async (req, res) => {
         }
       }))
     }
-  }).filter(item => item !== null);
+  })
+  // .filter(item => item !== null);
   res.status(200).json(formattedFeedback.sort((a, b) => (new Date(a.food.date - new Date(b.food.date)))))
 
 }

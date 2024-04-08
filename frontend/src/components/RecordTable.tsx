@@ -43,13 +43,9 @@ const RecordTable = ({
     state: { user },
   } = useContext(AuthContext);
   const { setLoading } = useContext(AppContext);
-
   const [selectedRecord, setSelectedRecord] = useState<RecordProps>();
-  // const [deleteRecordId, setDeleteRecordId] = useState<string>("");
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
-
   const [clicked, setClicked] = useState<"Delete" | "Close" | "">("");
-  const [opened, setOpened] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchRecord = async () => {
@@ -143,13 +139,11 @@ const RecordTable = ({
         }
       );
       const updatedRecord: RecordProps = await updatedResp.json();
-      console.log(updatedRecord.opened)
-      setOpened(updatedRecord.opened);
       dispatch({ type: "UPDATE_RECORD", payload: updatedRecord });
     }
   };
 
-  const headers = ["Start Date", "End Date", "Opened"];
+  const headers = ["Start Date", "End Date"];
 
   const renderButtons = (rowId: string) => {
     const actions: ActionButton[] = [
@@ -171,7 +165,10 @@ const RecordTable = ({
         },
       },
       {
-        label: opened ? "Open order" : "Close order",
+        label: records!.find((record) => record._id === rowId)!.opened
+          ? "Close order"
+          : "Open order",
+        variant: "dark",
         onClick: () => {
           setClicked("Close");
           setRecordID(rowId);
@@ -179,21 +176,36 @@ const RecordTable = ({
         },
       },
     ];
-
     return actions.map(({ label, iconName, variant, onClick }) => (
       <Button
         key={`${label}-${rowId}`}
         onClick={onClick}
         variant={variant}
-        style={{ margin: "0 10px 10px", minWidth: "auto" }}
+        style={{margin: "0 10px 10px", minWidth: "auto" }}
       >
         {!iconName ? label : <Icon iconName={iconName} />}
       </Button>
     ));
   };
 
+  const renderTags = (tag: "open" | "close") => (
+    <Text
+      style={{
+        color: tag === "open" ? "#114232" : "#A0153E",
+        backgroundColor: tag === "open" ? "#90D26D" : "#F28585",
+        border: "solid",
+        borderRadius: "5px",
+        padding: "3px",
+        minWidth: "100px",
+      }}
+    >
+      {tag === "open" ? "Opened" : "Closed"}
+    </Text>
+  );
+
   const customCol = {
-    Action: (row: any) => renderButtons(row._id),
+    Tag: (row: RecordProps) => renderTags(row.opened ? "open" : "close"),
+    Action: (row: RecordProps) => renderButtons(row._id),
   };
 
   return (

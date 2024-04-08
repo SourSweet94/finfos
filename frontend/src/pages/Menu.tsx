@@ -8,7 +8,6 @@ import FoodCard from "../components/FoodCard";
 import InfoModal from "../components/InfoModal";
 import DateDropdown from "../components/DateDropdown";
 import Text from "../components/Text";
-import { ItemContext } from "../context/ItemContext";
 
 const Menu = () => {
   const {

@@ -1,5 +1,4 @@
 import { ReactNode, createContext, useReducer } from "react";
-import Text from "../components/Text";
 
 interface RecordContextProps {
   children: ReactNode;
@@ -9,6 +8,7 @@ export interface RecordProps {
   startDate: Date;
   endDate: Date;
   opened: boolean;
+  tag?: JSX.Element;
   _id: string;
 }
 
@@ -27,21 +27,6 @@ export const RecordContext = createContext<{
   dispatch: React.Dispatch<RecordAction>;
 }>({ state: { records: null }, dispatch: () => {} });
 
-const tag = (tag: "open" | "close") => (
-  <Text
-    style={{
-      color: tag === "open" ? "#114232" : "#A0153E",
-      backgroundColor: tag === "open" ? "#90D26D" : "#F28585",
-      border: "solid",
-      borderRadius: "5px",
-      padding: "3px",
-      minWidth: "100px",
-    }}
-  >
-    {tag === "open" ? "Opened" : "Closed"}
-  </Text>
-);
-
 const recordReducer = (state: any, action: any) => {
   console.log(state);
 
@@ -52,7 +37,6 @@ const recordReducer = (state: any, action: any) => {
           ...record,
           startDate: new Date(record.startDate).toLocaleDateString(),
           endDate: new Date(record.endDate).toLocaleDateString(),
-          opened: record.opened ? tag("open") : tag("close"),
         })),
       };
     // return {records: action.payload}
@@ -63,7 +47,6 @@ const recordReducer = (state: any, action: any) => {
             ...action.payload,
             startDate: new Date(action.payload.startDate).toLocaleDateString(),
             endDate: new Date(action.payload.endDate).toLocaleDateString(),
-            opened: tag("open"),
           },
           ...state.records,
         ],
@@ -78,7 +61,6 @@ const recordReducer = (state: any, action: any) => {
                   action.payload.startDate
                 ).toLocaleDateString(),
                 endDate: new Date(action.payload.endDate).toLocaleDateString(),
-                opened: action.payload.opened ? tag("open") : tag("close"),
               }
             : records;
         }),
