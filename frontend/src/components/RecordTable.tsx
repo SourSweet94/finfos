@@ -15,10 +15,18 @@ import Button from "./Button";
 import Table from "./Table";
 import InfoModal from "./InfoModal";
 import Text from "./Text";
+import Icon, { IconProps } from "./Icon";
 
 interface RecordTableProps {
   showActionModal: boolean;
   setShowActionModal: Dispatch<SetStateAction<boolean>>;
+}
+
+interface ActionButton {
+  label: string;
+  iconName?: IconProps["iconName"];
+  variant?: string;
+  onClick: () => void;
 }
 
 const RecordTable = ({
@@ -41,6 +49,7 @@ const RecordTable = ({
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
 
   const [clicked, setClicked] = useState<"Delete" | "Close" | "">("");
+  const [opened, setOpened] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchRecord = async () => {
@@ -51,7 +60,6 @@ const RecordTable = ({
         },
       });
       const food = await response.json();
-      console.log(food);
       if (response.ok) {
         dispatch({ type: "SET_RECORD", payload: food });
       }
@@ -106,9 +114,9 @@ const RecordTable = ({
         },
       }
     );
-    const json = await response.json();
+    const record: RecordProps = await response.json();
     if (response.ok) {
-      dispatch({ type: "DELETE_RECORD", payload: json });
+      dispatch({ type: "DELETE_RECORD", payload: record });
     }
   };
 
@@ -117,7 +125,7 @@ const RecordTable = ({
       `http://localhost:4000/api/records/${record_id}`,
       {
         method: "PATCH",
-        body: JSON.stringify({ status: false }),
+        body: JSON.stringify({ opened: true }),
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
@@ -134,19 +142,27 @@ const RecordTable = ({
           },
         }
       );
-      const updatedJson = await updatedResp.json();
-      dispatch({ type: "UPDATE_RECORD" , payload: updatedJson});
+      const updatedRecord: RecordProps = await updatedResp.json();
+      console.log(updatedRecord.opened)
+      setOpened(updatedRecord.opened);
+      dispatch({ type: "UPDATE_RECORD", payload: updatedRecord });
     }
   };
 
-  const headers = ["Start Date", "End Date", "Status"];
+  const headers = ["Start Date", "End Date", "Opened"];
 
   const renderButtons = (rowId: string) => {
-    const actions = [
-      { label: "View", onClick: () => handleView(rowId) },
-      { label: "Edit", variant: "warning", onClick: () => handleEdit(rowId) },
+    const actions: ActionButton[] = [
+      { label: "View", iconName: "Eye", onClick: () => handleView(rowId) },
+      {
+        label: "Edit",
+        iconName: "PencilSquare",
+        variant: "warning",
+        onClick: () => handleEdit(rowId),
+      },
       {
         label: "Delete",
+        iconName: "Trash3",
         variant: "danger",
         onClick: () => {
           setClicked("Delete");
@@ -155,7 +171,7 @@ const RecordTable = ({
         },
       },
       {
-        label: "Close order",
+        label: opened ? "Open order" : "Close order",
         onClick: () => {
           setClicked("Close");
           setRecordID(rowId);
@@ -164,14 +180,14 @@ const RecordTable = ({
       },
     ];
 
-    return actions.map(({ label, variant, onClick }) => (
+    return actions.map(({ label, iconName, variant, onClick }) => (
       <Button
         key={`${label}-${rowId}`}
         onClick={onClick}
         variant={variant}
-        style={{ margin: "0 10px 10px" }}
+        style={{ margin: "0 10px 10px", minWidth: "auto" }}
       >
-        {label}
+        {!iconName ? label : <Icon iconName={iconName} />}
       </Button>
     ));
   };

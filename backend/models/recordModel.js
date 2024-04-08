@@ -13,7 +13,7 @@ const recordSchema = new Schema({
         required: true
     },
 
-    status: {
+    opened: {
         type: Boolean,
         required: true
     },

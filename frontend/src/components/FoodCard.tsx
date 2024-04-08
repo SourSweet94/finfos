@@ -10,10 +10,15 @@ interface FoodCardProps {
   food: FoodProps;
   setShowInfoModal: Dispatch<SetStateAction<boolean>>;
   isOrdered: boolean;
-  isExpired?: boolean;
+  opened?: boolean;
 }
 
-const FoodCard = ({ food, setShowInfoModal, isOrdered, isExpired }: FoodCardProps) => {
+const FoodCard = ({
+  food,
+  setShowInfoModal,
+  isOrdered,
+  opened,
+}: FoodCardProps) => {
   const { _id, date, title, price, image } = food;
   const {
     state: { user },
@@ -49,9 +54,9 @@ const FoodCard = ({ food, setShowInfoModal, isOrdered, isExpired }: FoodCardProp
         <Button
           style={{ background: "#fccd4c", color: "black", border: "none" }}
           onClick={handleAddToCart}
-          disabled={isOrdered}
+          disabled={!opened || isOrdered}
         >
-          {isOrdered ? "Ordered" : "Add to Cart"}
+          {!opened ? "Expired" : isOrdered ? "Ordered" : "Add to Cart"}
         </Button>
       </Card.Body>
     </Card>

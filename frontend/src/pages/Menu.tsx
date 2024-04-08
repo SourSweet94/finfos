@@ -8,6 +8,7 @@ import FoodCard from "../components/FoodCard";
 import InfoModal from "../components/InfoModal";
 import DateDropdown from "../components/DateDropdown";
 import Text from "../components/Text";
+import { ItemContext } from "../context/ItemContext";
 
 const Menu = () => {
   const {
@@ -23,9 +24,11 @@ const Menu = () => {
   const [selectedDateInterval, setSelectedDateInterval] = useState<{
     startDate: Date | null;
     endDate: Date | null;
+    opened?: boolean;
   }>({
     startDate: null,
     endDate: null,
+    opened: false
   });
 
   const [orders, setOrders] = useState<Order[]>([]);
@@ -36,8 +39,8 @@ const Menu = () => {
         Authorization: `Bearer ${user.token}`,
       },
     });
-    const json: FoodProps[] = await response.json();
-    const filteredJson = json.filter((food) => {
+    const food: FoodProps[] = await response.json();
+    const filteredFood = food.filter((food) => {
       const startDate = selectedDateInterval.startDate
         ? selectedDateInterval.startDate
         : "";
@@ -48,7 +51,7 @@ const Menu = () => {
     });
     // REMEMBER TO CHANGE TO filteredJson
     if (response.ok) {
-      dispatch({ type: "SET_FOOD", payload: filteredJson });
+      dispatch({ type: "SET_FOOD", payload: filteredFood });
     }
   };
 
@@ -60,9 +63,6 @@ const Menu = () => {
     });
     const orders: Order[] = await response.json();
     setOrders(orders);
-    if (response.ok) {
-      // dispatch({ type: "SET_FOOD", payload: filteredJson });
-    }
   };
 
   useEffect(() => {
@@ -116,6 +116,7 @@ const Menu = () => {
                 isOrdered={orders.some((order) =>
                   order.items.some((item) => item.food_id === food._id)
                 )}
+                opened={selectedDateInterval.opened}
               />
             );
           })

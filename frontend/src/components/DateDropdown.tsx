@@ -13,11 +13,13 @@ interface DateDropdownProps {
   selectedDateInterval: {
     startDate: Date | null;
     endDate: Date | null;
+    opened?: boolean
   };
   setSelectedDateInterval: Dispatch<
     SetStateAction<{
       startDate: Date | null;
       endDate: Date | null;
+      opened?: boolean;
     }>
   >;
 }
@@ -34,16 +36,19 @@ const DateDropdown = ({
     { startDate: Date; endDate: Date }[]
   >([]);
 
-  const handleDateSelect = (startDate: Date, endDate: Date) => {
+  const [isOrderClosed, setIsOrderClosed] = useState<boolean>(false);
+
+  const handleDateSelect = (startDate: Date, endDate: Date, opened: boolean) => {
     if (
       startDate === selectedDateInterval.startDate &&
       endDate === selectedDateInterval.endDate
     ) {
-      return
+      return;
     }
     setSelectedDateInterval({
       startDate,
       endDate,
+      opened
     });
   };
 
@@ -54,17 +59,19 @@ const DateDropdown = ({
           Authorization: `Bearer ${user.token}`,
         },
       });
-      const json: RecordProps[] = await response.json();
+      const records: RecordProps[] = await response.json();
       if (response.ok) {
         setDateInterval(
-          json.map((record: RecordProps) => ({
+          records.map((record) => ({
             startDate: record.startDate,
             endDate: record.endDate,
+            opened: record.opened
           }))
         );
         setSelectedDateInterval({
-          startDate: json[0]?.startDate,
-          endDate: json[0]?.endDate,
+          startDate: records[0].startDate,
+          endDate: records[0].endDate,
+          opened: records[0].opened
         });
       }
     };
@@ -93,7 +100,7 @@ const DateDropdown = ({
         {dateInterval.map((date: any) => (
           <Dropdown.Item
             key={date.startDate}
-            onClick={() => handleDateSelect(date.startDate, date.endDate)}
+            onClick={() => handleDateSelect(date.startDate, date.endDate, date.opened)}
           >
             {new Date(date.startDate).toLocaleDateString()} -{" "}
             {new Date(date.endDate).toLocaleDateString()}

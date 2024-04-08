@@ -20,7 +20,7 @@ interface FoodState {
 type FoodAction =
   | { type: "SET_FOOD"; payload: FoodProps[] | null }
   | { type: "CREATE_FOOD"; payload: FoodProps }
-  | { type: "DELETE_FOOD"; payload: FoodProps }
+  | { type: "DELETE_FOOD"; payload: string }
   | { type: "UPDATE_FOOD"; payload: FoodProps };
 
 const sortFoodByDate = (foodList: FoodProps[]) => {

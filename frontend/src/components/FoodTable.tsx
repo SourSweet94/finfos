@@ -13,6 +13,8 @@ import { AppContext } from "../context/AppContext";
 import ActionModal from "./ActionModal";
 import Button from "./Button";
 import Table from "./Table";
+import Text from "./Text";
+import Icon from "./Icon";
 
 interface FoodTableProps {
   showActionModal: boolean;
@@ -33,25 +35,24 @@ const FoodTable = ({ showActionModal, setShowActionModal }: FoodTableProps) => {
 
   const [selectedFood, setSelectedFood] = useState<FoodProps>();
 
+  const fetchFood = async () => {
+    const response = await fetch("http://localhost:4000/api/food", {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    const json = await response.json();
+    const filteredJson = json.filter((item: any) => food_id.includes(item._id));
+    if (response.ok) {
+      dispatch({ type: "SET_FOOD", payload: filteredJson });
+    }
+  };
+
   useEffect(() => {
-    const fetchFood = async () => {
-      setLoading(true);
-      const response = await fetch("http://localhost:4000/api/food", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const json = await response.json();
-      const filteredJson = json.filter((item: any) =>
-        food_id.includes(item._id)
-      );
-      if (response.ok) {
-        dispatch({ type: "SET_FOOD", payload: filteredJson });
-      }
-      setLoading(false);
-    };
     if (user) {
+      setLoading(true);
       fetchFood();
+      setLoading(false);
     }
   }, [dispatch, user, food_id]);
 
@@ -91,14 +92,14 @@ const FoodTable = ({ showActionModal, setShowActionModal }: FoodTableProps) => {
           onClick={() => handleEdit(row._id)}
           variant="warning"
         >
-          Edit
+          <Icon iconName="PencilSquare"/>
         </Button>
         <Button
           style={{ margin: "0 10px 10px" }}
           onClick={() => handleDelete(row._id)}
           variant="danger"
         >
-          Delete
+          <Icon iconName="Trash3"/>
         </Button>
       </>
     ),
@@ -109,7 +110,7 @@ const FoodTable = ({ showActionModal, setShowActionModal }: FoodTableProps) => {
       {food?.length !== 0 ? (
         <Table headers={headers} data={food} customCol={customCol} />
       ) : (
-        <div>No data</div>
+        <Text>No data</Text>
       )}
 
       <ActionModal

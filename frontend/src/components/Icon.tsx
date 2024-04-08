@@ -1,6 +1,6 @@
 import * as icons from "react-bootstrap-icons";
 
-interface IconProps {
+export interface IconProps {
   iconName: keyof typeof icons;
   color?: string
   size?: string
