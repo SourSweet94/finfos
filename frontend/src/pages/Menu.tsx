@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { FoodContext, FoodProps } from "../context/FoodContext";
 import { AuthContext } from "../context/AuthContext";
 import { AppContext } from "../context/AppContext";
+import { ItemContext } from "../context/ItemContext";
 import { Col, Container, Row } from "react-bootstrap";
 import { Order } from "./Order";
 import FoodCard from "../components/FoodCard";
@@ -18,17 +19,8 @@ const Menu = () => {
     state: { user },
   } = useContext(AuthContext);
   const { setLoading } = useContext(AppContext);
+  const { selectedDateInterval } = useContext(ItemContext);
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
-
-  const [selectedDateInterval, setSelectedDateInterval] = useState<{
-    startDate: Date | null;
-    endDate: Date | null;
-    opened?: boolean;
-  }>({
-    startDate: null,
-    endDate: null,
-    opened: false
-  });
 
   const [orders, setOrders] = useState<Order[]>([]);
 
@@ -92,10 +84,7 @@ const Menu = () => {
     <Container className="menu-container">
       <Row>
         <Col>
-          <DateDropdown
-            selectedDateInterval={selectedDateInterval}
-            setSelectedDateInterval={setSelectedDateInterval}
-          />
+          <DateDropdown />
         </Col>
       </Row>
       <Row className="my-3">

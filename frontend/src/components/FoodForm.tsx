@@ -21,13 +21,16 @@ interface FoodFormProps {
   setModalShow?: Dispatch<SetStateAction<boolean>>;
 }
 
-const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
+const FoodForm = ({
+  foodDetails,
+  setModalShow,
+}: FoodFormProps) => {
   const { dispatch } = useContext(FoodContext);
   const {
     state: { user },
   } = useContext(AuthContext);
   const { action } = useContext(ScreenContext);
-  const { record_id } = useContext(ItemContext);
+  const { record_id, selectedDateInterval } = useContext(ItemContext);
 
   const [image, setImage] = useState<File | null>(null);
 
@@ -118,11 +121,13 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
 
       <Form.Group className="mb-3">
         <Form.Label>Date</Form.Label>
-        <br/>
+        <br />
         <DatePicker
           selected={date}
           onChange={(selectedDate: Date | null) => setDate(selectedDate)}
           dateFormat="yyyy-MM-dd"
+          minDate={selectedDateInterval.startDate}
+          maxDate={selectedDateInterval.endDate}
         />
       </Form.Group>
 
@@ -144,6 +149,7 @@ const FoodForm = ({ foodDetails, setModalShow }: FoodFormProps) => {
           type="number"
           placeholder="Price"
           min="0"
+          step={0.01}
           value={price === null ? "" : price}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setPrice(e.target.valueAsNumber)

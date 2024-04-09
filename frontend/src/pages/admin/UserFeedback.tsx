@@ -7,6 +7,7 @@ import DateDropdown from "../../components/DateDropdown";
 import Icon from "../../components/Icon";
 import Text from "../../components/Text";
 import Tabs from "../../components/Tabs";
+import { ItemContext } from "../../context/ItemContext";
 
 const UserFeedback = () => {
   const {
@@ -14,15 +15,10 @@ const UserFeedback = () => {
   } = useContext(AuthContext);
   const { setLoading } = useContext(AppContext);
 
-  const [feedback, setFeedback] = useState<FeedbackProps[]>([]);
+  const { selectedDateInterval, setSelectedDateInterval } =
+    useContext(ItemContext);
 
-  const [selectedDateInterval, setSelectedDateInterval] = useState<{
-    startDate: Date | null;
-    endDate: Date | null;
-  }>({
-    startDate: null,
-    endDate: null,
-  });
+  const [feedback, setFeedback] = useState<FeedbackProps[]>([]);
 
   const [defaultActiveKey, setDefaultActiveKey] = useState<string>("");
 
@@ -36,8 +32,8 @@ const UserFeedback = () => {
     const json = await response.json();
     const filteredJson = json.filter((feedback: FeedbackProps) => {
       // check if the food has been deleted after giving feedback
-      if(feedback === null){
-        return null
+      if (feedback === null) {
+        return null;
       }
       const startDate = selectedDateInterval.startDate
         ? selectedDateInterval.startDate
@@ -67,10 +63,7 @@ const UserFeedback = () => {
     <Container>
       <Container>
         <Text style={{ marginRight: "10px" }}>Select a date range</Text>
-        <DateDropdown
-          selectedDateInterval={selectedDateInterval}
-          setSelectedDateInterval={setSelectedDateInterval}
-        />
+        <DateDropdown />
       </Container>
 
       {feedback.length > 0 ? (
@@ -84,7 +77,7 @@ const UserFeedback = () => {
                   feedbackItem.feedback.map((fb: FeedbackComment) => (
                     <Container
                       className="mb-4"
-                      style={{ display: "flex", paddingTop: '10px' }}
+                      style={{ display: "flex", paddingTop: "10px" }}
                       key={fb.user._id}
                     >
                       <Icon iconName="PersonCircle" size="30px" />
@@ -99,7 +92,9 @@ const UserFeedback = () => {
                     </Container>
                   ))
                 ) : (
-                  <Container style={{display: 'flex', justifyContent: 'center'}}>
+                  <Container
+                    style={{ display: "flex", justifyContent: "center" }}
+                  >
                     <Text style={{}}>No feedback</Text>
                   </Container>
                 )}

@@ -24,10 +24,10 @@ const getSingleRecord = async (req, res) => {
 const createRecord = async (req, res) => {
     const { startDate, endDate } = req.body
     try {
-        if (startDate > endDate) {
-            return res.status(400).json({ error: "Start date cannot be greater than end date" });
+        // if (startDate > endDate) {
+        //     return res.status(400).json({ error: "Start date cannot be greater than end date" });
 
-        }
+        // }
         const record = await Record.create({
             startDate,
             endDate,

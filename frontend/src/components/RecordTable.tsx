@@ -43,6 +43,7 @@ const RecordTable = ({
     state: { user },
   } = useContext(AuthContext);
   const { setLoading } = useContext(AppContext);
+  const { setSelectedDateInterval } = useContext(ItemContext);
   const [selectedRecord, setSelectedRecord] = useState<RecordProps>();
   const [showInfoModal, setShowInfoModal] = useState<boolean>(false);
   const [clicked, setClicked] = useState<"Delete" | "Close" | "">("");
@@ -64,7 +65,7 @@ const RecordTable = ({
     if (user) {
       fetchRecord();
     }
-  }, [dispatch, user]);
+  }, [dispatch]);
 
   const handleView = async (record_id: string) => {
     setLoading(true);
@@ -84,6 +85,10 @@ const RecordTable = ({
     if (response.ok) {
       // the food_id array from current viewed Record
       setFoodID(currentRecord.food_id);
+      setSelectedDateInterval({
+        startDate: currentRecord.startDate,
+        endDate: currentRecord.endDate,
+      });
     }
     setLoading(false);
   };
@@ -181,7 +186,7 @@ const RecordTable = ({
         key={`${label}-${rowId}`}
         onClick={onClick}
         variant={variant}
-        style={{margin: "0 10px 10px", minWidth: "auto" }}
+        style={{ margin: "0 10px 10px", minWidth: "auto" }}
       >
         {!iconName ? label : <Icon iconName={iconName} />}
       </Button>
@@ -226,7 +231,13 @@ const RecordTable = ({
       <InfoModal
         show={showInfoModal}
         setShow={setShowInfoModal}
-        headerTitle={clicked === "Delete" ? "Delete" : "Close Order"}
+        headerTitle={
+          clicked === "Delete"
+            ? "Delete"
+            : records?.find((record) => record._id === record_id)?.opened
+            ? "Close Order"
+            : "Open Order"
+        }
         buttonLbl1="Yes"
         onClickBtn1={() => {
           setShowInfoModal(false);
@@ -242,7 +253,12 @@ const RecordTable = ({
       >
         <Text>
           Confirm
-          {clicked === "Delete" ? " delete" : " close order"}
+          {clicked === "Delete"
+            ? " delete "
+            : records?.find((record) => record._id === record_id)?.opened
+            ? " close "
+            : " open "}
+          order
         </Text>
       </InfoModal>
     </>

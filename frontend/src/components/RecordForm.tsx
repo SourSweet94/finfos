@@ -95,6 +95,7 @@ const RecordForm = ({ record, setModalShow }: RecordFormProps) => {
           selected={startDate}
           onChange={(selectedDate: Date | null) => setStartDate(selectedDate)}
           dateFormat="dd-MM-yyyy"
+          maxDate={endDate}
         />
       </Form.Group>
 
@@ -104,10 +105,11 @@ const RecordForm = ({ record, setModalShow }: RecordFormProps) => {
           selected={endDate}
           onChange={(selectedDate: Date | null) => setEndDate(selectedDate)}
           dateFormat="dd-MM-yyyy"
+          minDate={startDate}
         />
       </Form.Group>
 
-      <Button type="submit" onClick={()=>{}}>{action === "N" ? "Submit" : "Save"}</Button>
+      <Button type="submit">{action === "N" ? "Submit" : "Save"}</Button>
       {error && <div>{error}</div>}
     </form>
   );

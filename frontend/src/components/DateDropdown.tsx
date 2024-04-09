@@ -1,44 +1,26 @@
-import {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { useContext, useEffect, useState } from "react";
 import { ButtonGroup, Dropdown } from "react-bootstrap";
 import { AuthContext } from "../context/AuthContext";
 import { RecordProps } from "../context/RecordContext";
+import { ItemContext } from "../context/ItemContext";
 
-interface DateDropdownProps {
-  selectedDateInterval: {
-    startDate: Date | null;
-    endDate: Date | null;
-    opened?: boolean
-  };
-  setSelectedDateInterval: Dispatch<
-    SetStateAction<{
-      startDate: Date | null;
-      endDate: Date | null;
-      opened?: boolean;
-    }>
-  >;
-}
-
-const DateDropdown = ({
-  selectedDateInterval,
-  setSelectedDateInterval,
-}: DateDropdownProps) => {
+const DateDropdown = () => {
   const {
     state: { user },
   } = useContext(AuthContext);
+
+  const { selectedDateInterval, setSelectedDateInterval } =
+    useContext(ItemContext);
 
   const [dateInterval, setDateInterval] = useState<
     { startDate: Date; endDate: Date }[]
   >([]);
 
-  const [isOrderClosed, setIsOrderClosed] = useState<boolean>(false);
-
-  const handleDateSelect = (startDate: Date, endDate: Date, opened: boolean) => {
+  const handleDateSelect = (
+    startDate: Date,
+    endDate: Date,
+    opened: boolean
+  ) => {
     if (
       startDate === selectedDateInterval.startDate &&
       endDate === selectedDateInterval.endDate
@@ -48,7 +30,7 @@ const DateDropdown = ({
     setSelectedDateInterval({
       startDate,
       endDate,
-      opened
+      opened,
     });
   };
 
@@ -65,13 +47,13 @@ const DateDropdown = ({
           records.map((record) => ({
             startDate: record.startDate,
             endDate: record.endDate,
-            opened: record.opened
+            opened: record.opened,
           }))
         );
         setSelectedDateInterval({
           startDate: records[0].startDate,
           endDate: records[0].endDate,
-          opened: records[0].opened
+          opened: records[0].opened,
         });
       }
     };
@@ -100,7 +82,9 @@ const DateDropdown = ({
         {dateInterval.map((date: any) => (
           <Dropdown.Item
             key={date.startDate}
-            onClick={() => handleDateSelect(date.startDate, date.endDate, date.opened)}
+            onClick={() =>
+              handleDateSelect(date.startDate, date.endDate, date.opened)
+            }
           >
             {new Date(date.startDate).toLocaleDateString()} -{" "}
             {new Date(date.endDate).toLocaleDateString()}
