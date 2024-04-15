@@ -71,11 +71,11 @@ const DateDropdown = () => {
         style={{ background: "#265073" }}
       >
         {selectedDateInterval.startDate && selectedDateInterval.endDate
-          ? `${new Date(
-              selectedDateInterval.startDate
-            ).toLocaleDateString()} - ${new Date(
-              selectedDateInterval.endDate
-            ).toLocaleDateString()}`
+          ? `${new Date(selectedDateInterval.startDate).toLocaleDateString(
+              "en-GB"
+            )} - ${new Date(selectedDateInterval.endDate).toLocaleDateString(
+              "en-GB"
+            )}`
           : "No data"}
       </Dropdown.Toggle>
       <Dropdown.Menu style={{ overflowY: "auto", maxHeight: "400px" }}>
@@ -86,8 +86,8 @@ const DateDropdown = () => {
               handleDateSelect(date.startDate, date.endDate, date.opened)
             }
           >
-            {new Date(date.startDate).toLocaleDateString()} -{" "}
-            {new Date(date.endDate).toLocaleDateString()}
+            {new Date(date.startDate).toLocaleDateString("en-GB")} -{" "}
+            {new Date(date.endDate).toLocaleDateString("en-GB")}
           </Dropdown.Item>
         ))}
       </Dropdown.Menu>

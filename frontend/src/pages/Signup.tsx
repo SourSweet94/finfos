@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, Container } from "react-bootstrap";
+import { Form, Container, Image } from "react-bootstrap";
 import { Link, Navigate } from "react-router-dom";
 import useSignup from "../hooks/useSignup";
 import Button from "../components/Button";
@@ -38,8 +38,12 @@ const Signup = () => {
       <Container className="Auth-form-container">
         <Form className="Auth-form" onSubmit={handleSubmit}>
           <Container className="Auth-form-content">
+            <div className="Auth-form-logo">
+              <Image src={"lemon.png"} width={"40"} height={"40"} />{" "}
+              <h3 className="my-0">Finexus Penang Cafe</h3>
+            </div>
             <h1 className="Auth-form-title">Sign up</h1>
-            <Form.Group controlId="formEmail">
+            <Form.Group controlId="formEmail" className="form-group mt-3">
               <Form.Label>Email address</Form.Label>
               <Form.Control
                 type="email"
@@ -50,7 +54,7 @@ const Signup = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="formPassword">
+            <Form.Group controlId="formPassword" className="form-group mt-3">
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"

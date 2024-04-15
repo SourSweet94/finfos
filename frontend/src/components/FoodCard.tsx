@@ -43,21 +43,31 @@ const FoodCard = ({
       <Card.Body className="text-center">
         <Container style={{ top: 0, height: "100px", marginBottom: "10px" }}>
           {image ? (
-            <Image className="mx-auto" src={`/uploads/${image}`} width="100%" />
+            <div style={{ height: "100px" }}>
+              <Image
+                className="mx-auto"
+                src={`/uploads/${image}`}
+                width="100%"
+                height="100%"
+                style={{ objectFit: "cover" }}
+              />
+            </div>
           ) : (
             <Text>No image</Text>
           )}
         </Container>
         <Card.Title>{title}</Card.Title>
-        <Card.Title>{date.toString()}</Card.Title>
-        <Card.Text style={{ color: "green" }}>RM {price}</Card.Text>
-        <Button
-          style={{ background: "#fccd4c", color: "black", border: "none" }}
-          onClick={handleAddToCart}
-          disabled={!opened || isOrdered}
-        >
-          {!opened ? "Expired" : isOrdered ? "Ordered" : "Add to Cart"}
-        </Button>
+        <div>
+          <Card.Title>{new Date(date).toLocaleDateString("en-GB")}</Card.Title>
+          <Card.Text style={{ color: "green" }}>RM {price}</Card.Text>
+          <Button
+            style={{ background: "#fccd4c", color: "black", border: "none" }}
+            onClick={handleAddToCart}
+            disabled={!opened || isOrdered}
+          >
+            {!opened ? "Expired" : isOrdered ? "Ordered" : "Add to Cart"}
+          </Button>
+        </div>
       </Card.Body>
     </Card>
   );

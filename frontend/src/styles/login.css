@@ -20,8 +20,14 @@
   padding-right: 12%;
 }
 
+.Auth-form-logo {
+  display: flex;
+  align-items: center;
+}
+
 .Auth-form-title {
   text-align: center;
+  margin-top: 1em;
   margin-bottom: 1em;
   font-size: 24px;
   color: rgb(34, 34, 34);
